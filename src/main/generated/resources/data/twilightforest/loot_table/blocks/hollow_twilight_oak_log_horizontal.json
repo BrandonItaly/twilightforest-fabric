@@ -9,28 +9,32 @@
           "children": [
             {
               "type": "minecraft:item",
-              "conditions": [
-                {
-                  "condition": "minecraft:match_tool",
-                  "predicate": {
-                    "predicates": {
-                      "minecraft:enchantments": [
-                        {
-                          "enchantments": "minecraft:silk_touch",
-                          "levels": {
-                            "min": 1
+              "name": "twilightforest:hollow_twilight_oak_log",
+              "condition": {
+                "type": "minecraft:all_of",
+                "terms": [
+                  {
+                    "predicate": {
+                      "predicates": {
+                        "minecraft:enchantments": [
+                          {
+                            "enchantments": "minecraft:silk_touch",
+                            "levels": {
+                              "min": 1
+                            }
                           }
-                        }
-                      ]
-                    }
+                        ]
+                      }
+                    },
+                    "type": "minecraft:match_tool"
                   }
-                }
-              ],
-              "name": "twilightforest:hollow_twilight_oak_log"
+                ]
+              }
             },
             {
               "type": "minecraft:item",
-              "functions": [
+              "name": "minecraft:stick",
+              "modifier": [
                 {
                   "add": false,
                   "count": {
@@ -38,18 +42,17 @@
                     "max": 4.0,
                     "min": 2.0
                   },
-                  "function": "minecraft:set_count"
+                  "type": "minecraft:set_count"
                 },
                 {
                   "enchantment": "minecraft:fortune",
                   "formula": "minecraft:uniform_bonus_count",
-                  "function": "minecraft:apply_bonus",
                   "parameters": {
                     "bonusMultiplier": 1
-                  }
+                  },
+                  "type": "minecraft:apply_bonus"
                 }
-              ],
-              "name": "minecraft:stick"
+              ]
             }
           ]
         }
@@ -61,31 +64,34 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "minecraft:match_tool",
-              "predicate": {
-                "predicates": {
-                  "minecraft:enchantments": [
-                    {
-                      "enchantments": "minecraft:silk_touch",
-                      "levels": {
-                        "min": 1
+          "name": "minecraft:short_grass",
+          "condition": {
+            "type": "minecraft:all_of",
+            "terms": [
+              {
+                "predicate": {
+                  "predicates": {
+                    "minecraft:enchantments": [
+                      {
+                        "enchantments": "minecraft:silk_touch",
+                        "levels": {
+                          "min": 1
+                        }
                       }
-                    }
-                  ]
+                    ]
+                  }
+                },
+                "type": "minecraft:match_tool"
+              },
+              {
+                "type": "minecraft:match_block",
+                "blocks": "twilightforest:hollow_twilight_oak_log_horizontal",
+                "state": {
+                  "variant": "moss_and_grass"
                 }
               }
-            },
-            {
-              "block": "twilightforest:hollow_twilight_oak_log_horizontal",
-              "condition": "minecraft:block_state_property",
-              "properties": {
-                "variant": "moss_and_grass"
-              }
-            }
-          ],
-          "name": "minecraft:short_grass"
+            ]
+          }
         }
       ],
       "rolls": 1.0
@@ -95,31 +101,34 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "minecraft:match_tool",
-              "predicate": {
-                "predicates": {
-                  "minecraft:enchantments": [
-                    {
-                      "enchantments": "minecraft:silk_touch",
-                      "levels": {
-                        "min": 1
+          "name": "twilightforest:moss_patch",
+          "condition": {
+            "type": "minecraft:all_of",
+            "terms": [
+              {
+                "predicate": {
+                  "predicates": {
+                    "minecraft:enchantments": [
+                      {
+                        "enchantments": "minecraft:silk_touch",
+                        "levels": {
+                          "min": 1
+                        }
                       }
-                    }
-                  ]
+                    ]
+                  }
+                },
+                "type": "minecraft:match_tool"
+              },
+              {
+                "type": "minecraft:match_block",
+                "blocks": "twilightforest:hollow_twilight_oak_log_horizontal",
+                "state": {
+                  "variant": "moss_and_grass"
                 }
               }
-            },
-            {
-              "block": "twilightforest:hollow_twilight_oak_log_horizontal",
-              "condition": "minecraft:block_state_property",
-              "properties": {
-                "variant": "moss_and_grass"
-              }
-            }
-          ],
-          "name": "twilightforest:moss_patch"
+            ]
+          }
         }
       ],
       "rolls": 1.0
@@ -129,31 +138,34 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "minecraft:match_tool",
-              "predicate": {
-                "predicates": {
-                  "minecraft:enchantments": [
-                    {
-                      "enchantments": "minecraft:silk_touch",
-                      "levels": {
-                        "min": 1
+          "name": "twilightforest:moss_patch",
+          "condition": {
+            "type": "minecraft:all_of",
+            "terms": [
+              {
+                "predicate": {
+                  "predicates": {
+                    "minecraft:enchantments": [
+                      {
+                        "enchantments": "minecraft:silk_touch",
+                        "levels": {
+                          "min": 1
+                        }
                       }
-                    }
-                  ]
+                    ]
+                  }
+                },
+                "type": "minecraft:match_tool"
+              },
+              {
+                "type": "minecraft:match_block",
+                "blocks": "twilightforest:hollow_twilight_oak_log_horizontal",
+                "state": {
+                  "variant": "moss"
                 }
               }
-            },
-            {
-              "block": "twilightforest:hollow_twilight_oak_log_horizontal",
-              "condition": "minecraft:block_state_property",
-              "properties": {
-                "variant": "moss"
-              }
-            }
-          ],
-          "name": "twilightforest:moss_patch"
+            ]
+          }
         }
       ],
       "rolls": 1.0
@@ -163,31 +175,34 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "minecraft:match_tool",
-              "predicate": {
-                "predicates": {
-                  "minecraft:enchantments": [
-                    {
-                      "enchantments": "minecraft:silk_touch",
-                      "levels": {
-                        "min": 1
+          "name": "minecraft:snowball",
+          "condition": {
+            "type": "minecraft:all_of",
+            "terms": [
+              {
+                "predicate": {
+                  "predicates": {
+                    "minecraft:enchantments": [
+                      {
+                        "enchantments": "minecraft:silk_touch",
+                        "levels": {
+                          "min": 1
+                        }
                       }
-                    }
-                  ]
+                    ]
+                  }
+                },
+                "type": "minecraft:match_tool"
+              },
+              {
+                "type": "minecraft:match_block",
+                "blocks": "twilightforest:hollow_twilight_oak_log_horizontal",
+                "state": {
+                  "variant": "snow"
                 }
               }
-            },
-            {
-              "block": "twilightforest:hollow_twilight_oak_log_horizontal",
-              "condition": "minecraft:block_state_property",
-              "properties": {
-                "variant": "snow"
-              }
-            }
-          ],
-          "name": "minecraft:snowball"
+            ]
+          }
         }
       ],
       "rolls": 1.0
@@ -197,31 +212,34 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "minecraft:match_tool",
-              "predicate": {
-                "predicates": {
-                  "minecraft:enchantments": [
-                    {
-                      "enchantments": "minecraft:silk_touch",
-                      "levels": {
-                        "min": 1
+          "name": "minecraft:vine",
+          "condition": {
+            "type": "minecraft:all_of",
+            "terms": [
+              {
+                "predicate": {
+                  "predicates": {
+                    "minecraft:enchantments": [
+                      {
+                        "enchantments": "minecraft:silk_touch",
+                        "levels": {
+                          "min": 1
+                        }
                       }
-                    }
-                  ]
+                    ]
+                  }
+                },
+                "type": "minecraft:match_tool"
+              },
+              {
+                "type": "minecraft:match_block",
+                "blocks": "twilightforest:hollow_twilight_oak_log_horizontal",
+                "state": {
+                  "variant": "vine"
                 }
               }
-            },
-            {
-              "block": "twilightforest:hollow_twilight_oak_log_horizontal",
-              "condition": "minecraft:block_state_property",
-              "properties": {
-                "variant": "vine"
-              }
-            }
-          ],
-          "name": "minecraft:vine"
+            ]
+          }
         }
       ],
       "rolls": 1.0
@@ -231,16 +249,19 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "block": "twilightforest:hollow_twilight_oak_log_horizontal",
-              "condition": "minecraft:block_state_property",
-              "properties": {
-                "variant": "ladder"
+          "name": "minecraft:ladder",
+          "condition": {
+            "type": "minecraft:all_of",
+            "terms": [
+              {
+                "type": "minecraft:match_block",
+                "blocks": "twilightforest:hollow_twilight_oak_log_horizontal",
+                "state": {
+                  "variant": "ladder"
+                }
               }
-            }
-          ],
-          "name": "minecraft:ladder"
+            ]
+          }
         }
       ],
       "rolls": 1.0
@@ -250,16 +271,19 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "block": "twilightforest:hollow_twilight_oak_log_horizontal",
-              "condition": "minecraft:block_state_property",
-              "properties": {
-                "variant": "ladder_waterlogged"
+          "name": "minecraft:ladder",
+          "condition": {
+            "type": "minecraft:all_of",
+            "terms": [
+              {
+                "type": "minecraft:match_block",
+                "blocks": "twilightforest:hollow_twilight_oak_log_horizontal",
+                "state": {
+                  "variant": "ladder_waterlogged"
+                }
               }
-            }
-          ],
-          "name": "minecraft:ladder"
+            ]
+          }
         }
       ],
       "rolls": 1.0

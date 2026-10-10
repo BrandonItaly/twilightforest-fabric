@@ -3,34 +3,39 @@
   "criteria": {
     "previous_progression": {
       "conditions": {
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "type_specific": {
-                "type": "minecraft:player",
-                "advancements": {
-                  "twilightforest:progress_yeti": true
+        "player": {
+          "type": "minecraft:all_of",
+          "terms": [
+            {
+              "entity": "this",
+              "predicate": {
+                "minecraft:type_specific/player": {
+                  "advancements": {
+                    "twilightforest:progress_yeti": true
+                  }
                 }
-              }
+              },
+              "type": "minecraft:entity_properties"
             }
-          }
-        ]
+          ]
+        }
       },
       "trigger": "minecraft:tick"
     },
     "queen": {
       "conditions": {
-        "entity": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "type": "twilightforest:snow_queen"
+        "entity": {
+          "type": "minecraft:all_of",
+          "terms": [
+            {
+              "entity": "this",
+              "predicate": {
+                "entity_type": "twilightforest:snow_queen"
+              },
+              "type": "minecraft:entity_properties"
             }
-          }
-        ]
+          ]
+        }
       },
       "trigger": "minecraft:player_killed_entity"
     },
@@ -46,15 +51,18 @@
     },
     "was_in_fight": {
       "conditions": {
-        "hurt_entity": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "type": "twilightforest:snow_queen"
+        "hurt_entity": {
+          "type": "minecraft:all_of",
+          "terms": [
+            {
+              "entity": "this",
+              "predicate": {
+                "entity_type": "twilightforest:snow_queen"
+              },
+              "type": "minecraft:entity_properties"
             }
-          }
-        ]
+          ]
+        }
       },
       "trigger": "twilightforest:hurt_boss"
     }

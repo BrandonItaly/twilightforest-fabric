@@ -6,66 +6,66 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:book",
+          "weight": 32,
+          "modifier": [
             {
-              "function": "minecraft:enchant_with_levels",
               "levels": {
                 "type": "minecraft:uniform",
                 "max": 10.0,
                 "min": 1.0
               },
-              "options": "#minecraft:on_random_loot"
+              "options": "#minecraft:on_random_loot",
+              "type": "minecraft:enchant_with_levels"
             }
-          ],
-          "name": "minecraft:book",
-          "weight": 32
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:book",
+          "weight": 8,
+          "modifier": [
             {
-              "function": "minecraft:enchant_with_levels",
               "levels": {
                 "type": "minecraft:uniform",
                 "max": 20.0,
                 "min": 11.0
               },
-              "options": "#minecraft:on_random_loot"
+              "options": "#minecraft:on_random_loot",
+              "type": "minecraft:enchant_with_levels"
             }
-          ],
-          "name": "minecraft:book",
-          "weight": 8
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:book",
+          "weight": 4,
+          "modifier": [
             {
-              "function": "minecraft:enchant_with_levels",
               "levels": {
                 "type": "minecraft:uniform",
                 "max": 30.0,
                 "min": 21.0
               },
-              "options": "#minecraft:on_random_loot"
+              "options": "#minecraft:on_random_loot",
+              "type": "minecraft:enchant_with_levels"
             }
-          ],
-          "name": "minecraft:book",
-          "weight": 4
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:book",
+          "modifier": [
             {
-              "function": "minecraft:enchant_with_levels",
               "levels": {
                 "type": "minecraft:uniform",
                 "max": 40.0,
                 "min": 31.0
               },
-              "options": "#minecraft:on_random_loot"
+              "options": "#minecraft:on_random_loot",
+              "type": "minecraft:enchant_with_levels"
             }
-          ],
-          "name": "minecraft:book"
+          ]
         }
       ],
       "rolls": 1.0

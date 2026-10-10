@@ -1,0 +1,9 @@
+{
+  "type": "twilightforest:lampposts",
+  "state": {
+    "id": "twilightforest:firefly_jar",
+    "properties": {
+      "waterlogged": "false"
+    }
+  }
+}

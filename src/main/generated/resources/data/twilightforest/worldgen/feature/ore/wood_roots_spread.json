@@ -1,0 +1,26 @@
+{
+  "type": "twilightforest:wood_roots",
+  "root_block": {
+    "type": "minecraft:weighted",
+    "entries": [
+      {
+        "data": {
+          "id": "twilightforest:root"
+        },
+        "weight": 6
+      },
+      {
+        "data": {
+          "id": "twilightforest:liveroot_block"
+        },
+        "weight": 1
+      }
+    ]
+  },
+  "root_ore": {
+    "type": "minecraft:simple",
+    "state": {
+      "id": "twilightforest:liveroot_block"
+    }
+  }
+}

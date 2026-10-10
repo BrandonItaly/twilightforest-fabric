@@ -3,30 +3,33 @@
   "pools": [
     {
       "bonus_rolls": 0.0,
-      "conditions": [
-        {
-          "condition": "minecraft:match_tool",
-          "predicate": {
-            "predicates": {
-              "minecraft:enchantments": [
-                {
-                  "enchantments": "minecraft:silk_touch",
-                  "levels": {
-                    "min": 1
-                  }
-                }
-              ]
-            }
-          }
-        }
-      ],
       "entries": [
         {
           "type": "minecraft:item",
           "name": "twilightforest:canopy_window"
         }
       ],
-      "rolls": 1.0
+      "rolls": 1.0,
+      "condition": {
+        "type": "minecraft:all_of",
+        "terms": [
+          {
+            "predicate": {
+              "predicates": {
+                "minecraft:enchantments": [
+                  {
+                    "enchantments": "minecraft:silk_touch",
+                    "levels": {
+                      "min": 1
+                    }
+                  }
+                ]
+              }
+            },
+            "type": "minecraft:match_tool"
+          }
+        ]
+      }
     }
   ]
 }

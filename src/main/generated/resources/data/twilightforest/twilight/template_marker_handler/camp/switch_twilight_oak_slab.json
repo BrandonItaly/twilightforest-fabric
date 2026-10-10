@@ -1,0 +1,24 @@
+{
+  "type": "twilightforest:block_placement",
+  "block_state": {
+    "type": "minecraft:weighted",
+    "entries": [
+      {
+        "data": {
+          "id": "twilightforest:twilight_oak_slab",
+          "properties": {
+            "type": "bottom",
+            "waterlogged": "false"
+          }
+        },
+        "weight": 1
+      },
+      {
+        "data": {
+          "id": "minecraft:air"
+        },
+        "weight": 3
+      }
+    ]
+  }
+}

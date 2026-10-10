@@ -11,23 +11,9 @@
         },
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "add": false,
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 4.0,
-                "min": 1.0
-              },
-              "function": "minecraft:set_count"
-            }
-          ],
           "name": "minecraft:iron_ingot",
-          "weight": 75
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -35,15 +21,15 @@
                 "max": 4.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
+          ]
+        },
+        {
+          "type": "minecraft:item",
           "name": "minecraft:wheat",
-          "weight": 75
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -51,11 +37,25 @@
                 "max": 4.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
+          ]
+        },
+        {
+          "type": "minecraft:item",
           "name": "minecraft:string",
-          "weight": 75
+          "weight": 75,
+          "modifier": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 4.0,
+                "min": 1.0
+              },
+              "type": "minecraft:set_count"
+            }
+          ]
         },
         {
           "type": "minecraft:item",
@@ -70,7 +70,8 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:torch",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -78,14 +79,14 @@
                 "max": 12.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:torch"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:arrow",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -93,14 +94,14 @@
                 "max": 12.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:arrow"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:gunpowder",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -108,10 +109,9 @@
                 "max": 4.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:gunpowder"
+          ]
         },
         {
           "type": "minecraft:item",
@@ -129,7 +129,9 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:liveroot",
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -137,15 +139,15 @@
                 "max": 3.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "twilightforest:liveroot",
-          "weight": 75
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:gold_ingot",
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -153,11 +155,9 @@
                 "max": 3.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:gold_ingot",
-          "weight": 75
+          ]
         },
         {
           "type": "minecraft:item",
@@ -176,7 +176,9 @@
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:transformation_powder",
+          "weight": 25,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -184,15 +186,15 @@
                 "max": 12.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "twilightforest:transformation_powder",
-          "weight": 25
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:steeleaf_ingot",
+          "weight": 25,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -200,11 +202,9 @@
                 "max": 3.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "twilightforest:steeleaf_ingot",
-          "weight": 25
+          ]
         },
         {
           "type": "minecraft:item",

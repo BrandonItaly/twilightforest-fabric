@@ -1,11 +1,10 @@
 {
-  "aquifers_enabled": false,
   "default_block": {
-    "Name": "minecraft:stone"
+    "id": "minecraft:stone"
   },
   "default_fluid": {
-    "Name": "minecraft:water",
-    "Properties": {
+    "id": "minecraft:water",
+    "properties": {
       "level": "0"
     }
   },
@@ -26,18 +25,24 @@
     "fluid_level_floodedness": 0.0,
     "fluid_level_spread": 0.0,
     "lava": 0.0,
-    "preliminary_surface_level": "twilightforest:forested_terrain",
     "ridges": 0.0,
     "temperature": 0.0,
     "vegetation": 0.0,
     "vein_gap": 0.0,
     "vein_ridged": 0.0,
-    "vein_toggle": 0.0
+    "vein_toggle": 0.0,
+    "chunk_surface_level": {
+      "type": "minecraft:find_top_surface",
+      "density": "twilightforest:forested_terrain",
+      "upper_bound": 223,
+      "lower_bound": -32,
+      "cell_height": 8
+    }
   },
   "ore_veins_enabled": false,
   "sea_level": 0,
   "spawn_target": [],
-  "surface_rule": {
+  "material_rule": {
     "type": "minecraft:sequence",
     "sequence": [
       {
@@ -55,7 +60,7 @@
         "then_run": {
           "type": "minecraft:block",
           "result_state": {
-            "Name": "minecraft:bedrock"
+            "id": "minecraft:bedrock"
           }
         }
       },
@@ -83,14 +88,14 @@
                 "type": "minecraft:condition",
                 "if_true": {
                   "type": "minecraft:noise_threshold",
-                  "max_threshold": 1.7976931348623157E308,
+                  "max_threshold": 1.7976931348623157E+308,
                   "min_threshold": 0.2727272727272727,
                   "noise": "minecraft:surface"
                 },
                 "then_run": {
                   "type": "minecraft:block",
                   "result_state": {
-                    "Name": "minecraft:coarse_dirt"
+                    "id": "minecraft:coarse_dirt"
                   }
                 }
               },
@@ -98,7 +103,7 @@
                 "type": "minecraft:condition",
                 "if_true": {
                   "type": "minecraft:noise_threshold",
-                  "max_threshold": 1.7976931348623157E308,
+                  "max_threshold": 1.7976931348623157E+308,
                   "min_threshold": -0.2727272727272727,
                   "noise": "minecraft:surface"
                 },
@@ -116,8 +121,8 @@
                       "then_run": {
                         "type": "minecraft:block",
                         "result_state": {
-                          "Name": "minecraft:podzol",
-                          "Properties": {
+                          "id": "minecraft:podzol",
+                          "properties": {
                             "snowy": "false"
                           }
                         }
@@ -126,7 +131,7 @@
                     {
                       "type": "minecraft:block",
                       "result_state": {
-                        "Name": "minecraft:dirt"
+                        "id": "minecraft:dirt"
                       }
                     }
                   ]
@@ -160,7 +165,7 @@
               "then_run": {
                 "type": "minecraft:block",
                 "result_state": {
-                  "Name": "twilightforest:weathered_deadrock"
+                  "id": "twilightforest:weathered_deadrock"
                 }
               }
             },
@@ -184,7 +189,7 @@
                 "then_run": {
                   "type": "minecraft:block",
                   "result_state": {
-                    "Name": "twilightforest:cracked_deadrock"
+                    "id": "twilightforest:cracked_deadrock"
                   }
                 }
               }
@@ -192,7 +197,7 @@
             {
               "type": "minecraft:block",
               "result_state": {
-                "Name": "twilightforest:deadrock"
+                "id": "twilightforest:deadrock"
               }
             }
           ]
@@ -232,14 +237,14 @@
                     "then_run": {
                       "type": "minecraft:block",
                       "result_state": {
-                        "Name": "minecraft:snow_block"
+                        "id": "minecraft:snow_block"
                       }
                     }
                   },
                   {
                     "type": "minecraft:block",
                     "result_state": {
-                      "Name": "minecraft:dirt"
+                      "id": "minecraft:dirt"
                     }
                   }
                 ]
@@ -265,7 +270,7 @@
                 "then_run": {
                   "type": "minecraft:block",
                   "result_state": {
-                    "Name": "minecraft:dirt"
+                    "id": "minecraft:dirt"
                   }
                 }
               }
@@ -296,7 +301,7 @@
               "then_run": {
                 "type": "minecraft:block",
                 "result_state": {
-                  "Name": "minecraft:gravel"
+                  "id": "minecraft:gravel"
                 }
               }
             },
@@ -320,7 +325,7 @@
                 "then_run": {
                   "type": "minecraft:block",
                   "result_state": {
-                    "Name": "minecraft:gravel"
+                    "id": "minecraft:gravel"
                   }
                 }
               }
@@ -367,7 +372,7 @@
                         "then_run": {
                           "type": "minecraft:block",
                           "result_state": {
-                            "Name": "minecraft:sandstone"
+                            "id": "minecraft:sandstone"
                           }
                         }
                       },
@@ -382,8 +387,8 @@
                         "then_run": {
                           "type": "minecraft:block",
                           "result_state": {
-                            "Name": "minecraft:grass_block",
-                            "Properties": {
+                            "id": "minecraft:grass_block",
+                            "properties": {
                               "snowy": "false"
                             }
                           }
@@ -392,7 +397,7 @@
                       {
                         "type": "minecraft:block",
                         "result_state": {
-                          "Name": "minecraft:sand"
+                          "id": "minecraft:sand"
                         }
                       }
                     ]
@@ -421,8 +426,8 @@
                         "then_run": {
                           "type": "minecraft:block",
                           "result_state": {
-                            "Name": "minecraft:grass_block",
-                            "Properties": {
+                            "id": "minecraft:grass_block",
+                            "properties": {
                               "snowy": "false"
                             }
                           }
@@ -431,7 +436,7 @@
                       {
                         "type": "minecraft:block",
                         "result_state": {
-                          "Name": "minecraft:dirt"
+                          "id": "minecraft:dirt"
                         }
                       }
                     ]
@@ -458,8 +463,8 @@
                     "then_run": {
                       "type": "minecraft:block",
                       "result_state": {
-                        "Name": "minecraft:grass_block",
-                        "Properties": {
+                        "id": "minecraft:grass_block",
+                        "properties": {
                           "snowy": "false"
                         }
                       }
@@ -493,7 +498,7 @@
                     "then_run": {
                       "type": "minecraft:block",
                       "result_state": {
-                        "Name": "minecraft:dirt"
+                        "id": "minecraft:dirt"
                       }
                     }
                   }
@@ -531,7 +536,7 @@
                 "then_run": {
                   "type": "minecraft:block",
                   "result_state": {
-                    "Name": "minecraft:dirt"
+                    "id": "minecraft:dirt"
                   }
                 }
               }

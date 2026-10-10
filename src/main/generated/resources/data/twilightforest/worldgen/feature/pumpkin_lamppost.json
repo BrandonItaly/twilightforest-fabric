@@ -1,0 +1,9 @@
+{
+  "type": "twilightforest:lampposts",
+  "state": {
+    "id": "minecraft:jack_o_lantern",
+    "properties": {
+      "facing": "north"
+    }
+  }
+}

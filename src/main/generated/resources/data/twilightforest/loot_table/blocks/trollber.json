@@ -9,19 +9,23 @@
           "children": [
             {
               "type": "minecraft:item",
-              "conditions": [
-                {
-                  "condition": "minecraft:match_tool",
-                  "predicate": {
-                    "items": "minecraft:shears"
+              "name": "twilightforest:trollber",
+              "condition": {
+                "type": "minecraft:all_of",
+                "terms": [
+                  {
+                    "predicate": {
+                      "items": "minecraft:shears"
+                    },
+                    "type": "minecraft:match_tool"
                   }
-                }
-              ],
-              "name": "twilightforest:trollber"
+                ]
+              }
             },
             {
               "type": "minecraft:item",
-              "functions": [
+              "name": "twilightforest:torchberries",
+              "modifier": [
                 {
                   "add": false,
                   "count": {
@@ -29,15 +33,14 @@
                     "max": 8.0,
                     "min": 4.0
                   },
-                  "function": "minecraft:set_count"
+                  "type": "minecraft:set_count"
                 },
                 {
                   "enchantment": "minecraft:fortune",
                   "formula": "minecraft:ore_drops",
-                  "function": "minecraft:apply_bonus"
+                  "type": "minecraft:apply_bonus"
                 }
-              ],
-              "name": "twilightforest:torchberries"
+              ]
             }
           ]
         }

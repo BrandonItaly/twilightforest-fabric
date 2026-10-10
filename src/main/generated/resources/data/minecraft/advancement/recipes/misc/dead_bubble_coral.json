@@ -13,7 +13,9 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:dead_bubble_coral"
+        "recipes": [
+          "minecraft:dead_bubble_coral"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

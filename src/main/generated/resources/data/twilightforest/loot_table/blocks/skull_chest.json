@@ -6,16 +6,16 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:skull_chest",
+          "modifier": [
             {
-              "function": "minecraft:copy_components",
               "include": [
                 "minecraft:custom_name"
               ],
-              "source": "block_entity"
+              "source": "block_entity",
+              "type": "minecraft:copy_components"
             }
-          ],
-          "name": "twilightforest:skull_chest"
+          ]
         }
       ],
       "rolls": 1.0

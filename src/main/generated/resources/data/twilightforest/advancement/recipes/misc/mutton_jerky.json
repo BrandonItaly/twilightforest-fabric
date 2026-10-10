@@ -13,7 +13,9 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "twilightforest:mutton_jerky"
+        "recipes": [
+          "twilightforest:mutton_jerky"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

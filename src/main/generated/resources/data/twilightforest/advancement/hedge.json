@@ -3,35 +3,41 @@
   "criteria": {
     "hedge_spider": {
       "conditions": {
-        "entity": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "type": "twilightforest:hedge_spider",
-              "location": {
-                "structures": "twilightforest:hedge_maze"
-              }
+        "entity": {
+          "type": "minecraft:all_of",
+          "terms": [
+            {
+              "entity": "this",
+              "predicate": {
+                "location": {
+                  "structures": "twilightforest:hedge_maze"
+                },
+                "entity_type": "twilightforest:hedge_spider"
+              },
+              "type": "minecraft:entity_properties"
             }
-          }
-        ]
+          ]
+        }
       },
       "trigger": "minecraft:player_killed_entity"
     },
     "swarm_spider": {
       "conditions": {
-        "entity": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "type": "twilightforest:swarm_spider",
-              "location": {
-                "structures": "twilightforest:hedge_maze"
-              }
+        "entity": {
+          "type": "minecraft:all_of",
+          "terms": [
+            {
+              "entity": "this",
+              "predicate": {
+                "location": {
+                  "structures": "twilightforest:hedge_maze"
+                },
+                "entity_type": "twilightforest:swarm_spider"
+              },
+              "type": "minecraft:entity_properties"
             }
-          }
-        ]
+          ]
+        }
       },
       "trigger": "minecraft:player_killed_entity"
     }

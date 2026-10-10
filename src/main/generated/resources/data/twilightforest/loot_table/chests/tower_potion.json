@@ -6,7 +6,8 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:glistering_melon_slice",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -14,14 +15,14 @@
                 "max": 6.0,
                 "min": 3.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:glistering_melon_slice"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:ghast_tear",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -29,14 +30,14 @@
                 "max": 3.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:ghast_tear"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:fermented_spider_eye",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -44,14 +45,14 @@
                 "max": 4.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:fermented_spider_eye"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:blaze_powder",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -59,14 +60,14 @@
                 "max": 9.0,
                 "min": 4.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:blaze_powder"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:glass_bottle",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -74,14 +75,14 @@
                 "max": 4.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:glass_bottle"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:magma_cream",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -89,14 +90,14 @@
                 "max": 3.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:magma_cream"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:sugar",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -104,14 +105,14 @@
                 "max": 7.0,
                 "min": 2.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:sugar"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:gunpowder",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -119,14 +120,14 @@
                 "max": 20.0,
                 "min": 8.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:gunpowder"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:nether_wart",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -134,10 +135,9 @@
                 "max": 13.0,
                 "min": 6.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:nether_wart"
+          ]
         }
       ],
       "rolls": 4.0
@@ -147,7 +147,8 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:golden_carrot",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -155,14 +156,14 @@
                 "max": 3.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:golden_carrot"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:redstone",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -170,14 +171,14 @@
                 "max": 7.0,
                 "min": 4.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:redstone"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:glowstone_dust",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -185,40 +186,39 @@
                 "max": 6.0,
                 "min": 2.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:glowstone_dust"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:splash_potion",
+          "modifier": [
             {
-              "function": "minecraft:set_potion",
-              "id": "minecraft:healing"
+              "id": "minecraft:healing",
+              "type": "minecraft:set_potion"
             }
-          ],
-          "name": "minecraft:splash_potion"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:potion",
+          "modifier": [
             {
-              "function": "minecraft:set_potion",
-              "id": "minecraft:strength"
+              "id": "minecraft:strength",
+              "type": "minecraft:set_potion"
             }
-          ],
-          "name": "minecraft:potion"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:potion",
+          "modifier": [
             {
-              "function": "minecraft:set_potion",
-              "id": "minecraft:fire_resistance"
+              "id": "minecraft:fire_resistance",
+              "type": "minecraft:set_potion"
             }
-          ],
-          "name": "minecraft:potion"
+          ]
         }
       ],
       "rolls": 2.0
@@ -228,7 +228,9 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:golden_apple",
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -236,15 +238,15 @@
                 "max": 2.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:golden_apple",
-          "weight": 75
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:blaze_rod",
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -252,44 +254,42 @@
                 "max": 4.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:blaze_rod",
-          "weight": 75
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "function": "minecraft:set_potion",
-              "id": "minecraft:strong_healing"
-            }
-          ],
           "name": "minecraft:potion",
-          "weight": 75
+          "weight": 75,
+          "modifier": [
+            {
+              "id": "minecraft:strong_healing",
+              "type": "minecraft:set_potion"
+            }
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "function": "minecraft:set_potion",
-              "id": "minecraft:swiftness"
-            }
-          ],
           "name": "minecraft:potion",
-          "weight": 75
+          "weight": 75,
+          "modifier": [
+            {
+              "id": "minecraft:swiftness",
+              "type": "minecraft:set_potion"
+            }
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "function": "minecraft:set_potion",
-              "id": "minecraft:regeneration"
-            }
-          ],
           "name": "minecraft:potion",
-          "weight": 75
+          "weight": 75,
+          "modifier": [
+            {
+              "id": "minecraft:regeneration",
+              "type": "minecraft:set_potion"
+            }
+          ]
         },
         {
           "type": "minecraft:item",
@@ -314,7 +314,8 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:brittle_potion_flask",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -322,10 +323,9 @@
                 "max": 5.0,
                 "min": 3.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "twilightforest:brittle_potion_flask"
+          ]
         }
       ],
       "rolls": 1.0

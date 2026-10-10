@@ -1,0 +1,10 @@
+{
+  "type": "twilightforest:handler_switch",
+  "element_processor": {
+    "birch_drying_rack": "twilightforest:camp/switch_birch_drying_rack",
+    "camp_armor_rack": "twilightforest:camp/switch_camp_armor_rack",
+    "painting": "twilightforest:camp/switch_painting",
+    "tent_pot": "twilightforest:camp/switch_tent_pot",
+    "twilight_oak_slab": "twilightforest:camp/switch_twilight_oak_slab"
+  }
+}

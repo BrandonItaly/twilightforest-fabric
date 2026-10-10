@@ -11,7 +11,9 @@
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:bone",
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -19,15 +21,15 @@
                 "max": 16.0,
                 "min": 4.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:bone",
-          "weight": 75
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:clay_ball",
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -35,15 +37,15 @@
                 "max": 12.0,
                 "min": 6.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:clay_ball",
-          "weight": 75
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:string",
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -51,15 +53,15 @@
                 "max": 8.0,
                 "min": 3.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:string",
-          "weight": 75
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:torch",
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -67,15 +69,15 @@
                 "max": 24.0,
                 "min": 9.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:torch",
-          "weight": 75
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:candle",
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -83,11 +85,9 @@
                 "max": 5.0,
                 "min": 2.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:candle",
-          "weight": 75
+          ]
         },
         {
           "type": "minecraft:loot_table",
@@ -96,7 +96,9 @@
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:gold_nugget",
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -104,15 +106,15 @@
                 "max": 9.0,
                 "min": 3.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:gold_nugget",
-          "weight": 75
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:iron_nugget",
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -120,15 +122,15 @@
                 "max": 20.0,
                 "min": 6.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:iron_nugget",
-          "weight": 75
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:bread",
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -136,11 +138,9 @@
                 "max": 6.0,
                 "min": 2.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:bread",
-          "weight": 75
+          ]
         }
       ],
       "rolls": 4.0
@@ -150,7 +150,8 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:transformation_powder",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -158,10 +159,9 @@
                 "max": 3.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "twilightforest:transformation_powder"
+          ]
         },
         {
           "type": "minecraft:item",
@@ -169,7 +169,8 @@
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:firefly",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -177,14 +178,14 @@
                 "max": 9.0,
                 "min": 3.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "twilightforest:firefly"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:exanimate_essence",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -192,14 +193,14 @@
                 "max": 3.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "twilightforest:exanimate_essence"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:brittle_potion_flask",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -207,14 +208,14 @@
                 "max": 5.0,
                 "min": 3.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "twilightforest:brittle_potion_flask"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:amethyst_shard",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -222,14 +223,14 @@
                 "max": 13.0,
                 "min": 4.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:amethyst_shard"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:ender_pearl",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -237,54 +238,54 @@
                 "max": 3.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:ender_pearl"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:potion",
+          "modifier": [
             {
-              "function": "minecraft:set_potion",
-              "id": "minecraft:healing"
+              "id": "minecraft:healing",
+              "type": "minecraft:set_potion"
             }
-          ],
-          "name": "minecraft:potion"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:potion",
+          "modifier": [
             {
-              "function": "minecraft:set_potion",
-              "id": "minecraft:regeneration"
+              "id": "minecraft:regeneration",
+              "type": "minecraft:set_potion"
             }
-          ],
-          "name": "minecraft:potion"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:potion",
+          "modifier": [
             {
-              "function": "minecraft:set_potion",
-              "id": "minecraft:strength"
+              "id": "minecraft:strength",
+              "type": "minecraft:set_potion"
             }
-          ],
-          "name": "minecraft:potion"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:golden_sword",
+          "modifier": [
             {
-              "function": "minecraft:enchant_randomly",
-              "options": "#minecraft:on_random_loot"
+              "options": "#minecraft:on_random_loot",
+              "type": "minecraft:enchant_randomly"
             }
-          ],
-          "name": "minecraft:golden_sword"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:ender_pearl",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -292,25 +293,24 @@
                 "max": 3.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:ender_pearl"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:book",
+          "modifier": [
             {
-              "function": "minecraft:enchant_with_levels",
               "levels": {
                 "type": "minecraft:uniform",
                 "max": 30.0,
                 "min": 20.0
               },
-              "options": "#minecraft:on_random_loot"
+              "options": "#minecraft:on_random_loot",
+              "type": "minecraft:enchant_with_levels"
             }
-          ],
-          "name": "minecraft:book"
+          ]
         }
       ],
       "rolls": 2.0
@@ -324,7 +324,9 @@
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:liveroot",
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -332,11 +334,9 @@
                 "max": 5.0,
                 "min": 3.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "twilightforest:liveroot",
-          "weight": 75
+          ]
         },
         {
           "type": "minecraft:item",
@@ -350,7 +350,9 @@
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:obsidian",
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -358,27 +360,25 @@
                 "max": 4.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:obsidian",
-          "weight": 75
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:golden_helmet",
+          "weight": 75,
+          "modifier": [
             {
-              "function": "minecraft:enchant_with_levels",
               "levels": {
                 "type": "minecraft:uniform",
                 "max": 15.0,
                 "min": 10.0
               },
-              "options": "#minecraft:on_random_loot"
+              "options": "#minecraft:on_random_loot",
+              "type": "minecraft:enchant_with_levels"
             }
-          ],
-          "name": "minecraft:golden_helmet",
-          "weight": 75
+          ]
         },
         {
           "type": "minecraft:item",
@@ -387,31 +387,31 @@
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:book",
+          "weight": 75,
+          "modifier": [
             {
-              "function": "minecraft:enchant_with_levels",
               "levels": {
                 "type": "minecraft:uniform",
                 "max": 30.0,
                 "min": 20.0
               },
-              "options": "#minecraft:on_random_loot"
+              "options": "#minecraft:on_random_loot",
+              "type": "minecraft:enchant_with_levels"
             }
-          ],
-          "name": "minecraft:book",
-          "weight": 75
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "function": "minecraft:enchant_with_levels",
-              "levels": 20.0,
-              "options": "#minecraft:on_random_loot"
-            }
-          ],
           "name": "minecraft:golden_axe",
-          "weight": 75
+          "weight": 75,
+          "modifier": [
+            {
+              "levels": 20.0,
+              "options": "#minecraft:on_random_loot",
+              "type": "minecraft:enchant_with_levels"
+            }
+          ]
         },
         {
           "type": "minecraft:item",

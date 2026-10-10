@@ -6,7 +6,8 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:maze_wafer",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -14,14 +15,14 @@
                 "max": 12.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "twilightforest:maze_wafer"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:ice_bomb",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -29,14 +30,14 @@
                 "max": 4.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "twilightforest:ice_bomb"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:firefly",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -44,14 +45,14 @@
                 "max": 5.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "twilightforest:firefly"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:ice",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -59,14 +60,14 @@
                 "max": 4.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:ice"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:packed_ice",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -74,10 +75,9 @@
                 "max": 4.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:packed_ice"
+          ]
         }
       ],
       "rolls": 4.0
@@ -87,7 +87,8 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:arctic_fur",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -95,10 +96,9 @@
                 "max": 6.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "twilightforest:arctic_fur"
+          ]
         },
         {
           "type": "minecraft:item",
@@ -136,57 +136,57 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:ice_bow",
+          "modifier": [
             {
-              "function": "minecraft:enchant_with_levels",
               "levels": 30.0,
-              "options": "#minecraft:on_random_loot"
+              "options": "#minecraft:on_random_loot",
+              "type": "minecraft:enchant_with_levels"
             }
-          ],
-          "name": "twilightforest:ice_bow"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:ender_bow",
+          "modifier": [
             {
-              "function": "minecraft:enchant_with_levels",
               "levels": 5.0,
-              "options": "#minecraft:on_random_loot"
+              "options": "#minecraft:on_random_loot",
+              "type": "minecraft:enchant_with_levels"
             }
-          ],
-          "name": "twilightforest:ender_bow"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:ice_sword",
+          "modifier": [
             {
-              "function": "minecraft:enchant_with_levels",
               "levels": 25.0,
-              "options": "#minecraft:on_random_loot"
+              "options": "#minecraft:on_random_loot",
+              "type": "minecraft:enchant_with_levels"
             }
-          ],
-          "name": "twilightforest:ice_sword"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:book",
+          "modifier": [
             {
-              "function": "minecraft:enchant_randomly",
-              "options": "twilightforest:chill_aura"
+              "options": "twilightforest:chill_aura",
+              "type": "minecraft:enchant_randomly"
             }
-          ],
-          "name": "minecraft:book"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:glass_sword",
+          "modifier": [
             {
-              "function": "minecraft:enchant_with_levels",
               "levels": 20.0,
-              "options": "#minecraft:on_random_loot"
+              "options": "#minecraft:on_random_loot",
+              "type": "minecraft:enchant_with_levels"
             }
-          ],
-          "name": "twilightforest:glass_sword"
+          ]
         }
       ],
       "rolls": 1.0

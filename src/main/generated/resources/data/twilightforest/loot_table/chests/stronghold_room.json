@@ -11,7 +11,9 @@
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:iron_ingot",
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -19,15 +21,15 @@
                 "max": 4.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:iron_ingot",
-          "weight": 75
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:gunpowder",
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -35,11 +37,9 @@
                 "max": 4.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:gunpowder",
-          "weight": 75
+          ]
         },
         {
           "type": "minecraft:item",
@@ -48,7 +48,9 @@
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:maze_wafer",
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -56,15 +58,15 @@
                 "max": 12.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "twilightforest:maze_wafer",
-          "weight": 75
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:ironwood_ingot",
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -72,15 +74,15 @@
                 "max": 4.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "twilightforest:ironwood_ingot",
-          "weight": 75
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:firefly",
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -88,11 +90,9 @@
                 "max": 5.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "twilightforest:firefly",
-          "weight": 75
+          ]
         }
       ],
       "rolls": 4.0
@@ -102,7 +102,8 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:steeleaf_ingot",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -110,10 +111,9 @@
                 "max": 6.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "twilightforest:steeleaf_ingot"
+          ]
         },
         {
           "type": "minecraft:item",
@@ -155,68 +155,68 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:ironwood_sword",
+          "modifier": [
             {
-              "function": "minecraft:enchant_with_levels",
               "levels": 25.0,
-              "options": "#minecraft:on_random_loot"
+              "options": "#minecraft:on_random_loot",
+              "type": "minecraft:enchant_with_levels"
             }
-          ],
-          "name": "twilightforest:ironwood_sword"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:steeleaf_sword",
+          "modifier": [
             {
-              "function": "minecraft:enchant_with_levels",
               "levels": 20.0,
-              "options": "#minecraft:on_random_loot"
+              "options": "#minecraft:on_random_loot",
+              "type": "minecraft:enchant_with_levels"
             }
-          ],
-          "name": "twilightforest:steeleaf_sword"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:iron_sword",
+          "modifier": [
             {
-              "function": "minecraft:enchant_with_levels",
               "levels": 30.0,
-              "options": "#minecraft:on_random_loot"
+              "options": "#minecraft:on_random_loot",
+              "type": "minecraft:enchant_with_levels"
             }
-          ],
-          "name": "minecraft:iron_sword"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:bow",
+          "modifier": [
             {
-              "function": "minecraft:enchant_with_levels",
               "levels": 30.0,
-              "options": "#minecraft:on_random_loot"
+              "options": "#minecraft:on_random_loot",
+              "type": "minecraft:enchant_with_levels"
             }
-          ],
-          "name": "minecraft:bow"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:diamond_sword",
+          "modifier": [
             {
-              "function": "minecraft:enchant_with_levels",
               "levels": 15.0,
-              "options": "#minecraft:on_random_loot"
+              "options": "#minecraft:on_random_loot",
+              "type": "minecraft:enchant_with_levels"
             }
-          ],
-          "name": "minecraft:diamond_sword"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:book",
+          "modifier": [
             {
-              "function": "minecraft:enchant_randomly",
-              "options": "twilightforest:destruction"
+              "options": "twilightforest:destruction",
+              "type": "minecraft:enchant_randomly"
             }
-          ],
-          "name": "minecraft:book"
+          ]
         },
         {
           "type": "minecraft:item",

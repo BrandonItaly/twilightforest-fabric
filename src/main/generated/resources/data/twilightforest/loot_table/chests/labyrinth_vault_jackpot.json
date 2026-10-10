@@ -16,7 +16,8 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:mazebreaker_pickaxe",
+          "modifier": [
             {
               "add": false,
               "enchantments": {
@@ -24,10 +25,9 @@
                 "minecraft:fortune": 2.0,
                 "minecraft:unbreaking": 3.0
               },
-              "function": "minecraft:set_enchantments"
+              "type": "minecraft:set_enchantments"
             }
-          ],
-          "name": "twilightforest:mazebreaker_pickaxe"
+          ]
         }
       ],
       "rolls": 1.0

@@ -11,18 +11,20 @@
         },
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "function": "minecraft:set_potion",
-              "id": "minecraft:water"
-            }
-          ],
           "name": "minecraft:potion",
-          "weight": 75
+          "weight": 75,
+          "modifier": [
+            {
+              "id": "minecraft:water",
+              "type": "minecraft:set_potion"
+            }
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:rotten_flesh",
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -30,15 +32,15 @@
                 "max": 6.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:rotten_flesh",
-          "weight": 75
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:poisonous_potato",
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -46,11 +48,9 @@
                 "max": 2.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:poisonous_potato",
-          "weight": 75
+          ]
         },
         {
           "type": "minecraft:item",
@@ -59,7 +59,9 @@
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:torch",
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -67,11 +69,9 @@
                 "max": 12.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:torch",
-          "weight": 75
+          ]
         },
         {
           "type": "minecraft:item",
@@ -86,7 +86,8 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:wheat",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -94,44 +95,44 @@
                 "max": 6.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:wheat"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:potion",
+          "modifier": [
             {
-              "function": "minecraft:set_potion",
-              "id": "minecraft:awkward"
+              "id": "minecraft:awkward",
+              "type": "minecraft:set_potion"
             }
-          ],
-          "name": "minecraft:potion"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:potion",
+          "modifier": [
             {
-              "function": "minecraft:set_potion",
-              "id": "minecraft:mundane"
+              "id": "minecraft:mundane",
+              "type": "minecraft:set_potion"
             }
-          ],
-          "name": "minecraft:potion"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:potion",
+          "modifier": [
             {
-              "function": "minecraft:set_potion",
-              "id": "minecraft:thick"
+              "id": "minecraft:thick",
+              "type": "minecraft:set_potion"
             }
-          ],
-          "name": "minecraft:potion"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:rotten_flesh",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -139,14 +140,14 @@
                 "max": 6.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:rotten_flesh"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:melon_seeds",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -154,14 +155,14 @@
                 "max": 5.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:melon_seeds"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:pumpkin_seeds",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -169,10 +170,9 @@
                 "max": 5.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:pumpkin_seeds"
+          ]
         }
       ],
       "rolls": 2.0
@@ -182,7 +182,9 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:glistering_melon_slice",
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -190,11 +192,9 @@
                 "max": 12.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:glistering_melon_slice",
-          "weight": 75
+          ]
         },
         {
           "type": "minecraft:item",
@@ -213,7 +213,9 @@
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:golden_apple",
+          "weight": 25,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -221,15 +223,15 @@
                 "max": 2.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:golden_apple",
-          "weight": 25
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:golden_carrot",
+          "weight": 25,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -237,11 +239,9 @@
                 "max": 2.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:golden_carrot",
-          "weight": 25
+          ]
         },
         {
           "type": "minecraft:item",

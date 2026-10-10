@@ -2,17 +2,20 @@
   "criteria": {
     "in_tf": {
       "conditions": {
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "location": {
-                "dimension": "twilightforest:twilight_forest"
-              }
+        "player": {
+          "type": "minecraft:all_of",
+          "terms": [
+            {
+              "entity": "this",
+              "predicate": {
+                "location": {
+                  "dimension": "twilightforest:twilight_forest"
+                }
+              },
+              "type": "minecraft:entity_properties"
             }
-          }
-        ]
+          ]
+        }
       },
       "trigger": "minecraft:location"
     },

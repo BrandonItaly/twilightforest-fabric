@@ -11,23 +11,9 @@
         },
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "add": false,
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 12.0,
-                "min": 1.0
-              },
-              "function": "minecraft:set_count"
-            }
-          ],
           "name": "minecraft:stick",
-          "weight": 75
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -35,15 +21,15 @@
                 "max": 12.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
+          ]
+        },
+        {
+          "type": "minecraft:item",
           "name": "minecraft:coal",
-          "weight": 75
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -51,31 +37,31 @@
                 "max": 12.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
+          ]
+        },
+        {
+          "type": "minecraft:item",
           "name": "minecraft:arrow",
-          "weight": 75
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 4.0,
+                "max": 12.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
+          ]
+        },
+        {
+          "type": "minecraft:item",
           "name": "minecraft:ice",
-          "weight": 75
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -83,15 +69,31 @@
                 "max": 4.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:packed_ice",
-          "weight": 75
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:packed_ice",
+          "weight": 75,
+          "modifier": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 4.0,
+                "min": 1.0
+              },
+              "type": "minecraft:set_count"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "twilightforest:ironwood_ingot",
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -99,15 +101,15 @@
                 "max": 2.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "twilightforest:ironwood_ingot",
-          "weight": 75
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:maze_wafer",
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -115,11 +117,9 @@
                 "max": 9.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "twilightforest:maze_wafer",
-          "weight": 75
+          ]
         }
       ],
       "rolls": 4.0
@@ -133,7 +133,8 @@
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:ironwood_ingot",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -141,14 +142,14 @@
                 "max": 6.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "twilightforest:ironwood_ingot"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:firefly",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -156,14 +157,14 @@
                 "max": 5.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "twilightforest:firefly"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:aurora_block",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -171,14 +172,14 @@
                 "max": 12.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "twilightforest:aurora_block"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:arctic_fur",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -186,10 +187,9 @@
                 "max": 3.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "twilightforest:arctic_fur"
+          ]
         }
       ],
       "rolls": 2.0
@@ -199,7 +199,9 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:arctic_fur",
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -207,11 +209,9 @@
                 "max": 8.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "twilightforest:arctic_fur",
-          "weight": 75
+          ]
         },
         {
           "type": "minecraft:item",
@@ -230,84 +230,84 @@
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:enchanted_book",
+          "weight": 25,
+          "modifier": [
             {
               "add": false,
               "enchantments": {
                 "minecraft:sharpness": 4.0
               },
-              "function": "minecraft:set_enchantments"
+              "type": "minecraft:set_enchantments"
             }
-          ],
-          "name": "minecraft:enchanted_book",
-          "weight": 25
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:enchanted_book",
+          "weight": 25,
+          "modifier": [
             {
               "add": false,
               "enchantments": {
                 "minecraft:power": 4.0
               },
-              "function": "minecraft:set_enchantments"
+              "type": "minecraft:set_enchantments"
             }
-          ],
-          "name": "minecraft:enchanted_book",
-          "weight": 25
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:enchanted_book",
+          "weight": 25,
+          "modifier": [
             {
               "add": false,
               "enchantments": {
                 "minecraft:punch": 2.0
               },
-              "function": "minecraft:set_enchantments"
+              "type": "minecraft:set_enchantments"
             }
-          ],
-          "name": "minecraft:enchanted_book",
-          "weight": 25
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:enchanted_book",
+          "weight": 25,
+          "modifier": [
             {
               "add": false,
               "enchantments": {
                 "minecraft:unbreaking": 2.0
               },
-              "function": "minecraft:set_enchantments"
+              "type": "minecraft:set_enchantments"
             }
-          ],
-          "name": "minecraft:enchanted_book",
-          "weight": 25
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "function": "minecraft:enchant_randomly",
-              "options": "twilightforest:chill_aura"
-            }
-          ],
           "name": "minecraft:book",
-          "weight": 25
+          "weight": 25,
+          "modifier": [
+            {
+              "options": "twilightforest:chill_aura",
+              "type": "minecraft:enchant_randomly"
+            }
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:enchanted_book",
+          "weight": 25,
+          "modifier": [
             {
               "add": false,
               "enchantments": {
                 "minecraft:infinity": 1.0
               },
-              "function": "minecraft:set_enchantments"
+              "type": "minecraft:set_enchantments"
             }
-          ],
-          "name": "minecraft:enchanted_book",
-          "weight": 25
+          ]
         }
       ],
       "rolls": 1.0

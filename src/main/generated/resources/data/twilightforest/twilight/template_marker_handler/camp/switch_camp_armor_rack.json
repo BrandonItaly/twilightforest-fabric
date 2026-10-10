@@ -1,0 +1,14 @@
+{
+  "type": "twilightforest:drying_rack",
+  "drying_rack_block": {
+    "type": "minecraft:simple",
+    "state": {
+      "id": "twilightforest:canopy_drying_rack",
+      "properties": {
+        "facing": "north",
+        "waterlogged": "false"
+      }
+    }
+  },
+  "loot_table": "twilightforest:chests/camp_armor_rack"
+}

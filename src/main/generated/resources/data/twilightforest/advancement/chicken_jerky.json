@@ -3,21 +3,24 @@
   "criteria": {
     "jerky": {
       "conditions": {
-        "entity": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "type": "minecraft:zombie",
-              "flags": {
-                "is_baby": true
+        "entity": {
+          "type": "minecraft:all_of",
+          "terms": [
+            {
+              "entity": "this",
+              "predicate": {
+                "flags": {
+                  "is_baby": true
+                },
+                "vehicle": {
+                  "entity_type": "minecraft:chicken"
+                },
+                "entity_type": "minecraft:zombie"
               },
-              "vehicle": {
-                "type": "minecraft:chicken"
-              }
+              "type": "minecraft:entity_properties"
             }
-          }
-        ],
+          ]
+        },
         "killing_blow": {
           "direct_entity": {
             "equipment": {

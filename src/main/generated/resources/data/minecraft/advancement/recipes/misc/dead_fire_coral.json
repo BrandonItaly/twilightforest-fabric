@@ -13,7 +13,9 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:dead_fire_coral"
+        "recipes": [
+          "minecraft:dead_fire_coral"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

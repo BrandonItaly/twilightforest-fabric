@@ -1,0 +1,15 @@
+{
+  "type": "twilightforest:loot",
+  "loot_block": {
+    "type": "minecraft:simple",
+    "state": {
+      "id": "minecraft:decorated_pot",
+      "properties": {
+        "cracked": "false",
+        "facing": "north",
+        "waterlogged": "false"
+      }
+    }
+  },
+  "loot_table": "twilightforest:chests/camp_pot"
+}

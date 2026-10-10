@@ -16,7 +16,8 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:leather_boots",
+          "modifier": [
             {
               "add": false,
               "damage": {
@@ -24,10 +25,9 @@
                 "max": 0.2,
                 "min": 0.1
               },
-              "function": "minecraft:set_damage"
+              "type": "minecraft:set_damage"
             }
-          ],
-          "name": "minecraft:leather_boots"
+          ]
         }
       ],
       "rolls": 1.0
@@ -37,7 +37,8 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:iron_leggings",
+          "modifier": [
             {
               "add": false,
               "damage": {
@@ -45,10 +46,9 @@
                 "max": 0.2,
                 "min": 0.1
               },
-              "function": "minecraft:set_damage"
+              "type": "minecraft:set_damage"
             }
-          ],
-          "name": "minecraft:iron_leggings"
+          ]
         }
       ],
       "rolls": 1.0

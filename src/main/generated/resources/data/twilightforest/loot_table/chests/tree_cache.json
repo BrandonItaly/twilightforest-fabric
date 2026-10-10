@@ -11,7 +11,9 @@
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:poisonous_potato",
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -19,31 +21,15 @@
                 "max": 2.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:poisonous_potato",
-          "weight": 75
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "add": false,
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 6.0,
-                "min": 1.0
-              },
-              "function": "minecraft:set_count"
-            }
-          ],
           "name": "minecraft:wheat",
-          "weight": 75
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -51,15 +37,15 @@
                 "max": 6.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
+          ]
+        },
+        {
+          "type": "minecraft:item",
           "name": "minecraft:potato",
-          "weight": 75
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -67,15 +53,15 @@
                 "max": 6.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
+          ]
+        },
+        {
+          "type": "minecraft:item",
           "name": "minecraft:carrot",
-          "weight": 75
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -83,15 +69,31 @@
                 "max": 6.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:melon_slice",
-          "weight": 75
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:melon_slice",
+          "weight": 75,
+          "modifier": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 6.0,
+                "min": 1.0
+              },
+              "type": "minecraft:set_count"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:melon_seeds",
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -99,11 +101,9 @@
                 "max": 5.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:melon_seeds",
-          "weight": 75
+          ]
         },
         {
           "type": "minecraft:item",
@@ -123,7 +123,8 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:twilight_oak_sapling",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -131,14 +132,14 @@
                 "max": 4.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "twilightforest:twilight_oak_sapling"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:canopy_sapling",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -146,14 +147,14 @@
                 "max": 4.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "twilightforest:canopy_sapling"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:mangrove_sapling",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -161,14 +162,14 @@
                 "max": 4.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "twilightforest:mangrove_sapling"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:darkwood_sapling",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -176,14 +177,14 @@
                 "max": 4.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "twilightforest:darkwood_sapling"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:firefly",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -191,10 +192,9 @@
                 "max": 12.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "twilightforest:firefly"
+          ]
         }
       ],
       "rolls": 2.0
@@ -204,7 +204,9 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:pumpkin_pie",
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -212,15 +214,15 @@
                 "max": 12.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:pumpkin_pie",
-          "weight": 75
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:apple",
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -228,11 +230,9 @@
                 "max": 12.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:apple",
-          "weight": 75
+          ]
         },
         {
           "type": "minecraft:item",

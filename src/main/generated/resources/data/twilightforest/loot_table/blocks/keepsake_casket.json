@@ -6,16 +6,16 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:keepsake_casket",
+          "modifier": [
             {
-              "function": "minecraft:copy_components",
               "include": [
                 "minecraft:custom_name"
               ],
-              "source": "block_entity"
+              "source": "block_entity",
+              "type": "minecraft:copy_components"
             }
-          ],
-          "name": "twilightforest:keepsake_casket"
+          ]
         }
       ],
       "rolls": 1.0

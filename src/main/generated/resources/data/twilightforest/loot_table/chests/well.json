@@ -6,7 +6,9 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:gold_nugget",
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -14,15 +16,15 @@
                 "max": 5.0,
                 "min": 3.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:gold_nugget",
-          "weight": 75
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:iron_nugget",
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -30,15 +32,15 @@
                 "max": 3.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:iron_nugget",
-          "weight": 75
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:string",
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -46,15 +48,15 @@
                 "max": 6.0,
                 "min": 2.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:string",
-          "weight": 75
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:stick",
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -62,11 +64,9 @@
                 "max": 7.0,
                 "min": 3.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:stick",
-          "weight": 75
+          ]
         },
         {
           "type": "minecraft:empty",
@@ -84,7 +84,8 @@
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:melon_seeds",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -92,14 +93,14 @@
                 "max": 4.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:melon_seeds"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:pumpkin_seeds",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -107,14 +108,14 @@
                 "max": 4.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:pumpkin_seeds"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:ink_sac",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -122,10 +123,9 @@
                 "max": 2.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:ink_sac"
+          ]
         },
         {
           "type": "minecraft:item",
@@ -141,7 +141,8 @@
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:iron_ingot",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -149,14 +150,14 @@
                 "max": 2.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:iron_ingot"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:gold_ingot",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -164,14 +165,14 @@
                 "max": 2.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:gold_ingot"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:copper_ingot",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -179,10 +180,9 @@
                 "max": 2.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:copper_ingot"
+          ]
         }
       ],
       "rolls": 2.0
@@ -204,7 +204,8 @@
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:experience_bottle",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -212,10 +213,9 @@
                 "max": 4.0,
                 "min": 2.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:experience_bottle"
+          ]
         }
       ],
       "rolls": 1.0

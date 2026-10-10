@@ -6,7 +6,8 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:red_mushroom",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -14,14 +15,14 @@
                 "max": 4.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:red_mushroom"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:brown_mushroom",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -29,14 +30,14 @@
                 "max": 4.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:brown_mushroom"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:wheat_seeds",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -44,14 +45,14 @@
                 "max": 6.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:wheat_seeds"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:carrot",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -59,14 +60,14 @@
                 "max": 6.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:carrot"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:potato",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -74,14 +75,14 @@
                 "max": 6.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:potato"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:melon_seeds",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -89,14 +90,14 @@
                 "max": 6.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:melon_seeds"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:bone_meal",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -104,10 +105,9 @@
                 "max": 12.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:bone_meal"
+          ]
         }
       ],
       "rolls": 4.0
@@ -117,7 +117,8 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:uberous_soil",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -125,10 +126,9 @@
                 "max": 6.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "twilightforest:uberous_soil"
+          ]
         }
       ],
       "rolls": 2.0

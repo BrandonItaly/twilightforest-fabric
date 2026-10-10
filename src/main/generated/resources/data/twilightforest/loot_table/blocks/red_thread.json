@@ -6,101 +6,119 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:red_thread",
+          "modifier": [
             {
               "add": true,
-              "conditions": [
-                {
-                  "block": "twilightforest:red_thread",
-                  "condition": "minecraft:block_state_property",
-                  "properties": {
-                    "east": "true"
-                  }
-                }
-              ],
               "count": 1.0,
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count",
+              "condition": {
+                "type": "minecraft:all_of",
+                "terms": [
+                  {
+                    "type": "minecraft:match_block",
+                    "blocks": "twilightforest:red_thread",
+                    "state": {
+                      "east": "true"
+                    }
+                  }
+                ]
+              }
             },
             {
               "add": true,
-              "conditions": [
-                {
-                  "block": "twilightforest:red_thread",
-                  "condition": "minecraft:block_state_property",
-                  "properties": {
-                    "west": "true"
-                  }
-                }
-              ],
               "count": 1.0,
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count",
+              "condition": {
+                "type": "minecraft:all_of",
+                "terms": [
+                  {
+                    "type": "minecraft:match_block",
+                    "blocks": "twilightforest:red_thread",
+                    "state": {
+                      "west": "true"
+                    }
+                  }
+                ]
+              }
             },
             {
               "add": true,
-              "conditions": [
-                {
-                  "block": "twilightforest:red_thread",
-                  "condition": "minecraft:block_state_property",
-                  "properties": {
-                    "north": "true"
-                  }
-                }
-              ],
               "count": 1.0,
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count",
+              "condition": {
+                "type": "minecraft:all_of",
+                "terms": [
+                  {
+                    "type": "minecraft:match_block",
+                    "blocks": "twilightforest:red_thread",
+                    "state": {
+                      "north": "true"
+                    }
+                  }
+                ]
+              }
             },
             {
               "add": true,
-              "conditions": [
-                {
-                  "block": "twilightforest:red_thread",
-                  "condition": "minecraft:block_state_property",
-                  "properties": {
-                    "south": "true"
-                  }
-                }
-              ],
               "count": 1.0,
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count",
+              "condition": {
+                "type": "minecraft:all_of",
+                "terms": [
+                  {
+                    "type": "minecraft:match_block",
+                    "blocks": "twilightforest:red_thread",
+                    "state": {
+                      "south": "true"
+                    }
+                  }
+                ]
+              }
             },
             {
               "add": true,
-              "conditions": [
-                {
-                  "block": "twilightforest:red_thread",
-                  "condition": "minecraft:block_state_property",
-                  "properties": {
-                    "up": "true"
-                  }
-                }
-              ],
               "count": 1.0,
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count",
+              "condition": {
+                "type": "minecraft:all_of",
+                "terms": [
+                  {
+                    "type": "minecraft:match_block",
+                    "blocks": "twilightforest:red_thread",
+                    "state": {
+                      "up": "true"
+                    }
+                  }
+                ]
+              }
             },
             {
               "add": true,
-              "conditions": [
-                {
-                  "block": "twilightforest:red_thread",
-                  "condition": "minecraft:block_state_property",
-                  "properties": {
-                    "down": "true"
-                  }
-                }
-              ],
               "count": 1.0,
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count",
+              "condition": {
+                "type": "minecraft:all_of",
+                "terms": [
+                  {
+                    "type": "minecraft:match_block",
+                    "blocks": "twilightforest:red_thread",
+                    "state": {
+                      "down": "true"
+                    }
+                  }
+                ]
+              }
             },
             {
               "add": true,
               "count": -1.0,
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             },
             {
-              "function": "minecraft:explosion_decay"
+              "type": "minecraft:explosion_decay"
             }
-          ],
-          "name": "twilightforest:red_thread"
+          ]
         }
       ],
       "rolls": 1.0

@@ -6,7 +6,8 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:suspicious_stew",
+          "modifier": [
             {
               "effects": [
                 {
@@ -58,10 +59,9 @@
                   }
                 }
               ],
-              "function": "minecraft:set_stew_effect"
+              "type": "minecraft:set_stew_effect"
             }
-          ],
-          "name": "minecraft:suspicious_stew"
+          ]
         }
       ],
       "rolls": 1.0

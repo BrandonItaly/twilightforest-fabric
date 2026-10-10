@@ -13,7 +13,9 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "twilightforest:monster_jerky"
+        "recipes": [
+          "twilightforest:monster_jerky"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

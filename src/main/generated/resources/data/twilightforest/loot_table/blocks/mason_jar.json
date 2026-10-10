@@ -3,17 +3,12 @@
   "pools": [
     {
       "bonus_rolls": 0.0,
-      "conditions": [
-        {
-          "condition": "minecraft:survives_explosion"
-        }
-      ],
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:mason_jar",
+          "modifier": [
             {
-              "function": "minecraft:copy_components",
               "include": [
                 "minecraft:custom_name",
                 "minecraft:container",
@@ -21,13 +16,21 @@
                 "minecraft:container_loot",
                 "twilightforest:jar_lid"
               ],
-              "source": "block_entity"
+              "source": "block_entity",
+              "type": "minecraft:copy_components"
             }
-          ],
-          "name": "twilightforest:mason_jar"
+          ]
         }
       ],
-      "rolls": 1.0
+      "rolls": 1.0,
+      "condition": {
+        "type": "minecraft:all_of",
+        "terms": [
+          {
+            "type": "minecraft:survives_explosion"
+          }
+        ]
+      }
     }
   ]
 }

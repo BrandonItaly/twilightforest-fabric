@@ -14,12 +14,18 @@
         }
       ],
       "rolls": {
-        "type": "twilightforest:multiplayer_rolls",
-        "default_rolls": 1.0,
-        "per_player_rolls": {
-          "type": "minecraft:uniform",
-          "max": 1.0,
-          "min": -2.0
+        "type": "minecraft:from_float",
+        "input": {
+          "type": "minecraft:floor",
+          "input": {
+            "type": "twilightforest:multiplayer_rolls",
+            "default_rolls": 1.0,
+            "per_player_rolls": {
+              "type": "minecraft:uniform",
+              "max": 1.0,
+              "min": -2.0
+            }
+          }
         }
       }
     },
@@ -28,11 +34,12 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:packed_ice",
+          "modifier": [
             {
               "add": false,
               "count": 7.0,
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             },
             {
               "count": {
@@ -41,10 +48,9 @@
                 "min": 0.0
               },
               "enchantment": "minecraft:looting",
-              "function": "minecraft:enchanted_count_increase"
+              "type": "minecraft:enchanted_count_increase"
             }
-          ],
-          "name": "minecraft:packed_ice"
+          ]
         }
       ],
       "rolls": {
@@ -58,14 +64,14 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:snowball",
+          "modifier": [
             {
               "add": false,
               "count": 16.0,
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:snowball"
+          ]
         }
       ],
       "rolls": {

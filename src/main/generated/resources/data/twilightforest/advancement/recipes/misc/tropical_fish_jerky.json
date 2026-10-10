@@ -13,7 +13,9 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "twilightforest:tropical_fish_jerky"
+        "recipes": [
+          "twilightforest:tropical_fish_jerky"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

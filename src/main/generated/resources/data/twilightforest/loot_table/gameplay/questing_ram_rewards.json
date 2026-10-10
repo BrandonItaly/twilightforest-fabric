@@ -16,7 +16,8 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:bundle",
+          "modifier": [
             {
               "component": "minecraft:bundle_contents",
               "entries": [
@@ -29,10 +30,9 @@
                   "value": "twilightforest:gameplay/questing_ram_reward_blocks"
                 }
               ],
-              "function": "minecraft:set_contents"
+              "type": "minecraft:set_contents"
             }
-          ],
-          "name": "minecraft:bundle"
+          ]
         }
       ],
       "rolls": 1.0

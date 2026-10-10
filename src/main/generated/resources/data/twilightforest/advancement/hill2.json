@@ -3,18 +3,21 @@
   "criteria": {
     "redcap": {
       "conditions": {
-        "entity": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "type": "twilightforest:redcap_sapper",
-              "location": {
-                "structures": "twilightforest:medium_hollow_hill"
-              }
+        "entity": {
+          "type": "minecraft:all_of",
+          "terms": [
+            {
+              "entity": "this",
+              "predicate": {
+                "location": {
+                  "structures": "twilightforest:medium_hollow_hill"
+                },
+                "entity_type": "twilightforest:redcap_sapper"
+              },
+              "type": "minecraft:entity_properties"
             }
-          }
-        ]
+          ]
+        }
       },
       "trigger": "minecraft:player_killed_entity"
     }

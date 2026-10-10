@@ -6,7 +6,8 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:porkchop",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -14,43 +15,46 @@
                 "max": 3.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             },
             {
-              "conditions": [
-                {
-                  "condition": "minecraft:any_of",
-                  "terms": [
-                    {
-                      "condition": "minecraft:entity_properties",
-                      "entity": "this",
-                      "predicate": {
-                        "flags": {
-                          "is_on_fire": true
-                        }
-                      }
-                    },
-                    {
-                      "condition": "minecraft:entity_properties",
-                      "entity": "direct_attacker",
-                      "predicate": {
-                        "equipment": {
-                          "mainhand": {
-                            "predicates": {
-                              "minecraft:enchantments": [
-                                {
-                                  "enchantments": "#minecraft:smelts_loot"
-                                }
-                              ]
+              "type": "minecraft:furnace_smelt",
+              "condition": {
+                "type": "minecraft:all_of",
+                "terms": [
+                  {
+                    "terms": [
+                      {
+                        "entity": "this",
+                        "predicate": {
+                          "flags": {
+                            "is_on_fire": true
+                          }
+                        },
+                        "type": "minecraft:entity_properties"
+                      },
+                      {
+                        "entity": "direct_attacker",
+                        "predicate": {
+                          "equipment": {
+                            "mainhand": {
+                              "predicates": {
+                                "minecraft:enchantments": [
+                                  {
+                                    "enchantments": "#minecraft:smelts_loot"
+                                  }
+                                ]
+                              }
                             }
                           }
-                        }
+                        },
+                        "type": "minecraft:entity_properties"
                       }
-                    }
-                  ]
-                }
-              ],
-              "function": "minecraft:furnace_smelt"
+                    ],
+                    "type": "minecraft:any_of"
+                  }
+                ]
+              }
             },
             {
               "count": {
@@ -59,27 +63,29 @@
                 "min": 0.0
               },
               "enchantment": "minecraft:looting",
-              "function": "minecraft:enchanted_count_increase"
+              "type": "minecraft:enchanted_count_increase"
             },
             {
-              "conditions": [
-                {
-                  "chance": 0.002,
-                  "condition": "minecraft:random_chance"
-                },
-                {
-                  "condition": "minecraft:killed_by_player"
-                }
-              ],
-              "function": "minecraft:set_name",
               "name": {
                 "italic": false,
                 "translate": "item.twilightforest.boarkchop"
               },
-              "target": "item_name"
+              "target": "item_name",
+              "type": "minecraft:set_name",
+              "condition": {
+                "type": "minecraft:all_of",
+                "terms": [
+                  {
+                    "chance": 0.002,
+                    "type": "minecraft:random_chance"
+                  },
+                  {
+                    "type": "minecraft:killed_by_player"
+                  }
+                ]
+              }
             }
-          ],
-          "name": "minecraft:porkchop"
+          ]
         }
       ],
       "rolls": 1.0

@@ -13,7 +13,9 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "twilightforest:chicken_jerky"
+        "recipes": [
+          "twilightforest:chicken_jerky"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

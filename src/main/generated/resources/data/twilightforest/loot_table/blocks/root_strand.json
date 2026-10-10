@@ -9,19 +9,23 @@
           "children": [
             {
               "type": "minecraft:item",
-              "conditions": [
-                {
-                  "condition": "minecraft:match_tool",
-                  "predicate": {
-                    "items": "minecraft:shears"
+              "name": "twilightforest:root_strand",
+              "condition": {
+                "type": "minecraft:all_of",
+                "terms": [
+                  {
+                    "predicate": {
+                      "items": "minecraft:shears"
+                    },
+                    "type": "minecraft:match_tool"
                   }
-                }
-              ],
-              "name": "twilightforest:root_strand"
+                ]
+              }
             },
             {
               "type": "minecraft:item",
-              "functions": [
+              "name": "minecraft:stick",
+              "modifier": [
                 {
                   "add": false,
                   "count": {
@@ -29,13 +33,12 @@
                     "max": 3.0,
                     "min": 1.0
                   },
-                  "function": "minecraft:set_count"
+                  "type": "minecraft:set_count"
                 },
                 {
-                  "function": "minecraft:explosion_decay"
+                  "type": "minecraft:explosion_decay"
                 }
-              ],
-              "name": "minecraft:stick"
+              ]
             }
           ]
         }

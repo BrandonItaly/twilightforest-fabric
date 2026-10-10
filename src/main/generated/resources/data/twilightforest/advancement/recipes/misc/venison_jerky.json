@@ -13,7 +13,9 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "twilightforest:venison_jerky"
+        "recipes": [
+          "twilightforest:venison_jerky"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

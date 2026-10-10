@@ -3,7 +3,9 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "twilightforest:tanned_leather"
+        "recipes": [
+          "twilightforest:tanned_leather"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     },

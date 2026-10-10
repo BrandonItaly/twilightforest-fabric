@@ -1,0 +1,9 @@
+{
+  "type": "twilightforest:underground_plants",
+  "state": {
+    "id": "twilightforest:torchberry_plant",
+    "properties": {
+      "has_torchberries": "true"
+    }
+  }
+}

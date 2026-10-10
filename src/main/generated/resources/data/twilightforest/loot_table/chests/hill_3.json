@@ -11,7 +11,9 @@
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:gold_nugget",
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -19,31 +21,15 @@
                 "max": 9.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:gold_nugget",
-          "weight": 75
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "add": false,
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 4.0,
-                "min": 1.0
-              },
-              "function": "minecraft:set_count"
-            }
-          ],
           "name": "minecraft:potato",
-          "weight": 75
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -51,15 +37,31 @@
                 "max": 4.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:cod",
-          "weight": 75
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:cod",
+          "weight": 75,
+          "modifier": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 4.0,
+                "min": 1.0
+              },
+              "type": "minecraft:set_count"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "twilightforest:torchberries",
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -67,11 +69,9 @@
                 "max": 5.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "twilightforest:torchberries",
-          "weight": 75
+          ]
         }
       ],
       "rolls": 4.0
@@ -81,7 +81,8 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:torch",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -89,14 +90,14 @@
                 "max": 12.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:torch"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:arrow",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -104,14 +105,14 @@
                 "max": 12.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:arrow"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:gunpowder",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -119,14 +120,14 @@
                 "max": 4.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:gunpowder"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:steeleaf_ingot",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -134,10 +135,9 @@
                 "max": 4.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "twilightforest:steeleaf_ingot"
+          ]
         },
         {
           "type": "minecraft:item",
@@ -155,7 +155,9 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:transformation_powder",
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -163,26 +165,24 @@
                 "max": 12.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "twilightforest:transformation_powder",
-          "weight": 75
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:ironwood_pickaxe",
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "enchantments": {
                 "minecraft:efficiency": 1.0,
                 "minecraft:fortune": 1.0
               },
-              "function": "minecraft:set_enchantments"
+              "type": "minecraft:set_enchantments"
             }
-          ],
-          "name": "twilightforest:ironwood_pickaxe",
-          "weight": 75
+          ]
         },
         {
           "type": "minecraft:item",
@@ -191,7 +191,9 @@
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:diamond",
+          "weight": 25,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -199,11 +201,9 @@
                 "max": 2.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:diamond",
-          "weight": 25
+          ]
         },
         {
           "type": "minecraft:item",

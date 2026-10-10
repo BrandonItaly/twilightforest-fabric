@@ -1,0 +1,10 @@
+{
+  "type": "twilightforest:oreberry_bushes",
+  "state": {
+    "id": "twilightforest:gold_oreberry_bush",
+    "properties": {
+      "age": "3",
+      "layers": "0"
+    }
+  }
+}

@@ -3,18 +3,21 @@
   "criteria": {
     "wraith": {
       "conditions": {
-        "entity": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "type": "twilightforest:wraith",
-              "location": {
-                "structures": "twilightforest:large_hollow_hill"
-              }
+        "entity": {
+          "type": "minecraft:all_of",
+          "terms": [
+            {
+              "entity": "this",
+              "predicate": {
+                "location": {
+                  "structures": "twilightforest:large_hollow_hill"
+                },
+                "entity_type": "twilightforest:wraith"
+              },
+              "type": "minecraft:entity_properties"
             }
-          }
-        ]
+          ]
+        }
       },
       "trigger": "minecraft:player_killed_entity"
     }

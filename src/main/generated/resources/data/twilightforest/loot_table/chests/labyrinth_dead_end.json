@@ -11,23 +11,9 @@
         },
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "add": false,
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 6.0,
-                "min": 1.0
-              },
-              "function": "minecraft:set_count"
-            }
-          ],
           "name": "minecraft:stick",
-          "weight": 75
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -35,15 +21,15 @@
                 "max": 6.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
+          ]
+        },
+        {
+          "type": "minecraft:item",
           "name": "minecraft:coal",
-          "weight": 75
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -51,11 +37,25 @@
                 "max": 6.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
+          ]
+        },
+        {
+          "type": "minecraft:item",
           "name": "minecraft:arrow",
-          "weight": 75
+          "weight": 75,
+          "modifier": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 6.0,
+                "min": 1.0
+              },
+              "type": "minecraft:set_count"
+            }
+          ]
         },
         {
           "type": "minecraft:item",
@@ -64,7 +64,9 @@
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:maze_wafer",
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -72,15 +74,15 @@
                 "max": 5.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "twilightforest:maze_wafer",
-          "weight": 75
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:paper",
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -88,15 +90,15 @@
                 "max": 6.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:paper",
-          "weight": 75
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:leather",
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -104,11 +106,9 @@
                 "max": 2.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:leather",
-          "weight": 75
+          ]
         }
       ],
       "rolls": 4.0
@@ -122,7 +122,8 @@
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:paper",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -130,14 +131,14 @@
                 "max": 5.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:paper"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:iron_ingot",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -145,14 +146,14 @@
                 "max": 3.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:iron_ingot"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:ironwood_ingot",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -160,14 +161,14 @@
                 "max": 4.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "twilightforest:ironwood_ingot"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:firefly",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -175,10 +176,9 @@
                 "max": 2.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "twilightforest:firefly"
+          ]
         },
         {
           "type": "minecraft:item",
@@ -196,7 +196,8 @@
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:red_thread",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -204,10 +205,9 @@
                 "max": 18.0,
                 "min": 5.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "twilightforest:red_thread"
+          ]
         },
         {
           "type": "minecraft:item",
@@ -215,17 +215,18 @@
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:book",
+          "modifier": [
             {
-              "function": "minecraft:enchant_randomly",
-              "options": "twilightforest:fire_react"
+              "options": "twilightforest:fire_react",
+              "type": "minecraft:enchant_randomly"
             }
-          ],
-          "name": "minecraft:book"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:steeleaf_ingot",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -233,10 +234,9 @@
                 "max": 4.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "twilightforest:steeleaf_ingot"
+          ]
         }
       ],
       "rolls": 1.0

@@ -6,48 +6,54 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:knightmetal_sword",
+          "modifier": [
             {
-              "function": "minecraft:enchant_with_levels",
               "levels": 20.0,
-              "options": "#minecraft:on_random_loot"
+              "options": "#minecraft:on_random_loot",
+              "type": "minecraft:enchant_with_levels"
             }
-          ],
-          "name": "twilightforest:knightmetal_sword"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:knightmetal_pickaxe",
+          "modifier": [
             {
-              "function": "minecraft:enchant_with_levels",
               "levels": 20.0,
-              "options": "#minecraft:on_random_loot"
+              "options": "#minecraft:on_random_loot",
+              "type": "minecraft:enchant_with_levels"
             }
-          ],
-          "name": "twilightforest:knightmetal_pickaxe"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:knightmetal_axe",
+          "modifier": [
             {
-              "function": "minecraft:enchant_with_levels",
               "levels": 20.0,
-              "options": "#minecraft:on_random_loot"
+              "options": "#minecraft:on_random_loot",
+              "type": "minecraft:enchant_with_levels"
             }
-          ],
-          "name": "twilightforest:knightmetal_axe"
+          ]
         }
       ],
       "rolls": {
         "type": "minecraft:binomial",
         "n": {
-          "type": "twilightforest:looting_rolls",
-          "base_value": {
-            "type": "twilightforest:multiplayer_rolls",
-            "default_rolls": 4.0,
-            "per_player_rolls": 1.5
-          },
-          "enchantment": "minecraft:looting"
+          "type": "minecraft:from_float",
+          "input": {
+            "type": "minecraft:floor",
+            "input": {
+              "type": "twilightforest:looting_rolls",
+              "base_value": {
+                "type": "twilightforest:multiplayer_rolls",
+                "default_rolls": 4.0,
+                "per_player_rolls": 1.5
+              },
+              "enchantment": "minecraft:looting"
+            }
+          }
         },
         "p": 0.17
       }
@@ -57,37 +63,43 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:phantom_helmet",
+          "modifier": [
             {
-              "function": "minecraft:enchant_with_levels",
               "levels": 20.0,
-              "options": "#minecraft:on_random_loot"
+              "options": "#minecraft:on_random_loot",
+              "type": "minecraft:enchant_with_levels"
             }
-          ],
-          "name": "twilightforest:phantom_helmet"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:phantom_chestplate",
+          "modifier": [
             {
-              "function": "minecraft:enchant_with_levels",
               "levels": 20.0,
-              "options": "#minecraft:on_random_loot"
+              "options": "#minecraft:on_random_loot",
+              "type": "minecraft:enchant_with_levels"
             }
-          ],
-          "name": "twilightforest:phantom_chestplate"
+          ]
         }
       ],
       "rolls": {
         "type": "minecraft:binomial",
         "n": {
-          "type": "twilightforest:looting_rolls",
-          "base_value": {
-            "type": "twilightforest:multiplayer_rolls",
-            "default_rolls": 2.0,
-            "per_player_rolls": 1.0
-          },
-          "enchantment": "minecraft:looting"
+          "type": "minecraft:from_float",
+          "input": {
+            "type": "minecraft:floor",
+            "input": {
+              "type": "twilightforest:looting_rolls",
+              "base_value": {
+                "type": "twilightforest:multiplayer_rolls",
+                "default_rolls": 2.0,
+                "per_player_rolls": 1.0
+              },
+              "enchantment": "minecraft:looting"
+            }
+          }
         },
         "p": 0.17
       }
@@ -97,37 +109,43 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:phantom_helmet",
+          "modifier": [
             {
-              "function": "minecraft:enchant_with_levels",
               "levels": 30.0,
-              "options": "#minecraft:on_random_loot"
+              "options": "#minecraft:on_random_loot",
+              "type": "minecraft:enchant_with_levels"
             }
-          ],
-          "name": "twilightforest:phantom_helmet"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:phantom_chestplate",
+          "modifier": [
             {
-              "function": "minecraft:enchant_with_levels",
               "levels": 30.0,
-              "options": "#minecraft:on_random_loot"
+              "options": "#minecraft:on_random_loot",
+              "type": "minecraft:enchant_with_levels"
             }
-          ],
-          "name": "twilightforest:phantom_chestplate"
+          ]
         }
       ],
       "rolls": {
         "type": "minecraft:binomial",
         "n": {
-          "type": "twilightforest:looting_rolls",
-          "base_value": {
-            "type": "twilightforest:multiplayer_rolls",
-            "default_rolls": 1.0,
-            "per_player_rolls": 0.5
-          },
-          "enchantment": "minecraft:looting"
+          "type": "minecraft:from_float",
+          "input": {
+            "type": "minecraft:floor",
+            "input": {
+              "type": "twilightforest:looting_rolls",
+              "base_value": {
+                "type": "twilightforest:multiplayer_rolls",
+                "default_rolls": 1.0,
+                "per_player_rolls": 0.5
+              },
+              "enchantment": "minecraft:looting"
+            }
+          }
         },
         "p": 0.17
       }

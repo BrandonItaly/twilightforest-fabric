@@ -13,7 +13,9 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "twilightforest:cod_jerky"
+        "recipes": [
+          "twilightforest:cod_jerky"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -22,12 +22,18 @@
         }
       ],
       "rolls": {
-        "type": "twilightforest:multiplayer_rolls",
-        "default_rolls": 1.0,
-        "per_player_rolls": {
-          "type": "minecraft:uniform",
-          "max": 1.0,
-          "min": -2.0
+        "type": "minecraft:from_float",
+        "input": {
+          "type": "minecraft:floor",
+          "input": {
+            "type": "twilightforest:multiplayer_rolls",
+            "default_rolls": 1.0,
+            "per_player_rolls": {
+              "type": "minecraft:uniform",
+              "max": 1.0,
+              "min": -2.0
+            }
+          }
         }
       }
     },
@@ -36,91 +42,97 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:golden_sword",
+          "modifier": [
             {
-              "function": "minecraft:enchant_with_levels",
               "levels": {
                 "type": "minecraft:uniform",
                 "max": 40.0,
                 "min": 10.0
               },
-              "options": "#minecraft:on_random_loot"
+              "options": "#minecraft:on_random_loot",
+              "type": "minecraft:enchant_with_levels"
             }
-          ],
-          "name": "minecraft:golden_sword"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:golden_helmet",
+          "modifier": [
             {
-              "function": "minecraft:enchant_with_levels",
               "levels": {
                 "type": "minecraft:uniform",
                 "max": 40.0,
                 "min": 10.0
               },
-              "options": "#minecraft:on_random_loot"
+              "options": "#minecraft:on_random_loot",
+              "type": "minecraft:enchant_with_levels"
             }
-          ],
-          "name": "minecraft:golden_helmet"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:golden_chestplate",
+          "modifier": [
             {
-              "function": "minecraft:enchant_with_levels",
               "levels": {
                 "type": "minecraft:uniform",
                 "max": 40.0,
                 "min": 10.0
               },
-              "options": "#minecraft:on_random_loot"
+              "options": "#minecraft:on_random_loot",
+              "type": "minecraft:enchant_with_levels"
             }
-          ],
-          "name": "minecraft:golden_chestplate"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:golden_leggings",
+          "modifier": [
             {
-              "function": "minecraft:enchant_with_levels",
               "levels": {
                 "type": "minecraft:uniform",
                 "max": 40.0,
                 "min": 10.0
               },
-              "options": "#minecraft:on_random_loot"
+              "options": "#minecraft:on_random_loot",
+              "type": "minecraft:enchant_with_levels"
             }
-          ],
-          "name": "minecraft:golden_leggings"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:golden_boots",
+          "modifier": [
             {
-              "function": "minecraft:enchant_with_levels",
               "levels": {
                 "type": "minecraft:uniform",
                 "max": 40.0,
                 "min": 10.0
               },
-              "options": "#minecraft:on_random_loot"
+              "options": "#minecraft:on_random_loot",
+              "type": "minecraft:enchant_with_levels"
             }
-          ],
-          "name": "minecraft:golden_boots"
+          ]
         }
       ],
       "rolls": {
-        "type": "twilightforest:multiplayer_rolls",
-        "default_rolls": {
-          "type": "minecraft:uniform",
-          "max": 4.0,
-          "min": 2.0
-        },
-        "per_player_rolls": {
-          "type": "minecraft:uniform",
-          "max": 1.0,
-          "min": 0.0
+        "type": "minecraft:from_float",
+        "input": {
+          "type": "minecraft:floor",
+          "input": {
+            "type": "twilightforest:multiplayer_rolls",
+            "default_rolls": {
+              "type": "minecraft:uniform",
+              "max": 4.0,
+              "min": 2.0
+            },
+            "per_player_rolls": {
+              "type": "minecraft:uniform",
+              "max": 1.0,
+              "min": 0.0
+            }
+          }
         }
       }
     },
@@ -129,7 +141,8 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:ender_pearl",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -137,7 +150,7 @@
                 "max": 4.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             },
             {
               "count": {
@@ -146,7 +159,7 @@
                 "min": 0.0
               },
               "enchantment": "minecraft:looting",
-              "function": "minecraft:enchanted_count_increase"
+              "type": "minecraft:enchanted_count_increase"
             },
             {
               "extra_count_per_player": {
@@ -154,10 +167,9 @@
                 "max": 2.0,
                 "min": 0.0
               },
-              "function": "twilightforest:multiplayer_addition"
+              "type": "twilightforest:multiplayer_addition"
             }
-          ],
-          "name": "minecraft:ender_pearl"
+          ]
         }
       ],
       "rolls": 1.0
@@ -167,7 +179,8 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:bone",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -175,7 +188,7 @@
                 "max": 9.0,
                 "min": 5.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             },
             {
               "count": {
@@ -184,10 +197,9 @@
                 "min": 0.0
               },
               "enchantment": "minecraft:looting",
-              "function": "minecraft:enchanted_count_increase"
+              "type": "minecraft:enchanted_count_increase"
             }
-          ],
-          "name": "minecraft:bone"
+          ]
         }
       ],
       "rolls": 1.0
@@ -207,7 +219,8 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:exanimate_essence",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -215,7 +228,7 @@
                 "max": 3.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             },
             {
               "count": {
@@ -224,7 +237,7 @@
                 "min": 0.0
               },
               "enchantment": "minecraft:looting",
-              "function": "minecraft:enchanted_count_increase"
+              "type": "minecraft:enchanted_count_increase"
             },
             {
               "extra_count_per_player": {
@@ -232,10 +245,9 @@
                 "max": 1.0,
                 "min": 0.0
               },
-              "function": "twilightforest:multiplayer_addition"
+              "type": "twilightforest:multiplayer_addition"
             }
-          ],
-          "name": "twilightforest:exanimate_essence"
+          ]
         }
       ],
       "rolls": 1.0

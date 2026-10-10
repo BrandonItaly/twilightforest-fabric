@@ -9,28 +9,32 @@
           "children": [
             {
               "type": "minecraft:item",
-              "conditions": [
-                {
-                  "condition": "minecraft:match_tool",
-                  "predicate": {
-                    "predicates": {
-                      "minecraft:enchantments": [
-                        {
-                          "enchantments": "minecraft:silk_touch",
-                          "levels": {
-                            "min": 1
+              "name": "twilightforest:root",
+              "condition": {
+                "type": "minecraft:all_of",
+                "terms": [
+                  {
+                    "predicate": {
+                      "predicates": {
+                        "minecraft:enchantments": [
+                          {
+                            "enchantments": "minecraft:silk_touch",
+                            "levels": {
+                              "min": 1
+                            }
                           }
-                        }
-                      ]
-                    }
+                        ]
+                      }
+                    },
+                    "type": "minecraft:match_tool"
                   }
-                }
-              ],
-              "name": "twilightforest:root"
+                ]
+              }
             },
             {
               "type": "minecraft:item",
-              "functions": [
+              "name": "minecraft:stick",
+              "modifier": [
                 {
                   "add": false,
                   "count": {
@@ -38,13 +42,12 @@
                     "max": 5.0,
                     "min": 3.0
                   },
-                  "function": "minecraft:set_count"
+                  "type": "minecraft:set_count"
                 },
                 {
-                  "function": "minecraft:explosion_decay"
+                  "type": "minecraft:explosion_decay"
                 }
-              ],
-              "name": "minecraft:stick"
+              ]
             }
           ]
         }

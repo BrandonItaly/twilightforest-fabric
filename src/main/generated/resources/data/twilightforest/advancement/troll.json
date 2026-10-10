@@ -3,18 +3,21 @@
   "criteria": {
     "troll": {
       "conditions": {
-        "entity": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "type": "twilightforest:troll",
-              "location": {
-                "structures": "twilightforest:troll_cave"
-              }
+        "entity": {
+          "type": "minecraft:all_of",
+          "terms": [
+            {
+              "entity": "this",
+              "predicate": {
+                "location": {
+                  "structures": "twilightforest:troll_cave"
+                },
+                "entity_type": "twilightforest:troll"
+              },
+              "type": "minecraft:entity_properties"
             }
-          }
-        ]
+          ]
+        }
       },
       "trigger": "minecraft:player_killed_entity"
     }

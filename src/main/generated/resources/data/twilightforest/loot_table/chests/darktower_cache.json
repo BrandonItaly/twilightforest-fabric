@@ -11,23 +11,9 @@
         },
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "add": false,
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 12.0,
-                "min": 1.0
-              },
-              "function": "minecraft:set_count"
-            }
-          ],
           "name": "minecraft:stick",
-          "weight": 75
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -35,15 +21,15 @@
                 "max": 12.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
+          ]
+        },
+        {
+          "type": "minecraft:item",
           "name": "minecraft:charcoal",
-          "weight": 75
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -51,15 +37,31 @@
                 "max": 12.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:arrow",
-          "weight": 75
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:arrow",
+          "weight": 75,
+          "modifier": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 12.0,
+                "min": 1.0
+              },
+              "type": "minecraft:set_count"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "twilightforest:experiment_115",
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -67,11 +69,9 @@
                 "max": 9.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "twilightforest:experiment_115",
-          "weight": 75
+          ]
         },
         {
           "type": "minecraft:item",
@@ -80,7 +80,9 @@
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:redstone",
+          "weight": 75,
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -88,11 +90,9 @@
                 "max": 6.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:redstone",
-          "weight": 75
+          ]
         }
       ],
       "rolls": 4.0
@@ -102,7 +102,8 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:redstone_lamp",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -110,14 +111,14 @@
                 "max": 4.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:redstone_lamp"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:iron_ingot",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -125,14 +126,14 @@
                 "max": 6.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:iron_ingot"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:ironwood_ingot",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -140,14 +141,14 @@
                 "max": 8.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "twilightforest:ironwood_ingot"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:firefly",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -155,10 +156,9 @@
                 "max": 5.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "twilightforest:firefly"
+          ]
         },
         {
           "type": "minecraft:item",
@@ -172,7 +172,8 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "twilightforest:steeleaf_ingot",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -180,14 +181,14 @@
                 "max": 8.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "twilightforest:steeleaf_ingot"
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:diamond",
+          "modifier": [
             {
               "add": false,
               "count": {
@@ -195,10 +196,9 @@
                 "max": 2.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:diamond"
+          ]
         }
       ],
       "rolls": 1.0
