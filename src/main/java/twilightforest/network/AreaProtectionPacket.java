@@ -10,6 +10,7 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import twilightforest.TFCommon;
+import twilightforest.client.ClientEntitySpawner;
 import twilightforest.entity.ProtectionBox;
 import twilightforest.init.TFParticleType;
 
@@ -62,6 +63,7 @@ public class AreaProtectionPacket implements CustomPacketPayload {
 			@Override
 			public void run() {
 				ClientLevel level = ctx.client().level;
+				if (level == null) return;
 				message.sbb.forEach(box -> {
 					for (Entity entity : level.entitiesForRendering()) {
 						if (entity instanceof ProtectionBox prot) {
@@ -72,7 +74,7 @@ public class AreaProtectionPacket implements CustomPacketPayload {
 						}
 					}
 
-					level.addEntity(new ProtectionBox(level, box));
+					ClientEntitySpawner.addEntity(level, new ProtectionBox(level, box));
 				});
 
 				for (int i = 0; i < 20; i++) {

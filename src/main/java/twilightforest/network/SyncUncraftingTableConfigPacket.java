@@ -22,8 +22,8 @@ public record SyncUncraftingTableConfigPacket(
 	public SyncUncraftingTableConfigPacket(FriendlyByteBuf buf) {
 		this(buf.readDouble(), buf.readDouble(),
 			buf.readBoolean(), buf.readBoolean(), buf.readBoolean(), buf.readBoolean(),
-			buf.readList(FriendlyByteBuf::readUtf), buf.readBoolean(),
-			buf.readList(FriendlyByteBuf::readUtf), buf.readBoolean());
+			net.minecraft.network.codec.ByteBufCodecs.STRING_UTF8.apply(net.minecraft.network.codec.ByteBufCodecs.list()).decode(buf), buf.readBoolean(),
+			net.minecraft.network.codec.ByteBufCodecs.STRING_UTF8.apply(net.minecraft.network.codec.ByteBufCodecs.list()).decode(buf), buf.readBoolean());
 	}
 
 	public void write(FriendlyByteBuf buf) {
@@ -33,9 +33,9 @@ public record SyncUncraftingTableConfigPacket(
 		buf.writeBoolean(this.disableIngredientSwitching());
 		buf.writeBoolean(this.disabledUncrafting());
 		buf.writeBoolean(this.disabledTable());
-		buf.writeCollection(this.disabledRecipes(), FriendlyByteBuf::writeUtf);
+		net.minecraft.network.codec.ByteBufCodecs.STRING_UTF8.apply(net.minecraft.network.codec.ByteBufCodecs.list()).encode(buf, List.copyOf(this.disabledRecipes()));
 		buf.writeBoolean(this.flipRecipeList());
-		buf.writeCollection(this.disabledModids(), FriendlyByteBuf::writeUtf);
+		net.minecraft.network.codec.ByteBufCodecs.STRING_UTF8.apply(net.minecraft.network.codec.ByteBufCodecs.list()).encode(buf, List.copyOf(this.disabledModids()));
 		buf.writeBoolean(this.flipModidList());
 	}
 

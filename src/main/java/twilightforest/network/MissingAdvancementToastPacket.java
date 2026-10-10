@@ -28,7 +28,7 @@ public record MissingAdvancementToastPacket(Component title, ItemStackTemplate i
 		Runnable task = new Runnable() {
 			@Override
 			public void run() {
-				ctx.client().getToastManager().addToast(new MissingAdvancementToast(packet.title(), packet.icon()));
+				ctx.client().gui.toastManager().addToast(new MissingAdvancementToast(packet.title(), packet.icon()));
 			}
 		};
 
