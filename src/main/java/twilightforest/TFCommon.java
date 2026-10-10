@@ -4,13 +4,11 @@ import com.google.common.reflect.Reflection;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.registry.DynamicRegistries;
+import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
-import net.fabricmc.fabric.api.registry.CompostableRegistry;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
-import net.fabricmc.fabric.api.registry.FuelValueEvents;
-import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
 import net.fabricmc.fabric.api.resource.v1.ResourceLoader;
 import net.fabricmc.fabric.api.transfer.v1.item.ContainerStorage;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage;
@@ -18,10 +16,13 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.Position;
 import net.minecraft.core.Registry;
 import net.minecraft.core.cauldron.CauldronInteractions;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.dispenser.DispenseItemBehavior;
 import net.minecraft.core.dispenser.EquipmentDispenseItemBehavior;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -36,15 +37,26 @@ import net.minecraft.world.entity.monster.skeleton.AbstractSkeleton;
 import net.minecraft.world.entity.monster.spider.Spider;
 import net.minecraft.world.entity.monster.zombie.Zombie;
 import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.Compostable;
+import net.minecraft.world.item.component.CookingFuel;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.entity.BlockEntityTypes;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.storage.loot.providers.number.floats.ResolvableFloat;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProvider;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ResolvableInt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import twilightforest.block.BanisterBlock;
 import twilightforest.block.ChiseledCanopyShelfBlock;
 import twilightforest.block.entity.JarBlockEntity;
 import twilightforest.command.TFCommand;
@@ -90,7 +102,6 @@ public final class TFCommon implements ModInitializer {
 		Reflection.initialize(ConfigSetup.class);
 
 		TFRegistries.init();
-		TFKeyBinds.init();
 		TFItems.init();
 		TFStats.init();
 		TFLoot.init();
@@ -138,7 +149,6 @@ public final class TFCommon implements ModInitializer {
 		registerConfig();
 		registerGiantToolDropConversions();
 		registerJarLids();
-		registerStrippableBlocks();
 		registerFlammableBlocks();
 		registerCompostables();
 		registerFuels();
@@ -282,25 +292,6 @@ public final class TFCommon implements ModInitializer {
 		JarBlockEntity.addLid(Items.BAMBOO_BLOCK);
 		JarBlockEntity.addLid(Items.STRIPPED_BAMBOO_BLOCK);
 		JarBlockEntity.addLid(Items.PUMPKIN, HolidayEvent.INSTANCE::isHalloweenWeek);
-	}
-
-	private static void registerStrippableBlocks() {
-		StrippableBlockRegistry.register(TFBlocks.TWILIGHT_OAK_LOG, TFBlocks.STRIPPED_TWILIGHT_OAK_LOG);
-		StrippableBlockRegistry.register(TFBlocks.CANOPY_LOG, TFBlocks.STRIPPED_CANOPY_LOG);
-		StrippableBlockRegistry.register(TFBlocks.MANGROVE_LOG, TFBlocks.STRIPPED_MANGROVE_LOG);
-		StrippableBlockRegistry.register(TFBlocks.DARK_LOG, TFBlocks.STRIPPED_DARK_LOG);
-		StrippableBlockRegistry.register(TFBlocks.TIME_LOG, TFBlocks.STRIPPED_TIME_LOG);
-		StrippableBlockRegistry.register(TFBlocks.TRANSFORMATION_LOG, TFBlocks.STRIPPED_TRANSFORMATION_LOG);
-		StrippableBlockRegistry.register(TFBlocks.MINING_LOG, TFBlocks.STRIPPED_MINING_LOG);
-		StrippableBlockRegistry.register(TFBlocks.SORTING_LOG, TFBlocks.STRIPPED_SORTING_LOG);
-		StrippableBlockRegistry.register(TFBlocks.TWILIGHT_OAK_WOOD, TFBlocks.STRIPPED_TWILIGHT_OAK_WOOD);
-		StrippableBlockRegistry.register(TFBlocks.CANOPY_WOOD, TFBlocks.STRIPPED_CANOPY_WOOD);
-		StrippableBlockRegistry.register(TFBlocks.MANGROVE_WOOD, TFBlocks.STRIPPED_MANGROVE_WOOD);
-		StrippableBlockRegistry.register(TFBlocks.DARK_WOOD, TFBlocks.STRIPPED_DARK_WOOD);
-		StrippableBlockRegistry.register(TFBlocks.TIME_WOOD, TFBlocks.STRIPPED_TIME_WOOD);
-		StrippableBlockRegistry.register(TFBlocks.TRANSFORMATION_WOOD, TFBlocks.STRIPPED_TRANSFORMATION_WOOD);
-		StrippableBlockRegistry.register(TFBlocks.MINING_WOOD, TFBlocks.STRIPPED_MINING_WOOD);
-		StrippableBlockRegistry.register(TFBlocks.SORTING_WOOD, TFBlocks.STRIPPED_SORTING_WOOD);
 	}
 
 	private static void registerFlammableBlocks() {
@@ -489,57 +480,66 @@ public final class TFCommon implements ModInitializer {
 	}
 
 	private static void registerCompostables() {
-		CompostableRegistry.INSTANCE.add(TFBlocks.FALLEN_LEAVES.asItem(), 0.1F);
-		CompostableRegistry.INSTANCE.add(TFBlocks.CANOPY_LEAVES.asItem(), 0.3F);
-		CompostableRegistry.INSTANCE.add(TFBlocks.CLOVER_PATCH.asItem(), 0.3F);
-		CompostableRegistry.INSTANCE.add(TFBlocks.DARK_LEAVES.asItem(), 0.3F);
-		CompostableRegistry.INSTANCE.add(TFBlocks.FIDDLEHEAD.asItem(), 0.3F);
-		CompostableRegistry.INSTANCE.add(TFBlocks.HEDGE.asItem(), 0.3F);
-		CompostableRegistry.INSTANCE.add(TFBlocks.MANGROVE_LEAVES.asItem(), 0.3F);
-		CompostableRegistry.INSTANCE.add(TFBlocks.MAYAPPLE.asItem(), 0.3F);
-		CompostableRegistry.INSTANCE.add(TFBlocks.MINING_LEAVES.asItem(), 0.3F);
-		CompostableRegistry.INSTANCE.add(TFBlocks.TWILIGHT_OAK_LEAVES.asItem(), 0.3F);
-		CompostableRegistry.INSTANCE.add(TFBlocks.RAINBOW_OAK_LEAVES.asItem(), 0.3F);
-		CompostableRegistry.INSTANCE.add(TFBlocks.ROOT_STRAND.asItem(), 0.3F);
-		CompostableRegistry.INSTANCE.add(TFBlocks.SORTING_LEAVES.asItem(), 0.3F);
-		CompostableRegistry.INSTANCE.add(TFBlocks.THORN_LEAVES.asItem(), 0.3F);
-		CompostableRegistry.INSTANCE.add(TFBlocks.TIME_LEAVES.asItem(), 0.3F);
-		CompostableRegistry.INSTANCE.add(TFBlocks.TRANSFORMATION_LEAVES.asItem(), 0.3F);
-		CompostableRegistry.INSTANCE.add(TFBlocks.TWILIGHT_OAK_SAPLING.asItem(), 0.3F);
-		CompostableRegistry.INSTANCE.add(TFBlocks.CANOPY_SAPLING.asItem(), 0.3F);
-		CompostableRegistry.INSTANCE.add(TFBlocks.MANGROVE_SAPLING.asItem(), 0.3F);
-		CompostableRegistry.INSTANCE.add(TFBlocks.DARKWOOD_SAPLING.asItem(), 0.3F);
-		CompostableRegistry.INSTANCE.add(TFBlocks.RAINBOW_OAK_SAPLING.asItem(), 0.3F);
-		CompostableRegistry.INSTANCE.add(TFItems.TORCHBERRIES, 0.3F);
-		CompostableRegistry.INSTANCE.add(TFBlocks.BEANSTALK_LEAVES.asItem(), 0.5F);
-		CompostableRegistry.INSTANCE.add(TFBlocks.MOSS_PATCH.asItem(), 0.5F);
-		CompostableRegistry.INSTANCE.add(TFBlocks.ROOT_BLOCK.asItem(), 0.5F);
-		CompostableRegistry.INSTANCE.add(TFBlocks.THORN_ROSE.asItem(), 0.5F);
-		CompostableRegistry.INSTANCE.add(TFBlocks.TROLLVIDR.asItem(), 0.5F);
-		CompostableRegistry.INSTANCE.add(TFBlocks.HOLLOW_OAK_SAPLING.asItem(), 0.5F);
-		CompostableRegistry.INSTANCE.add(TFBlocks.TIME_SAPLING.asItem(), 0.5F);
-		CompostableRegistry.INSTANCE.add(TFBlocks.TRANSFORMATION_SAPLING.asItem(), 0.5F);
-		CompostableRegistry.INSTANCE.add(TFBlocks.MINING_SAPLING.asItem(), 0.5F);
-		CompostableRegistry.INSTANCE.add(TFBlocks.SORTING_SAPLING.asItem(), 0.5F);
-		CompostableRegistry.INSTANCE.add(TFBlocks.TORCHBERRY_PLANT.asItem(), 0.5F);
-		CompostableRegistry.INSTANCE.add(TFItems.LIVEROOT, 0.5F);
-		CompostableRegistry.INSTANCE.add(TFBlocks.HUGE_MUSHGLOOM_STEM.asItem(), 0.65F);
-		CompostableRegistry.INSTANCE.add(TFBlocks.HUGE_WATER_LILY.asItem(), 0.65F);
-		CompostableRegistry.INSTANCE.add(TFBlocks.LIVEROOT_BLOCK.asItem(), 0.65F);
-		CompostableRegistry.INSTANCE.add(TFBlocks.MUSHGLOOM.asItem(), 0.65F);
-		CompostableRegistry.INSTANCE.add(TFBlocks.UBEROUS_SOIL.asItem(), 0.65F);
-		CompostableRegistry.INSTANCE.add(TFBlocks.HUGE_STALK.asItem(), 0.65F);
-		CompostableRegistry.INSTANCE.add(TFBlocks.UNRIPE_TROLLBER.asItem(), 0.65F);
-		CompostableRegistry.INSTANCE.add(TFBlocks.TROLLBER.asItem(), 0.65F);
-		CompostableRegistry.INSTANCE.add(TFItems.MAZE_WAFER, 0.65F);
-		CompostableRegistry.INSTANCE.add(TFBlocks.HUGE_LILY_PAD.asItem(), 0.85F);
-		CompostableRegistry.INSTANCE.add(TFBlocks.HUGE_MUSHGLOOM.asItem(), 0.85F);
-		CompostableRegistry.INSTANCE.add(TFItems.EXPERIMENT_115, 0.85F);
-		CompostableRegistry.INSTANCE.add(TFItems.MAGIC_BEANS, 0.85F);
+		DefaultItemComponentEvents.MODIFY.register(context -> {
+			setCompostable(context, TFBlocks.FALLEN_LEAVES.asItem(), ResourceKey.create(Registries.CONTEXT_INT_PROVIDER, prefix("compostable/fallen_leaves")));
+			setCompostable(context, TFBlocks.CANOPY_LEAVES.asItem(), ContextIntProviders.COMPOSTABLE_LOW);
+			setCompostable(context, TFBlocks.CLOVER_PATCH.asItem(), ContextIntProviders.COMPOSTABLE_LOW);
+			setCompostable(context, TFBlocks.DARK_LEAVES.asItem(), ContextIntProviders.COMPOSTABLE_LOW);
+			setCompostable(context, TFBlocks.FIDDLEHEAD.asItem(), ContextIntProviders.COMPOSTABLE_LOW);
+			setCompostable(context, TFBlocks.HEDGE.asItem(), ContextIntProviders.COMPOSTABLE_LOW);
+			setCompostable(context, TFBlocks.MANGROVE_LEAVES.asItem(), ContextIntProviders.COMPOSTABLE_LOW);
+			setCompostable(context, TFBlocks.MAYAPPLE.asItem(), ContextIntProviders.COMPOSTABLE_LOW);
+			setCompostable(context, TFBlocks.MINING_LEAVES.asItem(), ContextIntProviders.COMPOSTABLE_LOW);
+			setCompostable(context, TFBlocks.TWILIGHT_OAK_LEAVES.asItem(), ContextIntProviders.COMPOSTABLE_LOW);
+			setCompostable(context, TFBlocks.RAINBOW_OAK_LEAVES.asItem(), ContextIntProviders.COMPOSTABLE_LOW);
+			setCompostable(context, TFBlocks.ROOT_STRAND.asItem(), ContextIntProviders.COMPOSTABLE_LOW);
+			setCompostable(context, TFBlocks.SORTING_LEAVES.asItem(), ContextIntProviders.COMPOSTABLE_LOW);
+			setCompostable(context, TFBlocks.THORN_LEAVES.asItem(), ContextIntProviders.COMPOSTABLE_LOW);
+			setCompostable(context, TFBlocks.TIME_LEAVES.asItem(), ContextIntProviders.COMPOSTABLE_LOW);
+			setCompostable(context, TFBlocks.TRANSFORMATION_LEAVES.asItem(), ContextIntProviders.COMPOSTABLE_LOW);
+			setCompostable(context, TFBlocks.TWILIGHT_OAK_SAPLING.asItem(), ContextIntProviders.COMPOSTABLE_LOW);
+			setCompostable(context, TFBlocks.CANOPY_SAPLING.asItem(), ContextIntProviders.COMPOSTABLE_LOW);
+			setCompostable(context, TFBlocks.MANGROVE_SAPLING.asItem(), ContextIntProviders.COMPOSTABLE_LOW);
+			setCompostable(context, TFBlocks.DARKWOOD_SAPLING.asItem(), ContextIntProviders.COMPOSTABLE_LOW);
+			setCompostable(context, TFBlocks.RAINBOW_OAK_SAPLING.asItem(), ContextIntProviders.COMPOSTABLE_LOW);
+			setCompostable(context, TFItems.TORCHBERRIES, ContextIntProviders.COMPOSTABLE_LOW);
+			setCompostable(context, TFBlocks.BEANSTALK_LEAVES.asItem(), ContextIntProviders.COMPOSTABLE_LOW_MEDIUM);
+			setCompostable(context, TFBlocks.MOSS_PATCH.asItem(), ContextIntProviders.COMPOSTABLE_LOW_MEDIUM);
+			setCompostable(context, TFBlocks.ROOT_BLOCK.asItem(), ContextIntProviders.COMPOSTABLE_LOW_MEDIUM);
+			setCompostable(context, TFBlocks.THORN_ROSE.asItem(), ContextIntProviders.COMPOSTABLE_LOW_MEDIUM);
+			setCompostable(context, TFBlocks.TROLLVIDR.asItem(), ContextIntProviders.COMPOSTABLE_LOW_MEDIUM);
+			setCompostable(context, TFBlocks.HOLLOW_OAK_SAPLING.asItem(), ContextIntProviders.COMPOSTABLE_LOW_MEDIUM);
+			setCompostable(context, TFBlocks.TIME_SAPLING.asItem(), ContextIntProviders.COMPOSTABLE_LOW_MEDIUM);
+			setCompostable(context, TFBlocks.TRANSFORMATION_SAPLING.asItem(), ContextIntProviders.COMPOSTABLE_LOW_MEDIUM);
+			setCompostable(context, TFBlocks.MINING_SAPLING.asItem(), ContextIntProviders.COMPOSTABLE_LOW_MEDIUM);
+			setCompostable(context, TFBlocks.SORTING_SAPLING.asItem(), ContextIntProviders.COMPOSTABLE_LOW_MEDIUM);
+			setCompostable(context, TFBlocks.TORCHBERRY_PLANT.asItem(), ContextIntProviders.COMPOSTABLE_LOW_MEDIUM);
+			setCompostable(context, TFItems.LIVEROOT, ContextIntProviders.COMPOSTABLE_LOW_MEDIUM);
+			setCompostable(context, TFBlocks.HUGE_MUSHGLOOM_STEM.asItem(), ContextIntProviders.COMPOSTABLE_MEDIUM);
+			setCompostable(context, TFBlocks.HUGE_WATER_LILY.asItem(), ContextIntProviders.COMPOSTABLE_MEDIUM);
+			setCompostable(context, TFBlocks.LIVEROOT_BLOCK.asItem(), ContextIntProviders.COMPOSTABLE_MEDIUM);
+			setCompostable(context, TFBlocks.MUSHGLOOM.asItem(), ContextIntProviders.COMPOSTABLE_MEDIUM);
+			setCompostable(context, TFBlocks.UBEROUS_SOIL.asItem(), ContextIntProviders.COMPOSTABLE_MEDIUM);
+			setCompostable(context, TFBlocks.HUGE_STALK.asItem(), ContextIntProviders.COMPOSTABLE_MEDIUM);
+			setCompostable(context, TFBlocks.UNRIPE_TROLLBER.asItem(), ContextIntProviders.COMPOSTABLE_MEDIUM);
+			setCompostable(context, TFBlocks.TROLLBER.asItem(), ContextIntProviders.COMPOSTABLE_MEDIUM);
+			setCompostable(context, TFItems.MAZE_WAFER, ContextIntProviders.COMPOSTABLE_MEDIUM);
+			setCompostable(context, TFBlocks.HUGE_LILY_PAD.asItem(), ContextIntProviders.COMPOSTABLE_MEDIUM_HIGH);
+			setCompostable(context, TFBlocks.HUGE_MUSHGLOOM.asItem(), ContextIntProviders.COMPOSTABLE_MEDIUM_HIGH);
+			setCompostable(context, TFItems.EXPERIMENT_115, ContextIntProviders.COMPOSTABLE_MEDIUM_HIGH);
+			setCompostable(context, TFItems.MAGIC_BEANS, ContextIntProviders.COMPOSTABLE_MEDIUM_HIGH);
+		});
+	}
+
+	private static void setCompostable(DefaultItemComponentEvents.ModifyContext context, ItemLike item, ResourceKey<ContextIntProvider> layers) {
+		context.modify(item.asItem(), builder -> builder.set(DataComponents.COMPOSTABLE, new Compostable(layers)));
 	}
 
 	private static void registerFuels() {
-		FuelValueEvents.BUILD.register((builder, _) -> builder.add(TFItemTags.BANISTERS, 300));
+		CookingFuel banisterFuel = new CookingFuel(new ResolvableInt.Constant(300), new ResolvableFloat.Constant(1.0F));
+		DefaultItemComponentEvents.MODIFY.register(context -> context.modify(
+			item -> item instanceof BlockItem blockItem && blockItem.getBlock() instanceof BanisterBlock,
+			(builder, _) -> builder.set(DataComponents.COOKING_FUEL, banisterFuel)));
 	}
 
 	private static void registerParrotImitations() {
@@ -643,22 +643,22 @@ public final class TFCommon implements ModInitializer {
 		DispenserBlock.registerBehavior(TFItems.TRANSFORMATION_POWDER.asItem(), new TransformationDispenseBehavior());
 		DispenserBlock.registerProjectileBehavior(TFItems.ICE_BOMB);
 		DispenserBlock.registerBehavior(Items.CANDLE, new CandleDispenseBehavior());
-		DispenserBlock.registerBehavior(Items.BLACK_CANDLE, new CandleDispenseBehavior());
-		DispenserBlock.registerBehavior(Items.GRAY_CANDLE, new CandleDispenseBehavior());
-		DispenserBlock.registerBehavior(Items.LIGHT_GRAY_CANDLE, new CandleDispenseBehavior());
-		DispenserBlock.registerBehavior(Items.WHITE_CANDLE, new CandleDispenseBehavior());
-		DispenserBlock.registerBehavior(Items.RED_CANDLE, new CandleDispenseBehavior());
-		DispenserBlock.registerBehavior(Items.ORANGE_CANDLE, new CandleDispenseBehavior());
-		DispenserBlock.registerBehavior(Items.YELLOW_CANDLE, new CandleDispenseBehavior());
-		DispenserBlock.registerBehavior(Items.GREEN_CANDLE, new CandleDispenseBehavior());
-		DispenserBlock.registerBehavior(Items.LIME_CANDLE, new CandleDispenseBehavior());
-		DispenserBlock.registerBehavior(Items.BLUE_CANDLE, new CandleDispenseBehavior());
-		DispenserBlock.registerBehavior(Items.CYAN_CANDLE, new CandleDispenseBehavior());
-		DispenserBlock.registerBehavior(Items.LIGHT_BLUE_CANDLE, new CandleDispenseBehavior());
-		DispenserBlock.registerBehavior(Items.PURPLE_CANDLE, new CandleDispenseBehavior());
-		DispenserBlock.registerBehavior(Items.MAGENTA_CANDLE, new CandleDispenseBehavior());
-		DispenserBlock.registerBehavior(Items.PINK_CANDLE, new CandleDispenseBehavior());
-		DispenserBlock.registerBehavior(Items.BROWN_CANDLE, new CandleDispenseBehavior());
+		DispenserBlock.registerBehavior(Items.DYED_CANDLE.pick(DyeColor.BLACK), new CandleDispenseBehavior());
+		DispenserBlock.registerBehavior(Items.DYED_CANDLE.pick(DyeColor.GRAY), new CandleDispenseBehavior());
+		DispenserBlock.registerBehavior(Items.DYED_CANDLE.pick(DyeColor.LIGHT_GRAY), new CandleDispenseBehavior());
+		DispenserBlock.registerBehavior(Items.DYED_CANDLE.pick(DyeColor.WHITE), new CandleDispenseBehavior());
+		DispenserBlock.registerBehavior(Items.DYED_CANDLE.pick(DyeColor.RED), new CandleDispenseBehavior());
+		DispenserBlock.registerBehavior(Items.DYED_CANDLE.pick(DyeColor.ORANGE), new CandleDispenseBehavior());
+		DispenserBlock.registerBehavior(Items.DYED_CANDLE.pick(DyeColor.YELLOW), new CandleDispenseBehavior());
+		DispenserBlock.registerBehavior(Items.DYED_CANDLE.pick(DyeColor.GREEN), new CandleDispenseBehavior());
+		DispenserBlock.registerBehavior(Items.DYED_CANDLE.pick(DyeColor.LIME), new CandleDispenseBehavior());
+		DispenserBlock.registerBehavior(Items.DYED_CANDLE.pick(DyeColor.BLUE), new CandleDispenseBehavior());
+		DispenserBlock.registerBehavior(Items.DYED_CANDLE.pick(DyeColor.CYAN), new CandleDispenseBehavior());
+		DispenserBlock.registerBehavior(Items.DYED_CANDLE.pick(DyeColor.LIGHT_BLUE), new CandleDispenseBehavior());
+		DispenserBlock.registerBehavior(Items.DYED_CANDLE.pick(DyeColor.PURPLE), new CandleDispenseBehavior());
+		DispenserBlock.registerBehavior(Items.DYED_CANDLE.pick(DyeColor.MAGENTA), new CandleDispenseBehavior());
+		DispenserBlock.registerBehavior(Items.DYED_CANDLE.pick(DyeColor.PINK), new CandleDispenseBehavior());
+		DispenserBlock.registerBehavior(Items.DYED_CANDLE.pick(DyeColor.BROWN), new CandleDispenseBehavior());
 	}
 
 	private static void registerCommands() {
@@ -790,38 +790,38 @@ public final class TFCommon implements ModInitializer {
 	}
 
 	private static void registerValidBlockEntityTypes() {
-		BlockEntityType.HANGING_SIGN.addValidBlock(TFBlocks.TWILIGHT_OAK_HANGING_SIGN);
-		BlockEntityType.HANGING_SIGN.addValidBlock(TFBlocks.TWILIGHT_OAK_WALL_HANGING_SIGN);
-		BlockEntityType.HANGING_SIGN.addValidBlock(TFBlocks.CANOPY_HANGING_SIGN);
-		BlockEntityType.HANGING_SIGN.addValidBlock(TFBlocks.CANOPY_WALL_HANGING_SIGN);
-		BlockEntityType.HANGING_SIGN.addValidBlock(TFBlocks.MANGROVE_HANGING_SIGN);
-		BlockEntityType.HANGING_SIGN.addValidBlock(TFBlocks.MANGROVE_WALL_HANGING_SIGN);
-		BlockEntityType.HANGING_SIGN.addValidBlock(TFBlocks.DARK_HANGING_SIGN);
-		BlockEntityType.HANGING_SIGN.addValidBlock(TFBlocks.DARK_WALL_HANGING_SIGN);
-		BlockEntityType.HANGING_SIGN.addValidBlock(TFBlocks.TIME_HANGING_SIGN);
-		BlockEntityType.HANGING_SIGN.addValidBlock(TFBlocks.TIME_WALL_HANGING_SIGN);
-		BlockEntityType.HANGING_SIGN.addValidBlock(TFBlocks.TRANSFORMATION_HANGING_SIGN);
-		BlockEntityType.HANGING_SIGN.addValidBlock(TFBlocks.TRANSFORMATION_WALL_HANGING_SIGN);
-		BlockEntityType.HANGING_SIGN.addValidBlock(TFBlocks.MINING_HANGING_SIGN);
-		BlockEntityType.HANGING_SIGN.addValidBlock(TFBlocks.MINING_WALL_HANGING_SIGN);
-		BlockEntityType.HANGING_SIGN.addValidBlock(TFBlocks.SORTING_HANGING_SIGN);
-		BlockEntityType.HANGING_SIGN.addValidBlock(TFBlocks.SORTING_WALL_HANGING_SIGN);
-		BlockEntityType.SIGN.addValidBlock(TFBlocks.TWILIGHT_OAK_SIGN);
-		BlockEntityType.SIGN.addValidBlock(TFBlocks.TWILIGHT_WALL_SIGN);
-		BlockEntityType.SIGN.addValidBlock(TFBlocks.CANOPY_SIGN);
-		BlockEntityType.SIGN.addValidBlock(TFBlocks.CANOPY_WALL_SIGN);
-		BlockEntityType.SIGN.addValidBlock(TFBlocks.MANGROVE_SIGN);
-		BlockEntityType.SIGN.addValidBlock(TFBlocks.MANGROVE_WALL_SIGN);
-		BlockEntityType.SIGN.addValidBlock(TFBlocks.DARK_SIGN);
-		BlockEntityType.SIGN.addValidBlock(TFBlocks.DARK_WALL_SIGN);
-		BlockEntityType.SIGN.addValidBlock(TFBlocks.TIME_SIGN);
-		BlockEntityType.SIGN.addValidBlock(TFBlocks.TIME_WALL_SIGN);
-		BlockEntityType.SIGN.addValidBlock(TFBlocks.TRANSFORMATION_SIGN);
-		BlockEntityType.SIGN.addValidBlock(TFBlocks.TRANSFORMATION_WALL_SIGN);
-		BlockEntityType.SIGN.addValidBlock(TFBlocks.MINING_SIGN);
-		BlockEntityType.SIGN.addValidBlock(TFBlocks.MINING_WALL_SIGN);
-		BlockEntityType.SIGN.addValidBlock(TFBlocks.SORTING_SIGN);
-		BlockEntityType.SIGN.addValidBlock(TFBlocks.SORTING_WALL_SIGN);
+		BlockEntityTypes.HANGING_SIGN.addValidBlock(TFBlocks.TWILIGHT_OAK_HANGING_SIGN);
+		BlockEntityTypes.HANGING_SIGN.addValidBlock(TFBlocks.TWILIGHT_OAK_WALL_HANGING_SIGN);
+		BlockEntityTypes.HANGING_SIGN.addValidBlock(TFBlocks.CANOPY_HANGING_SIGN);
+		BlockEntityTypes.HANGING_SIGN.addValidBlock(TFBlocks.CANOPY_WALL_HANGING_SIGN);
+		BlockEntityTypes.HANGING_SIGN.addValidBlock(TFBlocks.MANGROVE_HANGING_SIGN);
+		BlockEntityTypes.HANGING_SIGN.addValidBlock(TFBlocks.MANGROVE_WALL_HANGING_SIGN);
+		BlockEntityTypes.HANGING_SIGN.addValidBlock(TFBlocks.DARK_HANGING_SIGN);
+		BlockEntityTypes.HANGING_SIGN.addValidBlock(TFBlocks.DARK_WALL_HANGING_SIGN);
+		BlockEntityTypes.HANGING_SIGN.addValidBlock(TFBlocks.TIME_HANGING_SIGN);
+		BlockEntityTypes.HANGING_SIGN.addValidBlock(TFBlocks.TIME_WALL_HANGING_SIGN);
+		BlockEntityTypes.HANGING_SIGN.addValidBlock(TFBlocks.TRANSFORMATION_HANGING_SIGN);
+		BlockEntityTypes.HANGING_SIGN.addValidBlock(TFBlocks.TRANSFORMATION_WALL_HANGING_SIGN);
+		BlockEntityTypes.HANGING_SIGN.addValidBlock(TFBlocks.MINING_HANGING_SIGN);
+		BlockEntityTypes.HANGING_SIGN.addValidBlock(TFBlocks.MINING_WALL_HANGING_SIGN);
+		BlockEntityTypes.HANGING_SIGN.addValidBlock(TFBlocks.SORTING_HANGING_SIGN);
+		BlockEntityTypes.HANGING_SIGN.addValidBlock(TFBlocks.SORTING_WALL_HANGING_SIGN);
+		BlockEntityTypes.SIGN.addValidBlock(TFBlocks.TWILIGHT_OAK_SIGN);
+		BlockEntityTypes.SIGN.addValidBlock(TFBlocks.TWILIGHT_WALL_SIGN);
+		BlockEntityTypes.SIGN.addValidBlock(TFBlocks.CANOPY_SIGN);
+		BlockEntityTypes.SIGN.addValidBlock(TFBlocks.CANOPY_WALL_SIGN);
+		BlockEntityTypes.SIGN.addValidBlock(TFBlocks.MANGROVE_SIGN);
+		BlockEntityTypes.SIGN.addValidBlock(TFBlocks.MANGROVE_WALL_SIGN);
+		BlockEntityTypes.SIGN.addValidBlock(TFBlocks.DARK_SIGN);
+		BlockEntityTypes.SIGN.addValidBlock(TFBlocks.DARK_WALL_SIGN);
+		BlockEntityTypes.SIGN.addValidBlock(TFBlocks.TIME_SIGN);
+		BlockEntityTypes.SIGN.addValidBlock(TFBlocks.TIME_WALL_SIGN);
+		BlockEntityTypes.SIGN.addValidBlock(TFBlocks.TRANSFORMATION_SIGN);
+		BlockEntityTypes.SIGN.addValidBlock(TFBlocks.TRANSFORMATION_WALL_SIGN);
+		BlockEntityTypes.SIGN.addValidBlock(TFBlocks.MINING_SIGN);
+		BlockEntityTypes.SIGN.addValidBlock(TFBlocks.MINING_WALL_SIGN);
+		BlockEntityTypes.SIGN.addValidBlock(TFBlocks.SORTING_SIGN);
+		BlockEntityTypes.SIGN.addValidBlock(TFBlocks.SORTING_WALL_SIGN);
 	}
 
 	private static void registerReloadListeners() {

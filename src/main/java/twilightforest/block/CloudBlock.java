@@ -96,7 +96,7 @@ public class CloudBlock extends Block implements ISpecialLandingEffectsBlock, IS
 	 */
 	@Override
 	public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-		if (!level.carminite$isAreaLoaded(pos, 1) || TFConfig.commonCloudBlockPrecipitationDistance == 0) return;
+		if (!level.hasChunksAt(pos.offset(-1, -1, -1), pos.offset(1, 1, 1)) || TFConfig.commonCloudBlockPrecipitationDistance == 0) return;
 
 		Pair<Biome.Precipitation, Float> pair = this.getCurrentPrecipitation(pos, level, level.getRainLevel(1.0F));
 		if (pair.getRight() > 0.0F) {

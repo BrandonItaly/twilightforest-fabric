@@ -32,8 +32,8 @@ public class LiverootBlock extends Block {
 			level.setBlockAndUpdate(pos, TFBlocks.ROOT_BLOCK.defaultBlockState());
 			int amountOfRoots = 1;
 			//fortune formula copied from ApplyBonusCount.OreDrops.calculateNewCount so it acts exactly like the loot table
-			if (EnchantmentHelper.getItemEnchantmentLevel(level.registryAccess().carminite$holderOrThrow(Enchantments.FORTUNE), stack) > 0) {
-				int i = level.getRandom().nextInt(EnchantmentHelper.getItemEnchantmentLevel(level.registryAccess().carminite$holderOrThrow(Enchantments.FORTUNE), stack) + 2) - 1;
+			if (EnchantmentHelper.getItemEnchantmentLevel(level.registryAccess().getOrThrow(Enchantments.FORTUNE), stack) > 0) {
+				int i = level.getRandom().nextInt(EnchantmentHelper.getItemEnchantmentLevel(level.registryAccess().getOrThrow(Enchantments.FORTUNE), stack) + 2) - 1;
 				if (i < 0) {
 					i = 0;
 				}
@@ -41,7 +41,7 @@ public class LiverootBlock extends Block {
 			}
 			ItemEntity liveroot = new ItemEntity(level, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(TFItems.LIVEROOT, amountOfRoots));
 			level.addFreshEntity(liveroot);
-			level.playSound(null, pos, SoundEvents.AXE_STRIP, SoundSource.BLOCKS, 1.0F, 1.0F);
+			level.playSound(null, pos, SoundEvents.AXE_STRIP.value(), SoundSource.BLOCKS, 1.0F, 1.0F);
 			stack.hurtAndBreak(1, player, hand == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
 			return InteractionResult.SUCCESS;
 		}

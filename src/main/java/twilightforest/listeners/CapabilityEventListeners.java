@@ -53,10 +53,10 @@ public final class CapabilityEventListeners {
 		if (!entity.level().isClientSide() && !source.is(DamageTypeTags.BYPASSES_ARMOR)) {
 			FortificationShieldAttachment attachment = entity.getAttachedOrCreate(TFDataAttachments.FORTIFICATION_SHIELDS);
 			if (attachment.shieldsLeft() > 0) {
-				if (entity.invulnerableTime <= 0) {
+				if (entity.getInvulnerableTime() <= 0) {
 					attachment.breakShield(entity, false);
 					FortificationShieldAttachment.addShieldBreakParticles(source, entity);
-					entity.invulnerableTime = LivingEntity.DEATH_DURATION;
+					entity.setInvulnerableTime(LivingEntity.DEATH_DURATION);
 				}
 				return false;
 			}

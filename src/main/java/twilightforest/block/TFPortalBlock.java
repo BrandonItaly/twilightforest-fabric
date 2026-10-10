@@ -67,7 +67,7 @@ public class TFPortalBlock extends HalfTransparentBlock implements LiquidBlockCo
 	}
 
 	private static void causeLightning(Level level, BlockPos pos, boolean destructive) {
-		LightningBolt bolt = new LightningBolt(EntityType.LIGHTNING_BOLT, level);
+		LightningBolt bolt = new LightningBolt(EntityTypes.LIGHTNING_BOLT, level);
 		bolt.setPos(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
 		bolt.setVisualOnly(destructive);
 		level.addFreshEntity(bolt);
@@ -219,7 +219,7 @@ public class TFPortalBlock extends HalfTransparentBlock implements LiquidBlockCo
 					if (!TFPortalBlock.isPlayerNotifiedOfRequirement(player)) {
 						// .doesPlayerHaveRequiredAdvancement null-checks already, so we can skip null-checking the `requirement`
 						DisplayInfo info = requirement.value().display().orElse(null);
-						ServerPlayNetworking.send(player, info == null ? new MissingAdvancementToastPacket(Component.translatable("twilightforest.ui.advancement.no_title"), new ItemStackTemplate(TFBlocks.TWILIGHT_PORTAL_MINIATURE_STRUCTURE.asItem())) : new MissingAdvancementToastPacket(info.getTitle(), info.getIcon()));
+						ServerPlayNetworking.send(player, info == null ? new MissingAdvancementToastPacket(Component.translatable("twilightforest.ui.advancement.no_title"), new ItemStackTemplate(TFBlocks.TWILIGHT_PORTAL_MINIATURE_STRUCTURE.asItem())) : new MissingAdvancementToastPacket(info.title(), info.icon()));
 						TFPortalBlock.playerNotifiedOfRequirement(player);
 					}
 
@@ -229,7 +229,7 @@ public class TFPortalBlock extends HalfTransparentBlock implements LiquidBlockCo
 
 			if (entity.canUsePortal(false)) {
 				entity.setAsInsidePortal(this, entity.blockPosition());
-				entity.getAttached(TFDataAttachments.TF_PORTAL_COOLDOWN).setInPortal(true);
+				entity.getAttachedOrCreate(TFDataAttachments.TF_PORTAL_COOLDOWN).setInPortal(true);
 			}
 		}
 	}

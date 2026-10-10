@@ -696,7 +696,7 @@ public class HydraHeadContainer {
 					if (living instanceof Player player) {
 						ServerPlayNetworking.send((ServerPlayer) player, new MovePlayerPacket(-this.headEntity.getDirection().getStepX() * 0.5F, 0.1F, -this.headEntity.getDirection().getStepZ() * 0.5F));
 					} else {
-						living.knockback(-this.headEntity.getDirection().getStepX(), 0.1F, -this.headEntity.getDirection().getStepZ());
+						living.knockback(-this.headEntity.getDirection().getStepX(), 0.1F, -this.headEntity.getDirection().getStepZ(), TFDamageTypes.getEntityDamageSource(living.level(), TFDamageTypes.HYDRA_BITE, this.hydra, TFEntities.HYDRA), BITE_DAMAGE);
 					}
 				}
 			}

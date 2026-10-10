@@ -28,6 +28,10 @@ public final class EntityHooks {
 		return TravellersModifiersManager.isModifierActive(entity, TravellersModifiersManager.UNRESTRAINED_MODIFIER) ? 1.0F : o;
 	}
 
+	public static double resetBounceWithUnrestrained(double original, Entity entity) {
+		return TravellersModifiersManager.isModifierActive(entity, TravellersModifiersManager.UNRESTRAINED_MODIFIER) ? 0.0D : original;
+	}
+
 	public static VoxelShape processLiquidCollisionShape(VoxelShape o, LivingEntity livingEntity) {
 		if (!TravellersModifiersManager.isModifierActive(livingEntity, TravellersModifiersManager.WATER_WALK_MODIFIER))
 			return o;

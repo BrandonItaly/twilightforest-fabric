@@ -160,7 +160,7 @@ public final class ProgressionEventListeners {
 	public static boolean preventLockedAreaEntityDamage(LivingEntity entity, DamageSource source) {
 		// cancel attacks in protected areas
 		if (entity.level() instanceof ServerLevel serverLevel && entity instanceof Enemy && source.getEntity() instanceof Player && !(entity instanceof Kobold)
-			&& isAreaProtected(serverLevel, (Player) source.getEntity(), new BlockPos(entity.blockPosition()))) {
+			&& isAreaProtected(serverLevel, (Player) source.getEntity(), entity.blockPosition().immutable())) {
 
 			return false;
 		}
@@ -244,7 +244,7 @@ public final class ProgressionEventListeners {
 					if (!TFPortalBlock.isPlayerNotifiedOfRequirement(player)) {
 						// .doesPlayerHaveRequiredAdvancement null-checks already, so we can skip null-checking the `requirement`
 						DisplayInfo info = requirement.value().display().orElse(null);
-						ServerPlayNetworking.send(player, info == null ? new MissingAdvancementToastPacket(net.minecraft.network.chat.Component.translatable("twilightforest.ui.advancement.no_title"), new ItemStackTemplate(TFBlocks.TWILIGHT_PORTAL_MINIATURE_STRUCTURE.asItem())) : new MissingAdvancementToastPacket(info.getTitle(), info.getIcon()));
+						ServerPlayNetworking.send(player, info == null ? new MissingAdvancementToastPacket(net.minecraft.network.chat.Component.translatable("twilightforest.ui.advancement.no_title"), new ItemStackTemplate(TFBlocks.TWILIGHT_PORTAL_MINIATURE_STRUCTURE.asItem())) : new MissingAdvancementToastPacket(info.title(), info.icon()));
 
 						TFPortalBlock.playerNotifiedOfRequirement(player);
 					}

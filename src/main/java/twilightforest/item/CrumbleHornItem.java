@@ -18,6 +18,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LevelEvent;
+import net.minecraft.world.level.block.WeatheringCopper.WeatherState;
+import net.minecraft.world.level.block.WeatheringCopperCollection;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.phys.AABB;
@@ -28,6 +30,11 @@ import twilightforest.init.TFStats;
 import twilightforest.util.WorldUtil;
 
 import java.util.Map;
+
+import static net.minecraft.world.level.block.WeatheringCopper.WeatherState.EXPOSED;
+import static net.minecraft.world.level.block.WeatheringCopper.WeatherState.OXIDIZED;
+import static net.minecraft.world.level.block.WeatheringCopper.WeatherState.UNAFFECTED;
+import static net.minecraft.world.level.block.WeatheringCopper.WeatherState.WEATHERED;
 
 public class CrumbleHornItem extends Item implements IContinuousUseItem {
 	public static final Map<Block, Pair<Block, Float>> CRUMBLE_HORN = Map.<Block, Pair<Block, Float>>ofEntries(
@@ -59,33 +66,33 @@ public class CrumbleHornItem extends Item implements IContinuousUseItem {
 		Map.entry(Blocks.MYCELIUM, Pair.of(Blocks.DIRT, 0.2F)),
 		Map.entry(Blocks.COARSE_DIRT, Pair.of(Blocks.DIRT, 0.2F)),
 		Map.entry(Blocks.ROOTED_DIRT, Pair.of(Blocks.DIRT, 0.2F)),
-		Map.entry(Blocks.OXIDIZED_COPPER, Pair.of(Blocks.WEATHERED_COPPER, 0.2F)),
-		Map.entry(Blocks.WEATHERED_COPPER, Pair.of(Blocks.EXPOSED_COPPER, 0.2F)),
-		Map.entry(Blocks.EXPOSED_COPPER, Pair.of(Blocks.COPPER_BLOCK, 0.2F)),
-		Map.entry(Blocks.OXIDIZED_CUT_COPPER, Pair.of(Blocks.WEATHERED_CUT_COPPER, 0.2F)),
-		Map.entry(Blocks.WEATHERED_CUT_COPPER, Pair.of(Blocks.EXPOSED_CUT_COPPER, 0.2F)),
-		Map.entry(Blocks.EXPOSED_CUT_COPPER, Pair.of(Blocks.CUT_COPPER, 0.2F)),
-		Map.entry(Blocks.OXIDIZED_CUT_COPPER_STAIRS, Pair.of(Blocks.WEATHERED_CUT_COPPER_STAIRS, 0.2F)),
-		Map.entry(Blocks.WEATHERED_CUT_COPPER_STAIRS, Pair.of(Blocks.EXPOSED_CUT_COPPER_STAIRS, 0.2F)),
-		Map.entry(Blocks.EXPOSED_CUT_COPPER_STAIRS, Pair.of(Blocks.CUT_COPPER_STAIRS, 0.2F)),
-		Map.entry(Blocks.OXIDIZED_CUT_COPPER_SLAB, Pair.of(Blocks.WEATHERED_CUT_COPPER_SLAB, 0.2F)),
-		Map.entry(Blocks.WEATHERED_CUT_COPPER_SLAB, Pair.of(Blocks.EXPOSED_CUT_COPPER_SLAB, 0.2F)),
-		Map.entry(Blocks.EXPOSED_CUT_COPPER_SLAB, Pair.of(Blocks.CUT_COPPER_SLAB, 0.2F)),
-		Map.entry(Blocks.OXIDIZED_CHISELED_COPPER, Pair.of(Blocks.WEATHERED_CHISELED_COPPER, 0.2F)),
-		Map.entry(Blocks.WEATHERED_CHISELED_COPPER, Pair.of(Blocks.EXPOSED_CHISELED_COPPER, 0.2F)),
-		Map.entry(Blocks.EXPOSED_CHISELED_COPPER, Pair.of(Blocks.CHISELED_COPPER, 0.2F)),
-		Map.entry(Blocks.OXIDIZED_COPPER_GRATE, Pair.of(Blocks.WEATHERED_COPPER_GRATE, 0.2F)),
-		Map.entry(Blocks.WEATHERED_COPPER_GRATE, Pair.of(Blocks.EXPOSED_COPPER_GRATE, 0.2F)),
-		Map.entry(Blocks.EXPOSED_COPPER_GRATE, Pair.of(Blocks.COPPER_GRATE, 0.2F)),
-		Map.entry(Blocks.OXIDIZED_COPPER_BULB, Pair.of(Blocks.WEATHERED_COPPER_BULB, 0.2F)),
-		Map.entry(Blocks.WEATHERED_COPPER_BULB, Pair.of(Blocks.EXPOSED_COPPER_BULB, 0.2F)),
-		Map.entry(Blocks.EXPOSED_COPPER_BULB, Pair.of(Blocks.COPPER_BULB, 0.2F)),
-		Map.entry(Blocks.OXIDIZED_COPPER_TRAPDOOR, Pair.of(Blocks.WEATHERED_COPPER_TRAPDOOR, 0.2F)),
-		Map.entry(Blocks.WEATHERED_COPPER_TRAPDOOR, Pair.of(Blocks.EXPOSED_COPPER_TRAPDOOR, 0.2F)),
-		Map.entry(Blocks.EXPOSED_COPPER_TRAPDOOR, Pair.of(Blocks.COPPER_TRAPDOOR, 0.2F)),
-		Map.entry(Blocks.OXIDIZED_COPPER_DOOR, Pair.of(Blocks.WEATHERED_COPPER_DOOR, 0.2F)),
-		Map.entry(Blocks.WEATHERED_COPPER_DOOR, Pair.of(Blocks.EXPOSED_COPPER_DOOR, 0.2F)),
-		Map.entry(Blocks.EXPOSED_COPPER_DOOR, Pair.of(Blocks.COPPER_DOOR, 0.2F)),
+		copperTransformation(Blocks.COPPER_BLOCK, OXIDIZED, WEATHERED),
+		copperTransformation(Blocks.COPPER_BLOCK, WEATHERED, EXPOSED),
+		copperTransformation(Blocks.COPPER_BLOCK, EXPOSED, UNAFFECTED),
+		copperTransformation(Blocks.CUT_COPPER, OXIDIZED, WEATHERED),
+		copperTransformation(Blocks.CUT_COPPER, WEATHERED, EXPOSED),
+		copperTransformation(Blocks.CUT_COPPER, EXPOSED, UNAFFECTED),
+		copperTransformation(Blocks.CUT_COPPER_STAIRS, OXIDIZED, WEATHERED),
+		copperTransformation(Blocks.CUT_COPPER_STAIRS, WEATHERED, EXPOSED),
+		copperTransformation(Blocks.CUT_COPPER_STAIRS, EXPOSED, UNAFFECTED),
+		copperTransformation(Blocks.CUT_COPPER_SLAB, OXIDIZED, WEATHERED),
+		copperTransformation(Blocks.CUT_COPPER_SLAB, WEATHERED, EXPOSED),
+		copperTransformation(Blocks.CUT_COPPER_SLAB, EXPOSED, UNAFFECTED),
+		copperTransformation(Blocks.CHISELED_COPPER, OXIDIZED, WEATHERED),
+		copperTransformation(Blocks.CHISELED_COPPER, WEATHERED, EXPOSED),
+		copperTransformation(Blocks.CHISELED_COPPER, EXPOSED, UNAFFECTED),
+		copperTransformation(Blocks.COPPER_GRATE, OXIDIZED, WEATHERED),
+		copperTransformation(Blocks.COPPER_GRATE, WEATHERED, EXPOSED),
+		copperTransformation(Blocks.COPPER_GRATE, EXPOSED, UNAFFECTED),
+		copperTransformation(Blocks.COPPER_BULB, OXIDIZED, WEATHERED),
+		copperTransformation(Blocks.COPPER_BULB, WEATHERED, EXPOSED),
+		copperTransformation(Blocks.COPPER_BULB, EXPOSED, UNAFFECTED),
+		copperTransformation(Blocks.COPPER_TRAPDOOR, OXIDIZED, WEATHERED),
+		copperTransformation(Blocks.COPPER_TRAPDOOR, WEATHERED, EXPOSED),
+		copperTransformation(Blocks.COPPER_TRAPDOOR, EXPOSED, UNAFFECTED),
+		copperTransformation(Blocks.COPPER_DOOR, OXIDIZED, WEATHERED),
+		copperTransformation(Blocks.COPPER_DOOR, WEATHERED, EXPOSED),
+		copperTransformation(Blocks.COPPER_DOOR, EXPOSED, UNAFFECTED),
 		Map.entry(Blocks.GRAVEL, Pair.of(Blocks.AIR, 0.05F)),
 		Map.entry(Blocks.DIRT, Pair.of(Blocks.AIR, 0.05F)),
 		Map.entry(Blocks.SAND, Pair.of(Blocks.AIR, 0.05F)),
@@ -96,6 +103,10 @@ public class CrumbleHornItem extends Item implements IContinuousUseItem {
 		Map.entry(Blocks.GRANITE, Pair.of(Blocks.AIR, 0.05F))
 	);
 
+
+	private static Map.Entry<Block, Pair<Block, Float>> copperTransformation(WeatheringCopperCollection<Block> copper, WeatherState from, WeatherState to) {
+		return Map.entry(copper.weathering().pick(from), Pair.of(copper.weathering().pick(to), 0.2F));
+	}
 
 	public CrumbleHornItem(Properties properties) {
 		super(properties);
@@ -175,7 +186,7 @@ public class CrumbleHornItem extends Item implements IContinuousUseItem {
 
 		if (crumbleMap.getFirst() == Blocks.AIR) {
 			if (serverLevel.getRandom().nextFloat() < crumbleMap.getSecond()) {
-				if (living instanceof Player player) {
+				if (living instanceof ServerPlayer player) {
 					if (block.carminite$canHarvestBlock(state, serverLevel, pos, player)) {
 						serverLevel.removeBlock(pos, false);
 						block.playerDestroy(serverLevel, player, pos, state, serverLevel.getBlockEntity(pos), ItemStack.EMPTY);

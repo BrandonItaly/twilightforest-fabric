@@ -125,7 +125,7 @@ public class Lich extends BaseTFBoss {
 		if (!this.isShadowClone()) {
 			this.setItemInHand(InteractionHand.MAIN_HAND, TFItems.FORTIFICATION_SCEPTER.getDefaultInstance());
 			this.playSound(TFSounds.SHIELD_ADD.value(), 1.5F, this.getVoicePitch());
-			this.swing(InteractionHand.MAIN_HAND);
+			this.swing(InteractionHand.MAIN_HAND, net.minecraft.world.item.component.SwingAnimation.DEFAULT);
 		}
 		return data;
 	}
@@ -627,7 +627,7 @@ public class Lich extends BaseTFBoss {
 			double ty = targetEntity.getY() + 2;
 			double tz = targetEntity.getZ() + this.getRandom().nextGaussian() * 16D;
 
-			boolean destClear = this.randomTeleport(tx, ty, tz, false);
+			boolean destClear = this.randomTeleport(tx, ty, tz, false, block -> false);
 			if (destClear) {
 				tx = this.getX();
 				ty = this.getY();
@@ -1090,11 +1090,11 @@ public class Lich extends BaseTFBoss {
 	@Override
 	public ProjectileDeflection deflection(Projectile projectile) {
 		if (projectile.typeHolder().is(TFEntityTypeTags.LICH_DEFLECTS_PHASE_2) && (projectile.getOwner() instanceof Player || projectile.getOwner() instanceof Lich || projectile.getOwner() == null) && this.getPhase() > 1) {
-			return (proj, entity, random) -> {
+			return (proj, entity, random, power) -> {
 				proj.setDeltaMovement(this.getDeltaMovement().add(0.5D - this.getRandom().nextDouble(), 0.75D, 0.5D - this.getRandom().nextDouble()).multiply(0.75D, 1.5D, 0.75D));
 				proj.setOwner(this);
 				this.playSound(TFSounds.SHIELD_BLOCK.value(), 0.5F, this.getVoicePitch() * 1.5F);
-				this.swing(InteractionHand.MAIN_HAND);
+				this.swing(InteractionHand.MAIN_HAND, net.minecraft.world.item.component.SwingAnimation.DEFAULT);
 			};
 		}
 		return super.deflection(projectile);

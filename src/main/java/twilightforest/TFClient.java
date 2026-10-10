@@ -81,6 +81,7 @@ public final class TFClient implements ClientModInitializer {
 
 	@Override
 	public void onInitializeClient() {
+		TFKeyBinds.init();
 		TFTintSources.init();
 
 		ModelLoadingPlugin.register(new TFModelLoadingPlugin());
@@ -579,7 +580,7 @@ public final class TFClient implements ClientModInitializer {
 	}
 
 	private static void registerPictureInPictureRenderers() {
-		PictureInPictureRendererRegistry.register(ctx -> new GuiBlockRenderer(ctx.bufferSource()));
-		PictureInPictureRendererRegistry.register(ctx -> new GuiMapRenderer(ctx.bufferSource()));
+		PictureInPictureRendererRegistry.register(ctx -> new GuiBlockRenderer());
+		PictureInPictureRendererRegistry.register(ctx -> new GuiMapRenderer());
 	}
 }

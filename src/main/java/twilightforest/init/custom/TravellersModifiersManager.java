@@ -137,7 +137,7 @@ public class TravellersModifiersManager {
 	}
 
 	public static Optional<Holder.Reference<TravellersModifier>> lookupHolder(HolderLookup.Provider registries, ResourceKey<TravellersModifier> key) {
-		Optional<Holder.Reference<TravellersModifier>> holder = registries.carminite$holder(key);
+		Optional<Holder.Reference<TravellersModifier>> holder = registries.get(key);
 
 		if (holder.isEmpty()) {
 			TFCommon.LOGGER.warn("Travellers modifier {} is not present in the registry", key.identifier());

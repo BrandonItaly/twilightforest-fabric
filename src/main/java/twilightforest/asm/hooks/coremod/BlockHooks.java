@@ -21,11 +21,6 @@ import twilightforest.init.custom.TravellersModifiersManager;
 public final class BlockHooks {
 	private static final FoliageColorHandler foliageColorHandler = FoliageColorHandler.INSTANCE;
 
-	public static void stopBouncing(Entity entity) {
-		if (TravellersModifiersManager.isModifierActive(entity, TravellersModifiersManager.UNRESTRAINED_MODIFIER) && entity.getDeltaMovement().y() > -0.08)
-			entity.setDeltaMovement(new Vec3(entity.getDeltaMovement().x, Math.max(0, entity.getDeltaMovement().y), entity.getDeltaMovement().z));
-	}
-
 	public static boolean resetSlimeMomentumWithUnrestrained(boolean o, Entity entity) {
 		if (TravellersModifiersManager.isModifierActive(entity, TravellersModifiersManager.UNRESTRAINED_MODIFIER)) {
 			return true;

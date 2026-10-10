@@ -19,7 +19,7 @@ public class DarkTowerBerryBushBlock extends BerryBushBlock {
 
 	@Override
 	protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-		if (!level.carminite$isAreaLoaded(pos, 1)) return;
+		if (!level.hasChunksAt(pos.offset(-1, -1, -1), pos.offset(1, 1, 1))) return;
 		if (this.shouldDie(level, pos))
 			level.destroyBlock(pos, true);
 	}

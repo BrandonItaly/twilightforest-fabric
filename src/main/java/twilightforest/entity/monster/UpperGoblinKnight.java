@@ -10,6 +10,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
@@ -24,7 +25,6 @@ import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -263,7 +263,7 @@ public class UpperGoblinKnight extends Monster {
 			return false;
 		}
 
-		this.swing(InteractionHand.MAIN_HAND);
+		this.swing(InteractionHand.MAIN_HAND, net.minecraft.world.item.component.SwingAnimation.DEFAULT);
 		return super.doHurtTarget(server, entity);
 	}
 
@@ -318,7 +318,7 @@ public class UpperGoblinKnight extends Monster {
 	public boolean takeHitOnShield(DamageSource source, float amount) {
 		if (this.isShieldDisabled()) return false;
 
-		if (source.getEntity() instanceof LivingEntity living && living.getMainHandItem().getItem() instanceof AxeItem && !this.level().isClientSide()) {
+		if (source.getEntity() instanceof LivingEntity living && living.getMainHandItem().is(ItemTags.AXES) && !this.level().isClientSide()) {
 			this.getEntityData().set(SHIELD_DISABLED, true);
 			this.playSound(SoundEvents.SHIELD_BREAK.value(), 1.0F, 0.8F + this.level().getRandom().nextFloat() * 0.4F);
 			return true;
@@ -341,7 +341,7 @@ public class UpperGoblinKnight extends Monster {
 				d0 = (Math.random() - Math.random()) * 0.01D;
 			}
 
-			toKnockback.knockback(0, d0 / 4D, d1 / 4D);
+			toKnockback.knockback(0, d0 / 4D, d1 / 4D, source, amount);
 
 			// also set revenge target
 			if (source.getEntity() instanceof LivingEntity living) {

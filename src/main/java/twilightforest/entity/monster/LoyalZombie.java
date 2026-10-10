@@ -198,12 +198,9 @@ public class LoyalZombie extends TamableAnimal {
 	}
 
 	@Override
-	public boolean isBaby() {
-		return this.getEntityData().get(DATA_BABY_ID);
-	}
-
-	@Override
-	public void setBaby(boolean baby) {
+	public void setAge(int age) {
+		super.setAge(age);
+		boolean baby = age < 0;
 		this.getEntityData().set(DATA_BABY_ID, baby);
 		if (!this.level().isClientSide()) {
 			AttributeInstance attributeinstance = this.getAttribute(Attributes.MOVEMENT_SPEED);
@@ -212,6 +209,11 @@ public class LoyalZombie extends TamableAnimal {
 				attributeinstance.addTransientModifier(SPEED_MODIFIER_BABY);
 			}
 		}
+	}
+
+	@Override
+	public boolean canAgeUp() {
+		return false;
 	}
 
 	@Override

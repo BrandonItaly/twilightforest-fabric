@@ -47,13 +47,13 @@ public final class MapDataManager {
 
 	public static final Map<Either<TagKey<Block>, Block>, MapColor> ORE_MAP_ORE_COLOR = Map.ofEntries(
 		Map.entry(Either.left(BlockTags.COPPER_ORES), MapColor.COLOR_ORANGE),
-		Map.entry(Either.left(BlockTags.COAL_ORES), MapColor.COLOR_BLACK),
+		Map.entry(Either.left(net.minecraft.tags.BlockItemTags.COAL_ORES.block()), MapColor.COLOR_BLACK),
 		Map.entry(Either.left(BlockTags.IRON_ORES),MapColor.RAW_IRON),
-		Map.entry(Either.left(BlockTags.LAPIS_ORES), MapColor.LAPIS),
+		Map.entry(Either.left(net.minecraft.tags.BlockItemTags.LAPIS_ORES.block()), MapColor.LAPIS),
 		Map.entry(Either.left(BlockTags.GOLD_ORES), MapColor.GOLD),
-		Map.entry(Either.left(BlockTags.REDSTONE_ORES), MapColor.COLOR_RED),
-		Map.entry(Either.left(BlockTags.DIAMOND_ORES), MapColor.DIAMOND),
-		Map.entry(Either.left(BlockTags.EMERALD_ORES), MapColor.EMERALD),
+		Map.entry(Either.left(net.minecraft.tags.BlockItemTags.REDSTONE_ORES.block()), MapColor.COLOR_RED),
+		Map.entry(Either.left(net.minecraft.tags.BlockItemTags.DIAMOND_ORES.block()), MapColor.DIAMOND),
+		Map.entry(Either.left(net.minecraft.tags.BlockItemTags.EMERALD_ORES.block()), MapColor.EMERALD),
 		Map.entry(Either.right(Blocks.ANCIENT_DEBRIS), MapColor.TERRACOTTA_BROWN)
 	);
 

@@ -13,6 +13,17 @@ import twilightforest.asm.hooks.coremod.EntityHooks;
 public class EntityMixin {
 
 	@ModifyExpressionValue(
+		method = "restituteMovementAfterCollisions(Lnet/minecraft/world/level/block/state/BlockState;ZZLnet/minecraft/world/phys/Vec3;)V",
+		at = @At(
+			value = "INVOKE",
+			target = "Lnet/minecraft/world/entity/Entity;getBlockBounciness(Lnet/minecraft/world/level/block/Block;)D"
+		)
+	)
+	private double twilightforest$stopBouncing(double original) {
+		return EntityHooks.resetBounceWithUnrestrained(original, (Entity) (Object) this);
+	}
+
+	@ModifyExpressionValue(
 		method = "move(Lnet/minecraft/world/entity/MoverType;Lnet/minecraft/world/phys/Vec3;)V",
 		at = @At(
 			value = "FIELD",

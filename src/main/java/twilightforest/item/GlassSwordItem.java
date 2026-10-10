@@ -2,7 +2,7 @@ package twilightforest.item;
 
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.advancements.triggers.CriteriaTriggers;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
@@ -12,6 +12,7 @@ import net.minecraft.stats.Stats;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -25,7 +26,7 @@ import twilightforest.network.ParticlePacket;
 import java.util.function.Consumer;
 
 public class GlassSwordItem extends Item {
-	protected static final BlockParticleOption GLASS_PARTICLE = new BlockParticleOption(ParticleTypes.BLOCK, Blocks.WHITE_STAINED_GLASS.defaultBlockState());
+	protected static final BlockParticleOption GLASS_PARTICLE = new BlockParticleOption(ParticleTypes.BLOCK, Blocks.STAINED_GLASS.pick(DyeColor.WHITE).defaultBlockState());
 
 	public GlassSwordItem(Properties properties) {
 		super(properties);
@@ -49,7 +50,7 @@ public class GlassSwordItem extends Item {
 
 		this.hurtAndBreak(stack, attacker, (user) -> {
 			user.level().playSound(null, attacker.getX(), attacker.getY(), attacker.getZ(), TFSounds.GLASS_SWORD_BREAK.value(), attacker.getSoundSource(), 1F, 0.5F);
-			user.onEquippedItemBroken(this, EquipmentSlot.MAINHAND);
+			user.onEquippedItemBroken(stack, EquipmentSlot.MAINHAND);
 		});
 	}
 

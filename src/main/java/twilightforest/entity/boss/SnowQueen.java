@@ -77,7 +77,7 @@ public class SnowQueen extends BaseTFBoss implements IBreathAttacker, IMultiPart
 		this.setCurrentPhase(Phase.SUMMON);
 
 		this.xpReward = 317;
-		this.moveControl = new FlyingMoveControl(this, 10, true);
+		this.moveControl = new FlyingMoveControl<>(this, 10, true);
 		this.setNoGravity(true);
 	}
 
@@ -373,7 +373,7 @@ public class SnowQueen extends BaseTFBoss implements IBreathAttacker, IMultiPart
 				attemptY = targetedEntity.getY() + this.getRandom().nextGaussian() * 8.0D;
 				attemptZ = targetedEntity.getZ() + this.getRandom().nextGaussian() * 6.0D;
 			}
-			if (minion.randomTeleport(attemptX, attemptY, attemptZ, true)) {
+			if (minion.randomTeleport(attemptX, attemptY, attemptZ, true, block -> false)) {
 				this.gameEvent(GameEvent.ENTITY_PLACE, minion);
 				break;
 			}

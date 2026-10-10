@@ -118,7 +118,7 @@ public class ChiseledCanopyShelfBlock extends ChiseledBookShelfBlock implements 
 	}
 
 	@Override
-	public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state, @Nullable BlockEntity entity, ItemStack stack) {
+	public void playerDestroy(ServerLevel level, net.minecraft.server.level.ServerPlayer player, BlockPos pos, BlockState state, @Nullable BlockEntity entity, ItemStack stack) {
 		if (level instanceof ServerLevel serverLevel && state.getValue(SPAWNER)) {
 			level.playSound(null, pos, TFSounds.DEATH_TOME_DEATH.value(), SoundSource.BLOCKS, 1.0F, 1.0F);
 			ParticlePacket particlePacket = new ParticlePacket();

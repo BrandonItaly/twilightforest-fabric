@@ -32,7 +32,7 @@ public final class LootEventListeners {
 	}
 
 	public static void handleFieryToolDrops(LootContext context, List<ItemStack> drops) {
-		ItemInstance tool = context.getOptionalParameter(LootContextParams.TOOL);
+		ItemInstance tool = context.getOptional(LootContextParams.TOOL);
 
 		if (tool == null || !tool.is(TFItems.FIERY_PICKAXE)) {
 			return;
@@ -54,7 +54,7 @@ public final class LootEventListeners {
 
 		float xp = (float) list.stream().mapToDouble(Pair::getRight).sum();
 		if (xp > 0.0F && context.hasParameter(LootContextParams.THIS_ENTITY)) {
-			ExperienceOrb.award(context.getLevel(), context.getParameter(LootContextParams.THIS_ENTITY).position(), Math.round(xp));
+			ExperienceOrb.award(context.getLevel(), context.getOptional(LootContextParams.THIS_ENTITY).position(), Math.round(xp));
 		}
 
 		drops.clear();
@@ -66,7 +66,7 @@ public final class LootEventListeners {
 			return;
 		}
 
-		if (context.getParameter(LootContextParams.THIS_ENTITY) instanceof Player player) {
+		if (context.getOptional(LootContextParams.THIS_ENTITY) instanceof Player player) {
 			if (!drops.isEmpty() && drops.getFirst().getItem() instanceof BlockItem block) {
 				if (GIANT_BLOCK_CONVERSIONS.containsKey(block.getBlock())) {
 					var attachment = player.getAttached(TFDataAttachments.GIANT_PICKAXE_MINING);

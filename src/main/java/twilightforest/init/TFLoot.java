@@ -5,7 +5,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraft.world.level.storage.loot.providers.number.NumberProvider;
+import net.minecraft.world.level.storage.loot.providers.number.floats.ContextFloatProvider;
 import twilightforest.TFCommon;
 import twilightforest.loot.LootingEnchantNumberProvider;
 import twilightforest.loot.MultiplayerBasedAdditionLootFunction;
@@ -43,9 +43,9 @@ public class TFLoot {
 		);
 	}
 
-	private static <T extends NumberProvider> MapCodec<T> registerNumber(String name, MapCodec<T> codec) {
+	private static <T extends ContextFloatProvider> MapCodec<T> registerNumber(String name, MapCodec<T> codec) {
 		return Registry.register(
-			BuiltInRegistries.LOOT_NUMBER_PROVIDER_TYPE,
+			BuiltInRegistries.CONTEXT_FLOAT_PROVIDER_TYPE,
 			TFCommon.prefix(name),
 			codec
 		);

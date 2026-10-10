@@ -16,7 +16,7 @@ import twilightforest.asm.hooks.coremod.EntityHooks;
 public class LivingEntityMixin {
 
 	@ModifyExpressionValue(
-		method = "getVisibilityPercent(Lnet/minecraft/world/entity/Entity;)D",
+		method = "getVisibilityPercent(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/Entity;)D",
 		at = @At(
 			value = "INVOKE",
 			target = "Lnet/minecraft/world/entity/LivingEntity;getArmorCoverPercentage()F"

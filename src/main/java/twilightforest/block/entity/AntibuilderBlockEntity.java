@@ -50,7 +50,7 @@ public class AntibuilderBlockEntity extends BlockEntity {
 			} else {
 
 				// new plan, take a snapshot of the world when we are first activated, and then rapidly revert changes
-				if (te.blockData == null && level.carminite$isAreaLoaded(pos, AntibuilderBlockEntity.RADIUS)) {
+				if (te.blockData == null && level.hasChunksAt(pos.offset(-AntibuilderBlockEntity.RADIUS, -AntibuilderBlockEntity.RADIUS, -AntibuilderBlockEntity.RADIUS), pos.offset(AntibuilderBlockEntity.RADIUS, AntibuilderBlockEntity.RADIUS, AntibuilderBlockEntity.RADIUS))) {
 					te.captureBlockData(level, pos);
 					te.slowScan = true;
 				}
@@ -209,7 +209,7 @@ public class AntibuilderBlockEntity extends BlockEntity {
 	}
 
 	private boolean revertBlock(Level level, BlockPos pos, BlockState stateThere, BlockState replaceWith) {
-		if (stateThere.isAir() && !replaceWith.blocksMotion()) {
+		if (stateThere.isAir() && !replaceWith.isSolid()) {
 			return false;
 		}
 		if (stateThere.getDestroySpeed(level, pos) < 0 || this.isUnrevertable(stateThere, replaceWith)) {
