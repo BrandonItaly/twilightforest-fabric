@@ -27,7 +27,7 @@ public class TFMapDecorations {
 		return Registry.register(
 			BuiltInRegistries.MAP_DECORATION_TYPE,
 			TFCommon.prefix(name),
-			new MapDecorationType(TFCommon.prefix(name), true, -1, false, true)
+			new MapDecorationType(TFCommon.prefix(name), true, true)
 		);
 	}
 

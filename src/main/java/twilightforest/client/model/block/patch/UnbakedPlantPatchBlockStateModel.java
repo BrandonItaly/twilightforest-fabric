@@ -20,7 +20,7 @@ public record UnbakedPlantPatchBlockStateModel(Material texture, boolean shaggif
 	public BlockStateModel bake(ModelBaker modelBaker) {
 		Material.Baked bakedMaterial = modelBaker.materials().get(this.texture, this.texture.sprite()::toDebugFileName);
 
-		BakedQuad.MaterialInfo materialInfo = BakedQuad.MaterialInfo.of(bakedMaterial, bakedMaterial.forceTranslucent() ? Transparency.TRANSLUCENT : bakedMaterial.sprite().transparency(), 0, true, 0);
+		BakedQuad.MaterialInfo materialInfo = BakedQuad.MaterialInfo.of(bakedMaterial, bakedMaterial.forceTranslucent() ? Transparency.TRANSLUCENT : bakedMaterial.sprite().transparency(), 0, null, 0);
 
 		return new PatchModel(materialInfo, this.shaggify, bakedMaterial);
 	}

@@ -14,6 +14,7 @@ import net.minecraft.client.resources.model.EquipmentClientInfo;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.equipment.Equippable;
@@ -78,7 +79,7 @@ public final class TravellersArmorRenderer extends TFArmorRenderer {
 		}
 
 		EquipmentClientInfo.LayerType layerType = state.isBaby
-			&& state.entityType != EntityType.ARMOR_STAND
+			&& state.entityType != EntityTypes.ARMOR_STAND
 			? EquipmentClientInfo.LayerType.HUMANOID_BABY
 			: slot == EquipmentSlot.LEGS
 			? EquipmentClientInfo.LayerType.HUMANOID_LEGGINGS
@@ -129,9 +130,7 @@ public final class TravellersArmorRenderer extends TFArmorRenderer {
 			OverlayTexture.NO_OVERLAY,
 			-1,
 			null,
-			outlineColor,
-			null
-		);
+			outlineColor);
 	}
 
 	private boolean isModelSlim(HumanoidModel<?> model) {

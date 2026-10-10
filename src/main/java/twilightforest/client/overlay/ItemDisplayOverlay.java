@@ -25,7 +25,7 @@ public class ItemDisplayOverlay {
 		Minecraft minecraft = Minecraft.getInstance();
 		Gui gui = minecraft.gui;
 
-		if (player == null || gui.getDebugOverlay().showDebugScreen() || minecraft.options.hideGui)
+		if (player == null || minecraft.getDebugOverlay().showDebugScreen() || minecraft.gui.hud.isHidden())
 			return;
 
 		ItemStack goggles = player.getItemBySlot(EquipmentSlot.HEAD);

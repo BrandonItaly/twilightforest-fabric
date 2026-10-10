@@ -11,7 +11,9 @@ import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.entity.Display;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.EntitySpawnRequest;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
@@ -48,11 +50,11 @@ public class DisplayUtil {
 		listtag.add(StringTag.valueOf(this.tag));
 		entityNBT.put("Tags", listtag);
 
-		entityNBT.putString("id", BuiltInRegistries.ENTITY_TYPE.getKey(EntityType.BLOCK_DISPLAY).toString());
+		entityNBT.putString("id", BuiltInRegistries.ENTITY_TYPE.getKey(EntityTypes.BLOCK_DISPLAY).toString());
 
 		ProblemReporter.Collector entitySpawnReporter = new ProblemReporter.Collector();
 		ValueInput valueInput = TagValueInput.create(entitySpawnReporter, level.registryAccess(), entityNBT);
-		Optional<Entity> spawned = EntityType.create(valueInput, level, EntitySpawnReason.LOAD);
+		Optional<Entity> spawned = EntityType.create(valueInput, level, new EntitySpawnRequest(EntitySpawnReason.LOAD, false));
 
 		if (spawned.isEmpty()) return false;
 		Entity entity = spawned.get();
@@ -92,11 +94,11 @@ public class DisplayUtil {
 		listtag.add(StringTag.valueOf(this.tag));
 		entityNBT.put("Tags", listtag);
 
-		entityNBT.putString("id", BuiltInRegistries.ENTITY_TYPE.getKey(EntityType.TEXT_DISPLAY).toString());
+		entityNBT.putString("id", BuiltInRegistries.ENTITY_TYPE.getKey(EntityTypes.TEXT_DISPLAY).toString());
 
 		ProblemReporter.Collector entitySpawnReporter = new ProblemReporter.Collector();
 		ValueInput valueInput = TagValueInput.create(entitySpawnReporter, level.registryAccess(), entityNBT);
-		Optional<Entity> spawned = EntityType.create(valueInput, level, EntitySpawnReason.LOAD);
+		Optional<Entity> spawned = EntityType.create(valueInput, level, new EntitySpawnRequest(EntitySpawnReason.LOAD, false));
 
 		if (spawned.isEmpty()) return;
 		Entity entity = spawned.get();

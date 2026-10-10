@@ -3,7 +3,7 @@ package twilightforest.asm.mixin;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
-import com.mojang.blaze3d.buffers.GpuBufferSlice;
+import com.mojang.renderpearl.api.buffers.GpuBufferSlice;
 import com.mojang.blaze3d.framegraph.FramePass;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
@@ -25,7 +25,7 @@ public class LevelRendererMixin {
 	private LevelRenderState levelRenderState;
 
 	@WrapOperation(
-		method = "addSkyPass(Lcom/mojang/blaze3d/framegraph/FrameGraphBuilder;Lnet/minecraft/client/renderer/state/level/CameraRenderState;Lcom/mojang/blaze3d/buffers/GpuBufferSlice;)V",
+		method = "addSkyPass(Lcom/mojang/blaze3d/framegraph/FrameGraphBuilder;Lnet/minecraft/client/renderer/state/level/CameraRenderState;Lcom/mojang/renderpearl/api/buffers/GpuBufferSlice;)V",
 		at = @At(
 			value = "INVOKE",
 			target = "Lcom/mojang/blaze3d/framegraph/FramePass;executes(Ljava/lang/Runnable;)V"
@@ -46,7 +46,7 @@ public class LevelRendererMixin {
 				TwilightForestRenderInfo.INSTANCE.renderSky(
 					this.levelRenderState,
 					state,
-					RenderSystem.getModelViewMatrix(),
+					RenderSystem.getModelViewMatrixCopy(),
 					() -> RenderSystem.setShaderFog(skyFog)
 				);
 			} else {

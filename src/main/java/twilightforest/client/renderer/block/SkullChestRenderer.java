@@ -45,14 +45,16 @@ public class SkullChestRenderer<T extends BlockEntity & LidBlockEntity> implemen
 		lidRotation = 1.0F - lidRotation;
 		lidRotation = 1.0F - lidRotation * lidRotation * lidRotation;
 
-		collector.submitModel(this.model, lidRotation, stack, this.model.renderType(state.texture), state.lightCoords, OverlayTexture.NO_OVERLAY, 0, state.breakProgress);
+		collector.submitModel(this.model, lidRotation, stack, this.model.renderType(state.texture), state.lightCoords, OverlayTexture.NO_OVERLAY, 0);
+		if (state.breakProgress != null)
+			collector.submitCrumblingOverlay(this.model, lidRotation, stack, this.model.renderType(state.texture), state.lightCoords, OverlayTexture.NO_OVERLAY, -1, state.breakProgress);
 		stack.popPose();
 	}
 
 	public static void applyCasketPose(PoseStack stack, Direction facing) {
 		stack.translate(0.5F, 0.0F, 0.5F);
-		stack.mulPose(facing.getRotation());
-		stack.mulPose(Axis.XP.rotationDegrees(90.0F));
+		stack.rotate(facing.getRotation());
+		stack.rotate(Axis.XP.rotationDegrees(90.0F));
 	}
 
 	public static void applyCasketItemPose(PoseStack stack) {

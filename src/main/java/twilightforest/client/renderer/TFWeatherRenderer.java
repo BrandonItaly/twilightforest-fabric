@@ -9,7 +9,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.LevelRenderer;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.WeatherEffectRenderer;
 import net.minecraft.client.renderer.state.level.WeatherRenderState;
 import net.minecraft.core.BlockPos;
@@ -22,6 +23,7 @@ import net.minecraft.server.level.ParticleStatus;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.util.LightCoordsUtil;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
@@ -87,11 +89,17 @@ public class TFWeatherRenderer {
 		}
 	}
 
+	public static int rainSoundTime;
+
 	public static void init() {
+		LevelRenderEvents.COLLECT_SUBMITS.register(context -> {
+			if (context.levelState().cameraRenderState != null && Minecraft.getInstance().level != null && Minecraft.getInstance().level.dimension().equals(TFDimension.DIMENSION_KEY))
+				renderSnowAndRain(Minecraft.getInstance().level, (int) context.levelState().gameTime, Minecraft.getInstance().getDeltaTracker().getGameTimeDeltaPartialTick(false), context.levelState().cameraRenderState.pos, context.submitNodeCollector());
+		});
 		LevelRenderEvents.END_EXTRACTION.register(TFWeatherRenderer::extractUrGhastRain);
 	}
 
-	public static boolean renderSnowAndRain(ClientLevel level, int ticks, float partialTicks, Vec3 camera, MultiBufferSource buffer) {
+	public static boolean renderSnowAndRain(ClientLevel level, int ticks, float partialTicks, Vec3 camera, SubmitNodeCollector buffer) {
 		Minecraft mc = Minecraft.getInstance();
 		if (progressionEnforced && mc.player != null && !mc.player.isCreative() && !mc.player.isSpectator()) {
 			// locked biome weather effects
@@ -99,16 +107,13 @@ public class TFWeatherRenderer {
 
 			// locked structures
 			renderLockedStructure(ticks, partialTicks, camera, buffer);
-
-			if (buffer instanceof MultiBufferSource.BufferSource bufferSource)
-				bufferSource.endBatch();
 		}
 
 		//render normal weather anyway
 		return false;
 	}
 
-	private static void renderLockedBiome(int ticks, float partialTicks, ClientLevel level, LocalPlayer player, Vec3 camera, MultiBufferSource buffer) {
+	private static void renderLockedBiome(int ticks, float partialTicks, ClientLevel level, LocalPlayer player, Vec3 camera, SubmitNodeCollector buffer) {
 		// check nearby for locked biome
 		if (isNearLockedBiome(level, player)) {
 			int px = Mth.floor(camera.x());
@@ -194,7 +199,7 @@ public class TFWeatherRenderer {
 									float uFactor = random.nextFloat();
 									float vFactor = random.nextFloat();
 									int terrainHeight = level.getHeight(Heightmap.Types.MOTION_BLOCKING, dx, dz);
-									int worldBrightness = LevelRenderer.getLightCoords(level, pos.set(dx, Math.max(py, terrainHeight), dz));
+									int worldBrightness = LightCoordsUtil.getLightCoords(level, pos.set(dx, Math.max(py, terrainHeight), dz));
 									renderEffect(currentType.getTextureLocation(), rainX, rainZ, minY, maxY, camera, dx, dz, countFactor, uFactor, vFactor, new float[]{1.0F, 1.0F, 1.0F, alpha}, worldBrightness, buffer);
 								}
 							}
@@ -206,7 +211,7 @@ public class TFWeatherRenderer {
 	}
 
 	@SuppressWarnings("ConstantConditions")
-	private static void renderLockedStructure(int ticks, float partialTicks, Vec3 camera, MultiBufferSource buffer) {
+	private static void renderLockedStructure(int ticks, float partialTicks, Vec3 camera, SubmitNodeCollector buffer) {
 		int range = Minecraft.getInstance().options.weatherRadius().get();
 		int px = Mth.floor(camera.x());
 		int py = Mth.floor(camera.y());
@@ -310,28 +315,30 @@ public class TFWeatherRenderer {
 		return intervals;
 	}
 
-	private static void renderEffect(Identifier type, double rainX, double rainZ, int minY, int maxY, Vec3 camera, int dx, int dz, float countFactor, float uFactor, float vFactor, float[] color, int light, MultiBufferSource bufferSource) {
-		VertexConsumer consumer = bufferSource.getBuffer(RenderTypeUtil.weather(type, Minecraft.useShaderTransparency()));
+	private static void renderEffect(Identifier type, double rainX, double rainZ, int minY, int maxY, Vec3 camera, int dx, int dz, float countFactor, float uFactor, float vFactor, float[] color, int light, SubmitNodeCollector bufferSource) {
+		float[] rgba = color.clone();
+		bufferSource.submitCustomGeometry(new PoseStack(), RenderTypeUtil.weather(type, false), (pose, consumer) -> {
 		consumer
-			.addVertex((float) (dx - camera.x() - rainX + 0.5F), (float) (minY - camera.y()), (float) (dz - camera.z() - rainZ + 0.5F))
+			.addVertex(pose, (float) (dx - camera.x() - rainX + 0.5F), (float) (minY - camera.y()), (float) (dz - camera.z() - rainZ + 0.5F))
 			.setUv(0.0F + uFactor, minY * 0.25F + countFactor + vFactor)
-			.setColor(color[0], color[1], color[2], color[3])
+			.setColor(rgba[0], rgba[1], rgba[2], rgba[3])
 			.setLight(light);
 		consumer
-			.addVertex((float) (dx - camera.x() + rainX + 0.5F), (float) (minY - camera.y()), (float) (dz - camera.z() + rainZ + 0.5F))
+			.addVertex(pose, (float) (dx - camera.x() + rainX + 0.5F), (float) (minY - camera.y()), (float) (dz - camera.z() + rainZ + 0.5F))
 			.setUv(1.0F + uFactor, minY * 0.25F + countFactor + vFactor)
-			.setColor(color[0], color[1], color[2], color[3])
+			.setColor(rgba[0], rgba[1], rgba[2], rgba[3])
 			.setLight(light);
 		consumer
-			.addVertex((float) (dx - camera.x() + rainX + 0.5F), (float) (maxY - camera.y()), (float) (dz - camera.z() + rainZ + 0.5F))
+			.addVertex(pose, (float) (dx - camera.x() + rainX + 0.5F), (float) (maxY - camera.y()), (float) (dz - camera.z() + rainZ + 0.5F))
 			.setUv(1.0F + uFactor, maxY * 0.25F + countFactor + vFactor)
-			.setColor(color[0], color[1], color[2], color[3])
+			.setColor(rgba[0], rgba[1], rgba[2], rgba[3])
 			.setLight(light);
 		consumer
-			.addVertex((float) (dx - camera.x() - rainX + 0.5F), (float) (maxY - camera.y()), (float) (dz - camera.z() - rainZ + 0.5F))
+			.addVertex(pose, (float) (dx - camera.x() - rainX + 0.5F), (float) (maxY - camera.y()), (float) (dz - camera.z() - rainZ + 0.5F))
 			.setUv(0.0F + uFactor, maxY * 0.25F + countFactor + vFactor)
-			.setColor(color[0], color[1], color[2], color[3])
+			.setColor(rgba[0], rgba[1], rgba[2], rgba[3])
 			.setLight(light);
+	});
 	}
 
 	private static boolean isNearLockedBiome(Level level, Entity viewEntity) {
@@ -443,8 +450,8 @@ public class TFWeatherRenderer {
 				}
 			}
 
-			if (blockpos1 != null && randomsource.nextInt(4) < Minecraft.getInstance().levelRenderer.weatherEffectRenderer.rainSoundTime++) {
-				Minecraft.getInstance().levelRenderer.weatherEffectRenderer.rainSoundTime = 0;
+			if (blockpos1 != null && randomsource.nextInt(4) < rainSoundTime++) {
+				rainSoundTime = 0;
 				if (blockpos1.getY() > blockpos.getY() + 1 && level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, blockpos).getY() > Mth.floor((float) blockpos.getY())) {
 					level.playLocalSound(blockpos1, SoundEvents.WEATHER_RAIN_ABOVE, SoundSource.WEATHER, 0.1F, 0.5F, false);
 				} else {
@@ -466,7 +473,7 @@ public class TFWeatherRenderer {
 		if (urGhastRain <= renderState.intensity)
 			return;
 
-		int ticks = context.levelRenderer().ticks;
+		int ticks = (int) context.levelState().gameTime;
 		float partialTicks = context.deltaTracker().getGameTimeDeltaPartialTick(false);
 		Vec3 cameraPos = context.camera().position();
 
@@ -485,7 +492,7 @@ public class TFWeatherRenderer {
 				int y1 = Math.max(cameraBlockY + renderState.radius, terrainHeight);
 				if (y1 - y0 != 0 && getPrecipitationAt(level, mutablePos.set(x, cameraBlockY, z)) == Biome.Precipitation.RAIN) {
 					columnRandom.setSeed(x * x * 3121L + x * 45238971L ^ z * z * 418711L + z * 13761L);
-					int lightCoords = LevelRenderer.getLightCoords(level, mutablePos.set(x, Math.max(cameraBlockY, terrainHeight), z));
+					int lightCoords = LightCoordsUtil.getLightCoords(level, mutablePos.set(x, Math.max(cameraBlockY, terrainHeight), z));
 					int wrappedTicks = ticks & 131071;
 					int tickOffset = x * x * 3121 + x * 45238971 + z * z * 418711 + z * 13761 & 0xFF;
 					float blockPosRainSpeed = 3.0F + columnRandom.nextFloat();

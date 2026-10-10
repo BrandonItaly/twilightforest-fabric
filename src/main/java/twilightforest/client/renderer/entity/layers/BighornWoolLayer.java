@@ -45,9 +45,7 @@ public class BighornWoolLayer extends RenderLayer<SheepRenderState, SheepModel> 
 					LivingEntityRenderer.getOverlayCoords(state, 0.0F),
 					-16777216,
 					null,
-					state.outlineColor,
-					null
-				);
+					state.outlineColor);
 			}
 		} else {
 			coloredCutoutModelCopyLayerRender(model, SHEEP_WOOL_LOCATION, poseStack, submitNodeCollector, lightCoords, state, state.getWoolColor(), state.isBaby ? 1 : 0);

@@ -18,6 +18,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.storage.WritableLevelData;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import org.jspecify.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
@@ -53,13 +54,16 @@ public abstract class ClientLevelMixin extends Level implements AddBreakingBlock
 		return !ClientBlockExtensionHooks.shouldApplyDestroyEffects(blockState, this, pos, this.minecraft.particleEngine);
 	}
 
-	@WrapMethod(method = "addBreakingBlockEffect(Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;)V")
+	@WrapMethod(method = "addBreakingParticles(Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;Lnet/minecraft/world/level/block/state/BlockState;)V")
 	private void twilightforest$wrapAddBreakingBlockEffect(
 		BlockPos pos,
 		Direction direction,
+		BlockState state,
 		Operation<Void> original
 	) {
-		twilightforest$addBreakingBlockEffect(pos, direction, null);
+		HitResult hit = this.minecraft.hitResult;
+		if (!(hit instanceof BlockHitResult blockHit) || !blockHit.getBlockPos().equals(pos)) hit = null;
+		twilightforest$addBreakingBlockEffect(pos, direction, hit);
 	}
 
 	@Override

@@ -6,7 +6,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderContext;
 import net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LevelRenderer;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -16,6 +16,7 @@ import net.minecraft.server.level.ParticleStatus;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.util.LightCoordsUtil;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.biome.Biome;
@@ -43,13 +44,13 @@ public final class CloudEventListeners {
 
 	public static void init() {
 		ClientTickEvents.END_CLIENT_TICK.register(CloudEventListeners::tickWeatherEffects);
-		LevelRenderEvents.AFTER_TRANSLUCENT_TERRAIN.register(CloudEventListeners::renderPrecipitation);
+		LevelRenderEvents.COLLECT_SUBMITS.register(CloudEventListeners::renderPrecipitation);
 	}
 
 	public static void tickWeatherEffects(Minecraft mc) {
 		if (!mc.isPaused()) {
 			if (mc.level != null && TFConfig.getClientCloudBlockPrecipitationDistance() > 0) { // Semi vanilla copy of the weather tick, but made to work with cloud blocks instead
-				Vec3 vec3 = mc.gameRenderer.getMainCamera().position();
+				Vec3 vec3 = mc.gameRenderer.mainCamera().position();
 				if (mc.level.getGameTime() % 10L == 0L) {
 					RENDER_HELPER.clear();
 
@@ -119,8 +120,8 @@ public final class CloudEventListeners {
 									if (!Heightmap.Types.MOTION_BLOCKING.isOpaque().test(mc.level.getBlockState(highestRainyPos.below())))
 										continue;
 
-									if (yetToMakeASound && particlePos != null && randomsource.nextInt(3) < mc.levelRenderer.weatherEffectRenderer.rainSoundTime++) {
-										mc.levelRenderer.weatherEffectRenderer.rainSoundTime = 0;
+									if (yetToMakeASound && particlePos != null && randomsource.nextInt(3) < TFWeatherRenderer.rainSoundTime++) {
+										TFWeatherRenderer.rainSoundTime = 0;
 										if (particlePos.getY() > camPos.getY() + 1 && mc.level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, camPos).getY() > Mth.floor((float) camPos.getY())) {
 											mc.level.playLocalSound(particlePos, SoundEvents.WEATHER_RAIN_ABOVE, SoundSource.WEATHER, 0.1F, 0.5F, false);
 										} else {
@@ -160,7 +161,7 @@ public final class CloudEventListeners {
 			float partialTick = minecraft.getDeltaTracker().getGameTimeDeltaPartialTick(false);
 			int ticks = (int) context.levelState().gameTime;
 
-			Vec3 vec3 = context.gameRenderer().getMainCamera().position();
+			Vec3 vec3 = context.gameRenderer().mainCamera().position();
 			double camX = vec3.x();
 			double camY = vec3.y();
 			double camZ = vec3.z();
@@ -171,7 +172,7 @@ public final class CloudEventListeners {
 
 			float fullTick = (float) ticks + partialTick;
 			BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
-			MultiBufferSource.BufferSource bufferSource = minecraft.renderBuffers().bufferSource();
+			SubmitNodeCollector bufferSource = context.submitNodeCollector();
 
 			for (PrecipitationRenderHelper helper : RENDER_HELPER) {
 				BlockPos pos = helper.cloudPos();
@@ -190,23 +191,24 @@ public final class CloudEventListeners {
 
 				RandomSource random = RandomSource.create((long) roofX * roofX * 3121 + roofX * 45238971L ^ (long) roofZ * roofZ * 418711 + roofZ * 13761L);
 				if (helper.precipitation() == Biome.Precipitation.RAIN) {
-					RenderType renderType = RenderTypeUtil.weather(TFWeatherRenderer.RAIN_TEXTURES, Minecraft.useShaderTransparency());
+					RenderType renderType = RenderTypeUtil.weather(TFWeatherRenderer.RAIN_TEXTURES, false);
 
 					int offset = ticks + roofX * roofX * 3121 + roofX * 45238971 + roofZ * roofZ * 418711 + roofZ * 13761 & 31;
 					float uvOffset = -((float) offset + partialTick) / 32.0F * (3.0F + random.nextFloat());
 					float distance = (float) (columnDistance / (double) renderDistance);
 					float alpha = ((1.0F - distance * distance) * 0.5F + 0.5F) * helper.precipitationLevel();
 					mutableBlockPos.set(roofX, Math.max(helper.rainOnY(), floorY), roofZ);
-					int lightCoords = LevelRenderer.getLightCoords(minecraft.level, mutableBlockPos);
+					int lightCoords = LightCoordsUtil.getLightCoords(minecraft.level, mutableBlockPos);
 
-					VertexConsumer vC = bufferSource.getBuffer(renderType);
+					bufferSource.submitCustomGeometry(context.poseStack(), renderType, (pose, vC) -> {
 
-					vC.addVertex(context.poseStack().last(), (float) (roofX - camX - rainX + 0.5D), (float) (topY - camY), (float) (roofZ - camZ - rainZ + 0.5D)).setUv(0.0F, (float) botY * 0.25F + uvOffset).setColor(1.0F, 1.0F, 1.0F, alpha).setLight(lightCoords);
-					vC.addVertex(context.poseStack().last(), (float) (roofX - camX + rainX + 0.5D), (float) (topY - camY), (float) (roofZ - camZ + rainZ + 0.5D)).setUv(1.0F, (float) botY * 0.25F + uvOffset).setColor(1.0F, 1.0F, 1.0F, alpha).setLight(lightCoords);
-					vC.addVertex(context.poseStack().last(), (float) (roofX - camX + rainX + 0.5D), (float) (botY - camY), (float) (roofZ - camZ + rainZ + 0.5D)).setUv(1.0F, (float) topY * 0.25F + uvOffset).setColor(1.0F, 1.0F, 1.0F, alpha).setLight(lightCoords);
-					vC.addVertex(context.poseStack().last(), (float) (roofX - camX - rainX + 0.5D), (float) (botY - camY), (float) (roofZ - camZ - rainZ + 0.5D)).setUv(0.0F, (float) topY * 0.25F + uvOffset).setColor(1.0F, 1.0F, 1.0F, alpha).setLight(lightCoords);
+					vC.addVertex(pose, (float) (roofX - camX - rainX + 0.5D), (float) (topY - camY), (float) (roofZ - camZ - rainZ + 0.5D)).setUv(0.0F, (float) botY * 0.25F + uvOffset).setColor(1.0F, 1.0F, 1.0F, alpha).setLight(lightCoords);
+					vC.addVertex(pose, (float) (roofX - camX + rainX + 0.5D), (float) (topY - camY), (float) (roofZ - camZ + rainZ + 0.5D)).setUv(1.0F, (float) botY * 0.25F + uvOffset).setColor(1.0F, 1.0F, 1.0F, alpha).setLight(lightCoords);
+					vC.addVertex(pose, (float) (roofX - camX + rainX + 0.5D), (float) (botY - camY), (float) (roofZ - camZ + rainZ + 0.5D)).setUv(1.0F, (float) topY * 0.25F + uvOffset).setColor(1.0F, 1.0F, 1.0F, alpha).setLight(lightCoords);
+					vC.addVertex(pose, (float) (roofX - camX - rainX + 0.5D), (float) (botY - camY), (float) (roofZ - camZ - rainZ + 0.5D)).setUv(0.0F, (float) topY * 0.25F + uvOffset).setColor(1.0F, 1.0F, 1.0F, alpha).setLight(lightCoords);
+					});
 				} else if (helper.precipitation() == Biome.Precipitation.SNOW) {
-					RenderType renderType = RenderTypeUtil.weather(TFWeatherRenderer.SNOW_TEXTURES, Minecraft.useShaderTransparency());
+					RenderType renderType = RenderTypeUtil.weather(TFWeatherRenderer.SNOW_TEXTURES, false);
 
 					float offset = -((float) (ticks & 511) + partialTick) / 512.0F;
 					float uOffset = (float) (random.nextDouble() + (double) fullTick * 0.01D * (double) ((float) random.nextGaussian()));
@@ -215,22 +217,22 @@ public final class CloudEventListeners {
 					float alpha = ((1.0F - distance * distance) * 0.3F + 0.5F) * helper.precipitationLevel();
 					mutableBlockPos.set(roofX, Math.max(helper.rainOnY(), floorY), roofZ);
 
-					int lightCoords = LevelRenderer.getLightCoords(minecraft.level, mutableBlockPos);
+					int lightCoords = LightCoordsUtil.getLightCoords(minecraft.level, mutableBlockPos);
 					int u = lightCoords & '\uffff';
 					int v = lightCoords >> 16 & '\uffff';
 					u = (u * 3 + 240) / 4;
 					v = (v * 3 + 240) / 4;
+					final int blockLight = u, skyLight = v;
 
-					VertexConsumer vC = bufferSource.getBuffer(renderType);
+					bufferSource.submitCustomGeometry(context.poseStack(), renderType, (pose, vC) -> {
 
-					vC.addVertex(context.poseStack().last(), (float) (roofX - camX - rainX + 0.5D), (float) (topY - camY), (float) (roofZ - camZ - rainZ + 0.5D)).setUv(0.0F + uOffset, (float) botY * 0.25F + offset + vOffset).setColor(1.0F, 1.0F, 1.0F, alpha).setUv2(u, v);
-					vC.addVertex(context.poseStack().last(), (float) (roofX - camX + rainX + 0.5D), (float) (topY - camY), (float) (roofZ - camZ + rainZ + 0.5D)).setUv(1.0F + uOffset, (float) botY * 0.25F + offset + vOffset).setColor(1.0F, 1.0F, 1.0F, alpha).setUv2(u, v);
-					vC.addVertex(context.poseStack().last(), (float) (roofX - camX + rainX + 0.5D), (float) (botY - camY), (float) (roofZ - camZ + rainZ + 0.5D)).setUv(1.0F + uOffset, (float) topY * 0.25F + offset + vOffset).setColor(1.0F, 1.0F, 1.0F, alpha).setUv2(u, v);
-					vC.addVertex(context.poseStack().last(), (float) (roofX - camX - rainX + 0.5D), (float) (botY - camY), (float) (roofZ - camZ - rainZ + 0.5D)).setUv(0.0F + uOffset, (float) topY * 0.25F + offset + vOffset).setColor(1.0F, 1.0F, 1.0F, alpha).setUv2(u, v);
+					vC.addVertex(pose, (float) (roofX - camX - rainX + 0.5D), (float) (topY - camY), (float) (roofZ - camZ - rainZ + 0.5D)).setUv(0.0F + uOffset, (float) botY * 0.25F + offset + vOffset).setColor(1.0F, 1.0F, 1.0F, alpha).setUv2(blockLight, skyLight);
+					vC.addVertex(pose, (float) (roofX - camX + rainX + 0.5D), (float) (topY - camY), (float) (roofZ - camZ + rainZ + 0.5D)).setUv(1.0F + uOffset, (float) botY * 0.25F + offset + vOffset).setColor(1.0F, 1.0F, 1.0F, alpha).setUv2(blockLight, skyLight);
+					vC.addVertex(pose, (float) (roofX - camX + rainX + 0.5D), (float) (botY - camY), (float) (roofZ - camZ + rainZ + 0.5D)).setUv(1.0F + uOffset, (float) topY * 0.25F + offset + vOffset).setColor(1.0F, 1.0F, 1.0F, alpha).setUv2(blockLight, skyLight);
+					vC.addVertex(pose, (float) (roofX - camX - rainX + 0.5D), (float) (botY - camY), (float) (roofZ - camZ - rainZ + 0.5D)).setUv(0.0F + uOffset, (float) topY * 0.25F + offset + vOffset).setColor(1.0F, 1.0F, 1.0F, alpha).setUv2(blockLight, skyLight);
+					});
 				}
 			}
-
-			bufferSource.endBatch();
 		}
 	}
 }

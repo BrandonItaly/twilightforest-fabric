@@ -14,37 +14,20 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import twilightforest.client.TwilightForestRenderInfo;
 import twilightforest.init.TFDimension;
 
-@Mixin(WeatherEffectRenderer.class)
+@Mixin(ClientLevel.class)
 public class WeatherEffectRendererMixin {
 
 	@Inject(
-		method = "render(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/client/renderer/state/level/WeatherRenderState;)V",
-		at = @At("HEAD"),
-		cancellable = true
-	)
-	private void twilightforest$customRainAndSnow(
-		Vec3 cameraPos,
-		WeatherRenderState renderState,
-		CallbackInfo ci
-	) {
-		if (Minecraft.getInstance().level.dimension().equals(TFDimension.DIMENSION_KEY) && TwilightForestRenderInfo.INSTANCE.renderSnowAndRain(Minecraft.getInstance().renderBuffers().bufferSource(), cameraPos)) {
-			ci.cancel();
-		}
-	}
-
-	@Inject(
-		method = "tickRainParticles(Lnet/minecraft/client/multiplayer/ClientLevel;Lnet/minecraft/client/Camera;ILnet/minecraft/server/level/ParticleStatus;I)V",
+		method = "tickWeatherEffects()V",
 		at = @At("HEAD"),
 		cancellable = true
 	)
 	private void twilightforest$customRainTick(
-		ClientLevel level,
-		Camera camera,
-		int ticks,
-		ParticleStatus particleStatus,
-		int weatherRadius,
 		CallbackInfo ci
 	) {
+		ClientLevel level = (ClientLevel) (Object) this;
+		Camera camera = Minecraft.getInstance().gameRenderer.mainCamera();
+		int ticks = (int) level.getGameTime();
 		if (level.dimension().equals(TFDimension.DIMENSION_KEY) && TwilightForestRenderInfo.INSTANCE.tickRain(level, ticks, camera)) {
 			ci.cancel();
 		}

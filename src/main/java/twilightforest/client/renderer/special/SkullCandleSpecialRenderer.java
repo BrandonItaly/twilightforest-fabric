@@ -11,6 +11,7 @@ import net.minecraft.client.model.object.skull.SkullModelBase;
 import net.minecraft.client.renderer.PlayerSkinRenderCache;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.block.BlockModelRenderState;
+import net.minecraft.client.renderer.block.BlockModelResolver;
 import net.minecraft.client.renderer.blockentity.SkullBlockRenderer;
 import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
@@ -58,7 +59,7 @@ public record SkullCandleSpecialRenderer(PlayerSkinRenderCache playerSkinRenderC
 			stack.pushPose();
 			stack.mulPose(SkullCandleRenderer.CANDLE_TRANSFORMS.freeTransformations(0));
 			BlockModelRenderState state = new BlockModelRenderState();
-			SkullCandleRenderer.updateSkullCandle(skullCandles.color(), skullCandles.count(), Minecraft.getInstance().blockModelResolver, state, false);
+			SkullCandleRenderer.updateSkullCandle(skullCandles.color(), skullCandles.count(), new BlockModelResolver(Minecraft.getInstance().getModelManager()), state, false);
 			SkullCandleRenderer.submitCandles(state, stack, collector, light, overlay, outlineColor);
 			stack.popPose();
 		}

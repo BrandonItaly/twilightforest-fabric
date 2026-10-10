@@ -7,6 +7,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.block.BlockModelRenderState;
+import net.minecraft.client.renderer.block.BlockModelResolver;
 import net.minecraft.client.renderer.block.model.BlockDisplayContext;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
@@ -38,7 +39,7 @@ public class IceLayer<S extends LivingEntityRenderState, M extends EntityModel<?
 		if (id == null)
 			return;
 
-		Minecraft.getInstance().blockModelResolver.update(iceModel, Blocks.ICE.defaultBlockState(), displayContext);
+		new BlockModelResolver(Minecraft.getInstance().getModelManager()).update(iceModel, Blocks.ICE.defaultBlockState(), displayContext);
 
 		random.setSeed(id * id * 3121L + id * 45238971L);
 
@@ -53,9 +54,9 @@ public class IceLayer<S extends LivingEntityRenderState, M extends EntityModel<?
 			float dz = ((random.nextFloat() * (state.boundingBoxWidth * 2.0F)) - state.boundingBoxWidth) * 0.1F;
 			stack.translate(dx, dy, dz);
 			stack.scale(0.5F, 0.5F, 0.5F);
-			stack.mulPose(Axis.XP.rotationDegrees(random.nextFloat() * 360F));
-			stack.mulPose(Axis.YP.rotationDegrees(random.nextFloat() * 360F));
-			stack.mulPose(Axis.ZP.rotationDegrees(random.nextFloat() * 360F));
+			stack.rotate(Axis.XP.rotationDegrees(random.nextFloat() * 360F));
+			stack.rotate(Axis.YP.rotationDegrees(random.nextFloat() * 360F));
+			stack.rotate(Axis.ZP.rotationDegrees(random.nextFloat() * 360F));
 			stack.translate(-0.5F, -0.5F, -0.5F);
 
 			iceModel.submit(stack, submitNodeCollector, light, OverlayTexture.NO_OVERLAY, 0);

@@ -3,7 +3,7 @@ package twilightforest.client;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.state.level.LevelRenderState;
 import net.minecraft.client.renderer.state.level.SkyRenderState;
 import net.minecraft.resources.Identifier;
@@ -53,8 +53,8 @@ public class TwilightForestRenderInfo {
 		return skyRenderer.renderSky(levelRenderState, skyRenderState, modelViewMatrix, setupFog);
 	}
 
-	public boolean renderSnowAndRain(MultiBufferSource bufferSource, Vec3 camPos) {
-		return TFWeatherRenderer.renderSnowAndRain(Minecraft.getInstance().level, Minecraft.getInstance().levelRenderer.ticks, Minecraft.getInstance().getDeltaTracker().getGameTimeDeltaPartialTick(false), camPos, bufferSource);
+	public boolean renderSnowAndRain(SubmitNodeCollector bufferSource, Vec3 camPos) {
+		return TFWeatherRenderer.renderSnowAndRain(Minecraft.getInstance().level, (int) Minecraft.getInstance().level.getGameTime(), Minecraft.getInstance().getDeltaTracker().getGameTimeDeltaPartialTick(false), camPos, bufferSource);
 	}
 
 	public boolean tickRain(ClientLevel level, int ticks, Camera camera) {

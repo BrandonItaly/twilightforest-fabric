@@ -256,7 +256,7 @@ public final class TravellersClientEventListeners {
 	}
 
 	public static boolean ignoreKeyEvent(InputEvent.Key event, KeyMapping key) {
-		return !key.matches(event.getKeyEvent()) || event.getAction() != InputConstants.PRESS || Minecraft.getInstance().screen != null;
+		return !key.matches(event.getKeyEvent()) || event.getAction() != InputConstants.PRESS || Minecraft.getInstance().gui.screen() != null;
 	}
 
 	public static void renderGlovesInFirstPerson(RenderArmEvent event) {
