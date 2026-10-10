@@ -74,7 +74,7 @@ public class AreaProtectionPacket implements CustomPacketPayload {
 						}
 					}
 
-					ClientEntitySpawner.addEntity(level, new ProtectionBox(level, box));
+					ClientEntitySpawner.addLocalEntity(level, new ProtectionBox(level, box));
 				});
 
 				for (int i = 0; i < 20; i++) {

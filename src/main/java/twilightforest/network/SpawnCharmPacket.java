@@ -56,7 +56,7 @@ public record SpawnCharmPacket(ItemStack charm, ResourceKey<SoundEvent> event) i
 				} else {
 					CharmEffect effect = new CharmEffect(TFEntities.CHARM_EFFECT, player.level(), player, packet.charm());
 					effect.offset = (float) Math.PI;
-					ClientEntitySpawner.addEntity(level, effect);
+					ClientEntitySpawner.addLocalEntity(level, effect);
 				}
 				SoundEvent event = BuiltInRegistries.SOUND_EVENT.get(packet.event()).map(Holder.Reference::value).orElse(null);
 				if (camera != null && event != null) {
