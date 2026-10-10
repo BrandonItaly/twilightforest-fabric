@@ -4,6 +4,7 @@ import com.google.common.reflect.Reflection;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.registry.DynamicRegistries;
+import net.fabricmc.fabric.api.item.v1.BlockTransformerHelper;
 import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -149,6 +150,7 @@ public final class TFCommon implements ModInitializer {
 		registerConfig();
 		registerGiantToolDropConversions();
 		registerJarLids();
+		registerStrippableBlocks();
 		registerFlammableBlocks();
 		registerCompostables();
 		registerFuels();
@@ -292,6 +294,25 @@ public final class TFCommon implements ModInitializer {
 		JarBlockEntity.addLid(Items.BAMBOO_BLOCK);
 		JarBlockEntity.addLid(Items.STRIPPED_BAMBOO_BLOCK);
 		JarBlockEntity.addLid(Items.PUMPKIN, HolidayEvent.INSTANCE::isHalloweenWeek);
+	}
+
+	private static void registerStrippableBlocks() {
+		BlockTransformerHelper.registerStripping(TFBlocks.TWILIGHT_OAK_LOG, TFBlocks.STRIPPED_TWILIGHT_OAK_LOG);
+		BlockTransformerHelper.registerStripping(TFBlocks.CANOPY_LOG, TFBlocks.STRIPPED_CANOPY_LOG);
+		BlockTransformerHelper.registerStripping(TFBlocks.MANGROVE_LOG, TFBlocks.STRIPPED_MANGROVE_LOG);
+		BlockTransformerHelper.registerStripping(TFBlocks.DARK_LOG, TFBlocks.STRIPPED_DARK_LOG);
+		BlockTransformerHelper.registerStripping(TFBlocks.TIME_LOG, TFBlocks.STRIPPED_TIME_LOG);
+		BlockTransformerHelper.registerStripping(TFBlocks.TRANSFORMATION_LOG, TFBlocks.STRIPPED_TRANSFORMATION_LOG);
+		BlockTransformerHelper.registerStripping(TFBlocks.MINING_LOG, TFBlocks.STRIPPED_MINING_LOG);
+		BlockTransformerHelper.registerStripping(TFBlocks.SORTING_LOG, TFBlocks.STRIPPED_SORTING_LOG);
+		BlockTransformerHelper.registerStripping(TFBlocks.TWILIGHT_OAK_WOOD, TFBlocks.STRIPPED_TWILIGHT_OAK_WOOD);
+		BlockTransformerHelper.registerStripping(TFBlocks.CANOPY_WOOD, TFBlocks.STRIPPED_CANOPY_WOOD);
+		BlockTransformerHelper.registerStripping(TFBlocks.MANGROVE_WOOD, TFBlocks.STRIPPED_MANGROVE_WOOD);
+		BlockTransformerHelper.registerStripping(TFBlocks.DARK_WOOD, TFBlocks.STRIPPED_DARK_WOOD);
+		BlockTransformerHelper.registerStripping(TFBlocks.TIME_WOOD, TFBlocks.STRIPPED_TIME_WOOD);
+		BlockTransformerHelper.registerStripping(TFBlocks.TRANSFORMATION_WOOD, TFBlocks.STRIPPED_TRANSFORMATION_WOOD);
+		BlockTransformerHelper.registerStripping(TFBlocks.MINING_WOOD, TFBlocks.STRIPPED_MINING_WOOD);
+		BlockTransformerHelper.registerStripping(TFBlocks.SORTING_WOOD, TFBlocks.STRIPPED_SORTING_WOOD);
 	}
 
 	private static void registerFlammableBlocks() {
