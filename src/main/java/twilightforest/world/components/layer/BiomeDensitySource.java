@@ -142,13 +142,13 @@ public class BiomeDensitySource {
 				double distSq = dX * dX + dZ * dZ;
 
 				if (distSq < BLEND_RADIUS * BLEND_RADIUS) {
-					Optional<TerrainColumn> terrainColumn = BiomeDensitySource.this.getTerrainColumn(cx + xQuartStart, cz + zQuartStart);
-					if (terrainColumn.isPresent()) {
-						double falloff = BLEND_RADIUS * BLEND_RADIUS * this.columns.get(terrainColumn.get().getResourceKey()).weight().sampleValue(context, blockX, blockY, blockZ);
-						double scaleFalloff = BLEND_RADIUS * BLEND_RADIUS * this.columns.get(terrainColumn.get().getResourceKey()).weight().sampleValue(context, blockX, blockY, blockZ);
+					TerrainColumn.Compiled terrainColumn = this.columns.get(BiomeDensitySource.this.genBiomes.get().getBiome(cx + xQuartStart, cz + zQuartStart));
+					if (terrainColumn != null) {
+						double falloff = BLEND_RADIUS * BLEND_RADIUS * terrainColumn.weight().sampleValue(context, blockX, blockY, blockZ);
+						double scaleFalloff = BLEND_RADIUS * BLEND_RADIUS * terrainColumn.weight().sampleValue(context, blockX, blockY, blockZ);
 
-						double neighborDepth = this.columns.get(terrainColumn.get().getResourceKey()).depth().sampleValue(context, blockX, blockY, blockZ);
-						double neighborScale = this.columns.get(terrainColumn.get().getResourceKey()).scale().sampleValue(context, blockX, blockY, blockZ);
+						double neighborDepth = terrainColumn.depth().sampleValue(context, blockX, blockY, blockZ);
+						double neighborScale = terrainColumn.scale().sampleValue(context, blockX, blockY, blockZ);
 
 						falloff *= Math.exp((distSq * 2f + neighborDepth) * -0.4f);
 						totalMappedDepth += neighborDepth * falloff;
