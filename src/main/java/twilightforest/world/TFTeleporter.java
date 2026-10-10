@@ -385,7 +385,7 @@ public class TFTeleporter {
 	protected static void loadSurroundingArea(ServerLevel world, Vec3 pos) {
 
 		int x = Mth.floor(pos.x()) >> 4;
-		int z = Mth.floor(pos.y()) >> 4;
+		int z = Mth.floor(pos.z()) >> 4;
 
 		for (int dx = -2; dx <= 2; dx++) {
 			for (int dz = -2; dz <= 2; dz++) {
