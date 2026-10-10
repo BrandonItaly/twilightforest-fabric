@@ -1,8 +1,9 @@
 #version 330
+#extension GL_ARB_separate_shader_objects : require
 
-#moj_import <minecraft:dynamictransforms.glsl>
-#moj_import <minecraft:fog.glsl>
-#moj_import <minecraft:globals.glsl>
+#include <minecraft:dynamictransforms.glsl>
+#include <minecraft:fog.glsl>
+#include <minecraft:globals.glsl>
 
 //////////////// K.jpg's Re-oriented 4-Point BCC Noise (OpenSimplex2) ////////////////
 ////////////////////// Output: vec4(dF/dx, dF/dy, dF/dz, value) //////////////////////
@@ -109,10 +110,10 @@ layout(std140) uniform TwilightForestAurora {
     vec3 PositionContext;
 };
 
-out vec4 fragColor;
+layout(location = 0) out vec4 fragColor;
 
-in vec4 pixelPos;
-in vec4 vertexColor;
+layout(location = 0) in vec4 pixelPos;
+layout(location = 1) in vec4 vertexColor;
 
 const int STEPS = 16;
 const float FSTEPS = 16.0;
