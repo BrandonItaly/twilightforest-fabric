@@ -105,6 +105,14 @@ public class BiomeDensitySource {
 	private static final int BLEND_RADIUS_INT = Mth.floor(BLEND_RADIUS + 1.0);
 	private static final int BLOCK_XYZ_OFFSET = QuartPos.SIZE / 2;
 
+	public int domainAxes() {
+		int axes = DensityFunction.AXIS_X | DensityFunction.AXIS_Z;
+		for (TerrainColumn column : this.biomeList.values()) {
+			axes |= column.domainAxes();
+		}
+		return axes;
+	}
+
 	public Compiled compile(DensityFunction.CompileContext context) {
 		return new Compiled(this.biomeList.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue().compile(context))));
 	}

@@ -83,6 +83,10 @@ public final class TerrainColumn implements Comparable<TerrainColumn> {
 		return this.biomes.double2ObjectEntrySet().stream().reduce(reducer).map(Map.Entry::getValue).orElse(other);
 	}
 
+	public int domainAxes() {
+		return this.noiseDepth.domainAxes() | this.noiseScale.domainAxes() | this.noiseWeight.domainAxes();
+	}
+
 	public Compiled compile(DensityFunction.CompileContext context) {
 		return new Compiled(noiseDepth.compileSampler(context), noiseScale.compileSampler(context), noiseWeight.compileSampler(context));
 	}

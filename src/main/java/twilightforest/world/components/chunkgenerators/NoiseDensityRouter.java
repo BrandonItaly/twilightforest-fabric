@@ -60,7 +60,7 @@ public class NoiseDensityRouter implements DensityFunction {
 	@Override
 	public Interval range() { return Interval.encapsulating((float) lowerDensityBound, (float) upperDensityBound); }
 	@Override
-	public int domainAxes() { return ALL_AXES; }
+	public int domainAxes() { return this.biomeDensitySourceHolder.value().domainAxes(); }
 	@Override
 	public MapCodec<? extends DensityFunction> codec() { return CODEC; }
 	public Holder<BiomeDensitySource> biomeDensitySourceHolder() {

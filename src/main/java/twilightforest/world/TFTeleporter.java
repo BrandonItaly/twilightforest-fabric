@@ -16,7 +16,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.LevelChunk;
+import net.minecraft.world.level.chunk.status.ChunkStatus;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.portal.TeleportTransition;
@@ -149,7 +151,7 @@ public class TFTeleporter {
 					continue;
 				}
 
-				for (BlockPos blockpos1 = pos.offset(i1, getScanHeight(destDim, pos) - pos.getY(), j1); blockpos1.getY() >= destDim.getMinY(); blockpos1 = blockpos2) {
+				for (BlockPos blockpos1 = pos.offset(i1, getScanHeight(chunk) - pos.getY(), j1); blockpos1.getY() >= destDim.getMinY(); blockpos1 = blockpos2) {
 					blockpos2 = blockpos1.below();
 
 					// don't lookup state if inner condition would fail
@@ -177,19 +179,18 @@ public class TFTeleporter {
 		return result;
 	}
 
-	private static int getScanHeight(ServerLevel world, BlockPos pos) {
-		return getScanHeight(world, pos.getX(), pos.getZ());
+	private static int getScanHeight(ServerLevel world, int x, int z) {
+		return getScanHeight(world.getChunk(x >> 4, z >> 4));
 	}
 
-	private static int getScanHeight(ServerLevel world, int x, int z) {
-		LevelChunk chunk = world.getChunk(x >> 4, z >> 4);
+	private static int getScanHeight(LevelChunk chunk) {
 
 		int sectionIndex = chunk.getHighestFilledSectionIndex();
 		int chunkHeight = sectionIndex == -1
 			? chunk.getMinY()
 			: SectionPos.sectionToBlockCoord(chunk.getSectionYFromSectionIndex(sectionIndex)) + 15;
 
-		return Math.min(world.getMaxY() - 1, chunkHeight);
+		return Math.min(chunk.getMaxY() - 1, chunkHeight);
 	}
 
 	private static boolean isPortal(BlockState state) {
@@ -316,7 +317,9 @@ public class TFTeleporter {
 			.map(HolderSet.ListBacked::iterator)
 			.orElse(Collections.emptyIterator());
 
-		LevelChunk chunkAt = destLevel.getChunkAt(pos);
+		// Safety checks need structure references, not fully generated terrain.
+		ChunkAccess chunkAt = destLevel.getChunk(SectionPos.blockToSectionCoord(pos.getX()),
+			SectionPos.blockToSectionCoord(pos.getZ()), ChunkStatus.STRUCTURE_REFERENCES);
 
 		while (landmarksInChunk.hasNext()) {
 			Holder<Structure> structureHolder = landmarksInChunk.next();
