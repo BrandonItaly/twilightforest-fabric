@@ -17,6 +17,7 @@ import net.minecraft.util.Unit;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.alchemy.Potions;
@@ -154,12 +155,12 @@ public class CraftingGenerator extends CraftingDataHelper {
 			.unlockedBy("has_item", has(TFBlocks.CICADA))
 			.save(this.output);
 
-		ShapelessRecipeBuilder.shapeless(getter, RecipeCategory.MISC, Items.MAGENTA_DYE)
+		ShapelessRecipeBuilder.shapeless(getter, RecipeCategory.MISC, Items.DYE.pick(DyeColor.MAGENTA))
 			.requires(Ingredient.of(TFBlocks.HUGE_WATER_LILY))
 			.unlockedBy("has_item", has(TFBlocks.HUGE_WATER_LILY))
 			.save(this.output, this.createKey("waterlily_to_magenta"));
 
-		ShapelessRecipeBuilder.shapeless(getter, RecipeCategory.MISC, Items.RED_DYE)
+		ShapelessRecipeBuilder.shapeless(getter, RecipeCategory.MISC, Items.DYE.pick(DyeColor.RED))
 			.requires(Ingredient.of(TFBlocks.THORN_ROSE))
 			.unlockedBy("has_item", has(TFBlocks.THORN_ROSE))
 			.save(this.output, this.createKey("thorn_rose_to_red"));
@@ -831,7 +832,7 @@ public class CraftingGenerator extends CraftingDataHelper {
 				.pattern("YGY")
 				.pattern("M M")
 				.define('M', Items.PHANTOM_MEMBRANE)
-				.define('Y', Items.YELLOW_STAINED_GLASS_PANE)
+				.define('Y', Items.STAINED_GLASS_PANE.pick(DyeColor.YELLOW))
 				.define('G', TFItems.TRAVELLERS_GOGGLES)
 				.build(),
 			TravellersModifiersManager.ALL_NIGHT_GOGGLES_MODIFIER).save(this.output);

@@ -4,6 +4,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.util.random.WeightedList;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.levelgen.GenerationStep;
@@ -34,7 +35,7 @@ public class FinalCastleStructureGenerator {
                 //.add(new MobSpawnSettings.SpawnerData(TFEntities.KOBOLD.get(), 1, 2), 10)
                 //.add(new MobSpawnSettings.SpawnerData(TFEntities.ADHERENT.get(), 1, 1), 10)
                 //.add(new MobSpawnSettings.SpawnerData(TFEntities.HARBINGER_CUBE.get(), 1, 1), 10)
-                //.add(new MobSpawnSettings.SpawnerData(EntityType.ENDERMAN, 1, 1), 10)
+                //.add(new MobSpawnSettings.SpawnerData(EntityTypes.ENDERMAN, 1, 1), 10)
                 .build()
             , WeightedList.<MobSpawnSettings.SpawnerData>builder()
                 // internal castle
@@ -49,7 +50,7 @@ public class FinalCastleStructureGenerator {
                 .build()
             , WeightedList.<MobSpawnSettings.SpawnerData>builder()
                 // forge
-                //.add(new MobSpawnSettings.SpawnerData(EntityType.BLAZE, 1, 1), 10)
+                //.add(new MobSpawnSettings.SpawnerData(EntityTypes.BLAZE, 1, 1), 10)
                 .build()
             ), WeightedList.of(), WeightedList.of()),
             new AdvancementLockedStructure.AdvancementLockConfig(List.of(TFCommon.prefix("progress_troll"))),

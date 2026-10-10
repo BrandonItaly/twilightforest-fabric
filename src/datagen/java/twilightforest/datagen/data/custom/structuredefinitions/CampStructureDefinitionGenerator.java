@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.util.random.WeightedList;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.structure.templatesystem.AlwaysTrueTest;
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockMatchTest;
@@ -52,21 +53,21 @@ public class CampStructureDefinitionGenerator extends StructureTemplateDefinitio
 		int defaultWeight = 10;
 		TemplatePoolInstance.ChooseRandomProcessors randomizedProcessors = new TemplatePoolInstance.ChooseRandomProcessors(List.of(
 			WeightedList.<StructureProcessor>builder()
-				.add(new StateTransfiguringProcessor(List.of(new ProcessorRule(new BlockMatchTest(Blocks.LIGHT_GRAY_WOOL), AlwaysTrueTest.INSTANCE, Blocks.WHITE_WOOL.defaultBlockState()))), defaultWeight)
-				.add(new StateTransfiguringProcessor(List.of(new ProcessorRule(new BlockMatchTest(Blocks.LIGHT_GRAY_WOOL), AlwaysTrueTest.INSTANCE, Blocks.LIGHT_GRAY_WOOL.defaultBlockState()))), defaultWeight)
-				.add(new StateTransfiguringProcessor(List.of(new ProcessorRule(new BlockMatchTest(Blocks.LIGHT_GRAY_WOOL), AlwaysTrueTest.INSTANCE, Blocks.GRAY_WOOL.defaultBlockState()))), defaultWeight)
-				.add(new StateTransfiguringProcessor(List.of(new ProcessorRule(new BlockMatchTest(Blocks.LIGHT_GRAY_WOOL), AlwaysTrueTest.INSTANCE, Blocks.BROWN_WOOL.defaultBlockState()))), defaultWeight)
-				.add(new StateTransfiguringProcessor(List.of(new ProcessorRule(new BlockMatchTest(Blocks.LIGHT_GRAY_WOOL), AlwaysTrueTest.INSTANCE, Blocks.GREEN_WOOL.defaultBlockState()))), defaultWeight)
-				.add(new StateTransfiguringProcessor(List.of(new ProcessorRule(new BlockMatchTest(Blocks.LIGHT_GRAY_WOOL), AlwaysTrueTest.INSTANCE, Blocks.BLUE_WOOL.defaultBlockState()))), defaultWeight)
-				.add(new StateTransfiguringProcessor(List.of(new ProcessorRule(new BlockMatchTest(Blocks.LIGHT_GRAY_WOOL), AlwaysTrueTest.INSTANCE, Blocks.RED_WOOL.defaultBlockState()))), defaultWeight)
-				.add(new StateTransfiguringProcessor(List.of(new ProcessorRule(new BlockMatchTest(Blocks.LIGHT_GRAY_WOOL), AlwaysTrueTest.INSTANCE, Blocks.LIME_WOOL.defaultBlockState()))), 1)
+				.add(new StateTransfiguringProcessor(List.of(new ProcessorRule(new BlockMatchTest(Blocks.WOOL.pick(DyeColor.LIGHT_GRAY)), AlwaysTrueTest.INSTANCE, Blocks.WOOL.pick(DyeColor.WHITE).defaultBlockState()))), defaultWeight)
+				.add(new StateTransfiguringProcessor(List.of(new ProcessorRule(new BlockMatchTest(Blocks.WOOL.pick(DyeColor.LIGHT_GRAY)), AlwaysTrueTest.INSTANCE, Blocks.WOOL.pick(DyeColor.LIGHT_GRAY).defaultBlockState()))), defaultWeight)
+				.add(new StateTransfiguringProcessor(List.of(new ProcessorRule(new BlockMatchTest(Blocks.WOOL.pick(DyeColor.LIGHT_GRAY)), AlwaysTrueTest.INSTANCE, Blocks.WOOL.pick(DyeColor.GRAY).defaultBlockState()))), defaultWeight)
+				.add(new StateTransfiguringProcessor(List.of(new ProcessorRule(new BlockMatchTest(Blocks.WOOL.pick(DyeColor.LIGHT_GRAY)), AlwaysTrueTest.INSTANCE, Blocks.WOOL.pick(DyeColor.BROWN).defaultBlockState()))), defaultWeight)
+				.add(new StateTransfiguringProcessor(List.of(new ProcessorRule(new BlockMatchTest(Blocks.WOOL.pick(DyeColor.LIGHT_GRAY)), AlwaysTrueTest.INSTANCE, Blocks.WOOL.pick(DyeColor.GREEN).defaultBlockState()))), defaultWeight)
+				.add(new StateTransfiguringProcessor(List.of(new ProcessorRule(new BlockMatchTest(Blocks.WOOL.pick(DyeColor.LIGHT_GRAY)), AlwaysTrueTest.INSTANCE, Blocks.WOOL.pick(DyeColor.BLUE).defaultBlockState()))), defaultWeight)
+				.add(new StateTransfiguringProcessor(List.of(new ProcessorRule(new BlockMatchTest(Blocks.WOOL.pick(DyeColor.LIGHT_GRAY)), AlwaysTrueTest.INSTANCE, Blocks.WOOL.pick(DyeColor.RED).defaultBlockState()))), defaultWeight)
+				.add(new StateTransfiguringProcessor(List.of(new ProcessorRule(new BlockMatchTest(Blocks.WOOL.pick(DyeColor.LIGHT_GRAY)), AlwaysTrueTest.INSTANCE, Blocks.WOOL.pick(DyeColor.LIME).defaultBlockState()))), 1)
 				.build(),
 			WeightedList.<StructureProcessor>builder()
-				.add(new StateTransfiguringProcessor(List.of(new ProcessorRule(new BlockMatchTest(Blocks.RED_BED), AlwaysTrueTest.INSTANCE, Blocks.RED_BED.defaultBlockState()))), defaultWeight)
-				.add(new StateTransfiguringProcessor(List.of(new ProcessorRule(new BlockMatchTest(Blocks.RED_BED), AlwaysTrueTest.INSTANCE, Blocks.LIGHT_BLUE_BED.defaultBlockState()))), defaultWeight)
-				.add(new StateTransfiguringProcessor(List.of(new ProcessorRule(new BlockMatchTest(Blocks.RED_BED), AlwaysTrueTest.INSTANCE, Blocks.LIME_BED.defaultBlockState()))), defaultWeight)
-				.add(new StateTransfiguringProcessor(List.of(new ProcessorRule(new BlockMatchTest(Blocks.RED_BED), AlwaysTrueTest.INSTANCE, Blocks.ORANGE_BED.defaultBlockState()))), defaultWeight)
-				.add(new StateTransfiguringProcessor(List.of(new ProcessorRule(new BlockMatchTest(Blocks.RED_BED), AlwaysTrueTest.INSTANCE, Blocks.LIGHT_GRAY_BED.defaultBlockState()))), defaultWeight)
+				.add(new StateTransfiguringProcessor(List.of(new ProcessorRule(new BlockMatchTest(Blocks.BED.pick(DyeColor.RED)), AlwaysTrueTest.INSTANCE, Blocks.BED.pick(DyeColor.RED).defaultBlockState()))), defaultWeight)
+				.add(new StateTransfiguringProcessor(List.of(new ProcessorRule(new BlockMatchTest(Blocks.BED.pick(DyeColor.RED)), AlwaysTrueTest.INSTANCE, Blocks.BED.pick(DyeColor.LIGHT_BLUE).defaultBlockState()))), defaultWeight)
+				.add(new StateTransfiguringProcessor(List.of(new ProcessorRule(new BlockMatchTest(Blocks.BED.pick(DyeColor.RED)), AlwaysTrueTest.INSTANCE, Blocks.BED.pick(DyeColor.LIME).defaultBlockState()))), defaultWeight)
+				.add(new StateTransfiguringProcessor(List.of(new ProcessorRule(new BlockMatchTest(Blocks.BED.pick(DyeColor.RED)), AlwaysTrueTest.INSTANCE, Blocks.BED.pick(DyeColor.ORANGE).defaultBlockState()))), defaultWeight)
+				.add(new StateTransfiguringProcessor(List.of(new ProcessorRule(new BlockMatchTest(Blocks.BED.pick(DyeColor.RED)), AlwaysTrueTest.INSTANCE, Blocks.BED.pick(DyeColor.LIGHT_GRAY).defaultBlockState()))), defaultWeight)
 				.build()
 		));
 

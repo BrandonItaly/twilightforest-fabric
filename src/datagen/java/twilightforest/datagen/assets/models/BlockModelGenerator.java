@@ -11,6 +11,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.random.Weighted;
 import net.minecraft.util.random.WeightedList;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import org.joml.Vector3f;
@@ -107,22 +108,22 @@ public class BlockModelGenerator extends BlockModelBuilders {
 			.with(sideOminous.with(Y_ROT_270))
 		);
 		this.createParticleOnlyBlock(TFBlocks.OMINOUS_CANDLE, Blocks.CANDLE);
-		this.createParticleOnlyBlock(TFBlocks.OMINOUS_BROWN_CANDLE, Blocks.BROWN_CANDLE);
-		this.createParticleOnlyBlock(TFBlocks.OMINOUS_WHITE_CANDLE, Blocks.WHITE_CANDLE);
-		this.createParticleOnlyBlock(TFBlocks.OMINOUS_LIGHT_GRAY_CANDLE, Blocks.LIGHT_GRAY_CANDLE);
-		this.createParticleOnlyBlock(TFBlocks.OMINOUS_GRAY_CANDLE, Blocks.GRAY_CANDLE);
-		this.createParticleOnlyBlock(TFBlocks.OMINOUS_BLACK_CANDLE, Blocks.BLACK_CANDLE);
-		this.createParticleOnlyBlock(TFBlocks.OMINOUS_RED_CANDLE, Blocks.RED_CANDLE);
-		this.createParticleOnlyBlock(TFBlocks.OMINOUS_ORANGE_CANDLE, Blocks.ORANGE_CANDLE);
-		this.createParticleOnlyBlock(TFBlocks.OMINOUS_YELLOW_CANDLE, Blocks.YELLOW_CANDLE);
-		this.createParticleOnlyBlock(TFBlocks.OMINOUS_GREEN_CANDLE, Blocks.GREEN_CANDLE);
-		this.createParticleOnlyBlock(TFBlocks.OMINOUS_LIME_CANDLE, Blocks.LIME_CANDLE);
-		this.createParticleOnlyBlock(TFBlocks.OMINOUS_BLUE_CANDLE, Blocks.BLUE_CANDLE);
-		this.createParticleOnlyBlock(TFBlocks.OMINOUS_CYAN_CANDLE, Blocks.CYAN_CANDLE);
-		this.createParticleOnlyBlock(TFBlocks.OMINOUS_LIGHT_BLUE_CANDLE, Blocks.LIGHT_BLUE_CANDLE);
-		this.createParticleOnlyBlock(TFBlocks.OMINOUS_PURPLE_CANDLE, Blocks.PURPLE_CANDLE);
-		this.createParticleOnlyBlock(TFBlocks.OMINOUS_MAGENTA_CANDLE, Blocks.MAGENTA_CANDLE);
-		this.createParticleOnlyBlock(TFBlocks.OMINOUS_PINK_CANDLE, Blocks.PINK_CANDLE);
+		this.createParticleOnlyBlock(TFBlocks.OMINOUS_BROWN_CANDLE, Blocks.DYED_CANDLE.pick(DyeColor.BROWN));
+		this.createParticleOnlyBlock(TFBlocks.OMINOUS_WHITE_CANDLE, Blocks.DYED_CANDLE.pick(DyeColor.WHITE));
+		this.createParticleOnlyBlock(TFBlocks.OMINOUS_LIGHT_GRAY_CANDLE, Blocks.DYED_CANDLE.pick(DyeColor.LIGHT_GRAY));
+		this.createParticleOnlyBlock(TFBlocks.OMINOUS_GRAY_CANDLE, Blocks.DYED_CANDLE.pick(DyeColor.GRAY));
+		this.createParticleOnlyBlock(TFBlocks.OMINOUS_BLACK_CANDLE, Blocks.DYED_CANDLE.pick(DyeColor.BLACK));
+		this.createParticleOnlyBlock(TFBlocks.OMINOUS_RED_CANDLE, Blocks.DYED_CANDLE.pick(DyeColor.RED));
+		this.createParticleOnlyBlock(TFBlocks.OMINOUS_ORANGE_CANDLE, Blocks.DYED_CANDLE.pick(DyeColor.ORANGE));
+		this.createParticleOnlyBlock(TFBlocks.OMINOUS_YELLOW_CANDLE, Blocks.DYED_CANDLE.pick(DyeColor.YELLOW));
+		this.createParticleOnlyBlock(TFBlocks.OMINOUS_GREEN_CANDLE, Blocks.DYED_CANDLE.pick(DyeColor.GREEN));
+		this.createParticleOnlyBlock(TFBlocks.OMINOUS_LIME_CANDLE, Blocks.DYED_CANDLE.pick(DyeColor.LIME));
+		this.createParticleOnlyBlock(TFBlocks.OMINOUS_BLUE_CANDLE, Blocks.DYED_CANDLE.pick(DyeColor.BLUE));
+		this.createParticleOnlyBlock(TFBlocks.OMINOUS_CYAN_CANDLE, Blocks.DYED_CANDLE.pick(DyeColor.CYAN));
+		this.createParticleOnlyBlock(TFBlocks.OMINOUS_LIGHT_BLUE_CANDLE, Blocks.DYED_CANDLE.pick(DyeColor.LIGHT_BLUE));
+		this.createParticleOnlyBlock(TFBlocks.OMINOUS_PURPLE_CANDLE, Blocks.DYED_CANDLE.pick(DyeColor.PURPLE));
+		this.createParticleOnlyBlock(TFBlocks.OMINOUS_MAGENTA_CANDLE, Blocks.DYED_CANDLE.pick(DyeColor.MAGENTA));
+		this.createParticleOnlyBlock(TFBlocks.OMINOUS_PINK_CANDLE, Blocks.DYED_CANDLE.pick(DyeColor.PINK));
 
 		this.createCrossBlockWithDefaultItem(TFBlocks.HUGE_WATER_LILY, PlantType.NOT_TINTED);
 		this.blockStateOutput.accept(createSimpleBlock(TFBlocks.RED_THREAD, plainVariant(ModelTemplates.PARTICLE_ONLY.create(TFBlocks.RED_THREAD, TextureMapping.particle(new Material(TFCommon.prefix("block/blank"))), this.modelOutput))));
@@ -134,8 +135,8 @@ public class BlockModelGenerator extends BlockModelBuilders {
 		this.wrapBlockItem(TFBlocks.CUT_MAZESTONE, block -> this.blockStateOutput.accept(createSimpleBlock(block, plainVariant(ModelTemplates.CUBE_COLUMN.create(block, TextureMapping.column(TextureMapping.getBlockTexture(block), TextureMapping.getBlockTexture(TFBlocks.MAZESTONE)), this.modelOutput)))));
 		this.wrapBlockItem(TFBlocks.MAZESTONE_MOSAIC, block -> this.blockStateOutput.accept(createSimpleBlock(block, plainVariant(ModelTemplates.CUBE_COLUMN.create(block, TextureMapping.column(TextureMapping.getBlockTexture(TFBlocks.MAZESTONE_BRICK), TextureMapping.getBlockTexture(block)), this.modelOutput)))));
 		this.wrapBlockItem(TFBlocks.MAZESTONE_BORDER, block -> this.blockStateOutput.accept(createSimpleBlock(block, plainVariant(ModelTemplates.CUBE_COLUMN.create(block, TextureMapping.column(TextureMapping.getBlockTexture(TFBlocks.MAZESTONE_BRICK), TextureMapping.getBlockTexture(block)), this.modelOutput)))));
-		this.wrapTintedBlockItem(TFBlocks.SMOKER, new GrassColorSource(), block -> this.blockStateOutput.accept(createSimpleBlock(block, plainVariant(TFModelTemplates.TINTED_CUBE_BOTTOM_TOP.create(block, TextureMapping.cubeTop(TFBlocks.FIRE_JET).put(TextureSlot.BOTTOM, TextureMapping.getBlockTexture(Blocks.BLACK_CONCRETE_POWDER)), this.modelOutput)))));
-		this.wrapTintedBlockItem(TFBlocks.FIRE_JET, new GrassColorSource(), block -> this.blockStateOutput.accept(createSimpleBlock(block, plainVariant(TFModelTemplates.TINTED_CUBE_BOTTOM_TOP.create(block, TextureMapping.cubeTop(block).put(TextureSlot.BOTTOM, TextureMapping.getBlockTexture(Blocks.BLACK_CONCRETE_POWDER)), this.modelOutput)))));
+		this.wrapTintedBlockItem(TFBlocks.SMOKER, new GrassColorSource(), block -> this.blockStateOutput.accept(createSimpleBlock(block, plainVariant(TFModelTemplates.TINTED_CUBE_BOTTOM_TOP.create(block, TextureMapping.cubeTop(TFBlocks.FIRE_JET).put(TextureSlot.BOTTOM, TextureMapping.getBlockTexture(Blocks.CONCRETE_POWDER.pick(DyeColor.BLACK))), this.modelOutput)))));
+		this.wrapTintedBlockItem(TFBlocks.FIRE_JET, new GrassColorSource(), block -> this.blockStateOutput.accept(createSimpleBlock(block, plainVariant(TFModelTemplates.TINTED_CUBE_BOTTOM_TOP.create(block, TextureMapping.cubeTop(block).put(TextureSlot.BOTTOM, TextureMapping.getBlockTexture(Blocks.CONCRETE_POWDER.pick(DyeColor.BLACK))), this.modelOutput)))));
 		this.wrapBlockItem(TFBlocks.UNDERBRICK, this::createTrivialCube);
 		this.wrapBlockItem(TFBlocks.CRACKED_UNDERBRICK, this::createTrivialCube);
 		this.wrapBlockItem(TFBlocks.MOSSY_UNDERBRICK, this::createTrivialCube);
@@ -238,7 +239,7 @@ public class BlockModelGenerator extends BlockModelBuilders {
 		this.wrapBlockItem(TFBlocks.WISPY_CLOUD, this::createTrivialCube);
 		this.wrapBlockItem(TFBlocks.RAINY_CLOUD, this::createTrivialCube);
 		this.wrapBlockItem(TFBlocks.SNOWY_CLOUD, this::createTrivialCube);
-		this.wrapBlockItem(TFBlocks.UBEROUS_SOIL, block -> this.createTrivialBlock(block, TexturedModel.createDefault(block1 -> new TextureMapping().put(TextureSlot.DIRT, TextureMapping.getBlockTexture(block)).put(TextureSlot.TOP, TextureMapping.getBlockTexture(block)), ModelTemplates.FARMLAND)));
+		this.wrapBlockItem(TFBlocks.UBEROUS_SOIL, block -> this.createTrivialBlock(block, TexturedModel.createDefault(block1 -> new TextureMapping().put(TextureSlot.BOTTOM, TextureMapping.getBlockTexture(block)).put(TextureSlot.SIDE, TextureMapping.getBlockTexture(block)).put(TextureSlot.TOP, TextureMapping.getBlockTexture(block)), ModelTemplates.CUBE_BOTTOM_TOP_INDENTED)));
 
 		this.wrapBlockItem(TFBlocks.CASTLE_BRICK, this::createTrivialCube);
 		this.wrapBlockItem(TFBlocks.WORN_CASTLE_BRICK, this::createTrivialCube);

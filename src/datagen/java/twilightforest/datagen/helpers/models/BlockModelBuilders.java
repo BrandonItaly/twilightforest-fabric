@@ -22,6 +22,7 @@ import net.minecraft.core.Vec3i;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import org.jetbrains.annotations.NotNull;
@@ -261,7 +262,7 @@ public abstract class BlockModelBuilders extends WoodBlockBuilders {
 		Identifier basalt = TFModelTemplates.CASKET_SOLID.create(TFCommon.prefix("block/casket_basalt"), new TextureMapping().put(TextureSlot.TOP, new Material(Identifier.withDefaultNamespace("block/basalt_top"))).put(TextureSlot.SIDE, new Material(Identifier.withDefaultNamespace("block/basalt_side"))), this.modelOutput);
 
 		this.casketBlockAndItemModels(TFBlocks.KEEPSAKE_CASKET, _ -> ItemModelUtils.specialModel(TFCommon.prefix("item/keepsake_casket"), new KeepsakeCasketSpecialRenderer.Unbaked()), this.createParticleOnlyBlockModel(TFBlocks.KEEPSAKE_CASKET, Blocks.NETHERITE_BLOCK), obsidian, stone, basalt);
-		this.casketBlockAndItemModels(TFBlocks.SKULL_CHEST, _ -> ItemModelUtils.specialModel(TFCommon.prefix("item/skull_chest"), new SkullChestSpecialRenderer.Unbaked()), this.createParticleOnlyBlockModel(TFBlocks.SKULL_CHEST, Blocks.LIGHT_GRAY_CONCRETE_POWDER), obsidian, stone, basalt);
+		this.casketBlockAndItemModels(TFBlocks.SKULL_CHEST, _ -> ItemModelUtils.specialModel(TFCommon.prefix("item/skull_chest"), new SkullChestSpecialRenderer.Unbaked()), this.createParticleOnlyBlockModel(TFBlocks.SKULL_CHEST, Blocks.CONCRETE_POWDER.pick(DyeColor.LIGHT_GRAY)), obsidian, stone, basalt);
 	}
 
 	private <B extends Block> void casketBlockAndItemModels(B block, Function<B, ItemModel.Unbaked> itemModel, MultiVariant particleOnlyBlockModel, Identifier obsidian, Identifier stone, Identifier basalt) {

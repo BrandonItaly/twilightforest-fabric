@@ -2,15 +2,17 @@ package twilightforest.datagen.data.loot;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricEntityLootSubProvider;
-import net.minecraft.advancements.criterion.EntityPredicate;
-import net.minecraft.advancements.criterion.MinMaxBounds;
+import net.minecraft.advancements.predicates.entity.EntityPredicate;
+import net.minecraft.advancements.predicates.MinMaxBounds;
 import net.minecraft.advancements.criterion.SlimePredicate;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.loot.*;
@@ -22,7 +24,7 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyC
 import net.minecraft.world.level.storage.loot.predicates.LootItemKilledByPlayerCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceWithEnchantedBonusCondition;
-import net.minecraft.world.level.storage.loot.providers.number.BinomialDistributionGenerator;
+import net.minecraft.world.level.storage.loot.providers.number.ints.BinomialDistributionGenerator;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import twilightforest.init.TFBlocks;
@@ -51,33 +53,33 @@ public class EntityLootTables extends FabricEntityLootSubProvider {
 		add(TFEntities.PINCH_BEETLE, emptyLootTable());
 		add(TFEntities.QUEST_RAM, emptyLootTable());
 		add(TFEntities.SQUIRREL, emptyLootTable());
-		add(TFEntities.DWARF_RABBIT, fromEntityLootTable(EntityType.RABBIT));
-		add(TFEntities.HEDGE_SPIDER, fromEntityLootTable(EntityType.SPIDER));
-		add(TFEntities.HOSTILE_WOLF, fromEntityLootTable(EntityType.WOLF));
-		add(TFEntities.KING_SPIDER, fromEntityLootTable(EntityType.SPIDER));
-		add(TFEntities.MIST_WOLF, fromEntityLootTable(EntityType.WOLF));
+		add(TFEntities.DWARF_RABBIT, fromEntityLootTable(EntityTypes.RABBIT));
+		add(TFEntities.HEDGE_SPIDER, fromEntityLootTable(EntityTypes.SPIDER));
+		add(TFEntities.HOSTILE_WOLF, fromEntityLootTable(EntityTypes.WOLF));
+		add(TFEntities.KING_SPIDER, fromEntityLootTable(EntityTypes.SPIDER));
+		add(TFEntities.MIST_WOLF, fromEntityLootTable(EntityTypes.WOLF));
 		add(TFEntities.REDCAP_SAPPER, fromEntityLootTable(TFEntities.REDCAP));
-		add(TFEntities.SWARM_SPIDER, fromEntityLootTable(EntityType.SPIDER));
-		add(TFEntities.CARMINITE_BROODLING, fromEntityLootTable(EntityType.SPIDER));
-		add(TFEntities.CARMINITE_GHASTGUARD, fromEntityLootTable(EntityType.GHAST));
-		add(TFEntities.BIGHORN_SHEEP, fromEntityLootTable(EntityType.SHEEP));
-		add(TFEntities.RISING_ZOMBIE, fromEntityLootTable(EntityType.ZOMBIE));
-		add(TFEntities.BIGHORN_SHEEP, TFLootTables.BIGHORN_SHEEP_BLACK, sheepLootTableBuilderWithDrop(Blocks.BLACK_WOOL));
-		add(TFEntities.BIGHORN_SHEEP, TFLootTables.BIGHORN_SHEEP_BLUE, sheepLootTableBuilderWithDrop(Blocks.BLUE_WOOL));
-		add(TFEntities.BIGHORN_SHEEP, TFLootTables.BIGHORN_SHEEP_BROWN, sheepLootTableBuilderWithDrop(Blocks.BROWN_WOOL));
-		add(TFEntities.BIGHORN_SHEEP, TFLootTables.BIGHORN_SHEEP_CYAN, sheepLootTableBuilderWithDrop(Blocks.CYAN_WOOL));
-		add(TFEntities.BIGHORN_SHEEP, TFLootTables.BIGHORN_SHEEP_GRAY, sheepLootTableBuilderWithDrop(Blocks.GRAY_WOOL));
-		add(TFEntities.BIGHORN_SHEEP, TFLootTables.BIGHORN_SHEEP_GREEN, sheepLootTableBuilderWithDrop(Blocks.GREEN_WOOL));
-		add(TFEntities.BIGHORN_SHEEP, TFLootTables.BIGHORN_SHEEP_LIGHT_BLUE, sheepLootTableBuilderWithDrop(Blocks.LIGHT_BLUE_WOOL));
-		add(TFEntities.BIGHORN_SHEEP, TFLootTables.BIGHORN_SHEEP_LIGHT_GRAY, sheepLootTableBuilderWithDrop(Blocks.LIGHT_GRAY_WOOL));
-		add(TFEntities.BIGHORN_SHEEP, TFLootTables.BIGHORN_SHEEP_LIME, sheepLootTableBuilderWithDrop(Blocks.LIME_WOOL));
-		add(TFEntities.BIGHORN_SHEEP, TFLootTables.BIGHORN_SHEEP_MAGENTA, sheepLootTableBuilderWithDrop(Blocks.MAGENTA_WOOL));
-		add(TFEntities.BIGHORN_SHEEP, TFLootTables.BIGHORN_SHEEP_ORANGE, sheepLootTableBuilderWithDrop(Blocks.ORANGE_WOOL));
-		add(TFEntities.BIGHORN_SHEEP, TFLootTables.BIGHORN_SHEEP_PINK, sheepLootTableBuilderWithDrop(Blocks.PINK_WOOL));
-		add(TFEntities.BIGHORN_SHEEP, TFLootTables.BIGHORN_SHEEP_PURPLE, sheepLootTableBuilderWithDrop(Blocks.PURPLE_WOOL));
-		add(TFEntities.BIGHORN_SHEEP, TFLootTables.BIGHORN_SHEEP_RED, sheepLootTableBuilderWithDrop(Blocks.RED_WOOL));
-		add(TFEntities.BIGHORN_SHEEP, TFLootTables.BIGHORN_SHEEP_WHITE, sheepLootTableBuilderWithDrop(Blocks.WHITE_WOOL));
-		add(TFEntities.BIGHORN_SHEEP, TFLootTables.BIGHORN_SHEEP_YELLOW, sheepLootTableBuilderWithDrop(Blocks.YELLOW_WOOL));
+		add(TFEntities.SWARM_SPIDER, fromEntityLootTable(EntityTypes.SPIDER));
+		add(TFEntities.CARMINITE_BROODLING, fromEntityLootTable(EntityTypes.SPIDER));
+		add(TFEntities.CARMINITE_GHASTGUARD, fromEntityLootTable(EntityTypes.GHAST));
+		add(TFEntities.BIGHORN_SHEEP, fromEntityLootTable(EntityTypes.SHEEP));
+		add(TFEntities.RISING_ZOMBIE, fromEntityLootTable(EntityTypes.ZOMBIE));
+		add(TFEntities.BIGHORN_SHEEP, TFLootTables.BIGHORN_SHEEP_BLACK, sheepLootTableBuilderWithDrop(Blocks.WOOL.pick(DyeColor.BLACK)));
+		add(TFEntities.BIGHORN_SHEEP, TFLootTables.BIGHORN_SHEEP_BLUE, sheepLootTableBuilderWithDrop(Blocks.WOOL.pick(DyeColor.BLUE)));
+		add(TFEntities.BIGHORN_SHEEP, TFLootTables.BIGHORN_SHEEP_BROWN, sheepLootTableBuilderWithDrop(Blocks.WOOL.pick(DyeColor.BROWN)));
+		add(TFEntities.BIGHORN_SHEEP, TFLootTables.BIGHORN_SHEEP_CYAN, sheepLootTableBuilderWithDrop(Blocks.WOOL.pick(DyeColor.CYAN)));
+		add(TFEntities.BIGHORN_SHEEP, TFLootTables.BIGHORN_SHEEP_GRAY, sheepLootTableBuilderWithDrop(Blocks.WOOL.pick(DyeColor.GRAY)));
+		add(TFEntities.BIGHORN_SHEEP, TFLootTables.BIGHORN_SHEEP_GREEN, sheepLootTableBuilderWithDrop(Blocks.WOOL.pick(DyeColor.GREEN)));
+		add(TFEntities.BIGHORN_SHEEP, TFLootTables.BIGHORN_SHEEP_LIGHT_BLUE, sheepLootTableBuilderWithDrop(Blocks.WOOL.pick(DyeColor.LIGHT_BLUE)));
+		add(TFEntities.BIGHORN_SHEEP, TFLootTables.BIGHORN_SHEEP_LIGHT_GRAY, sheepLootTableBuilderWithDrop(Blocks.WOOL.pick(DyeColor.LIGHT_GRAY)));
+		add(TFEntities.BIGHORN_SHEEP, TFLootTables.BIGHORN_SHEEP_LIME, sheepLootTableBuilderWithDrop(Blocks.WOOL.pick(DyeColor.LIME)));
+		add(TFEntities.BIGHORN_SHEEP, TFLootTables.BIGHORN_SHEEP_MAGENTA, sheepLootTableBuilderWithDrop(Blocks.WOOL.pick(DyeColor.MAGENTA)));
+		add(TFEntities.BIGHORN_SHEEP, TFLootTables.BIGHORN_SHEEP_ORANGE, sheepLootTableBuilderWithDrop(Blocks.WOOL.pick(DyeColor.ORANGE)));
+		add(TFEntities.BIGHORN_SHEEP, TFLootTables.BIGHORN_SHEEP_PINK, sheepLootTableBuilderWithDrop(Blocks.WOOL.pick(DyeColor.PINK)));
+		add(TFEntities.BIGHORN_SHEEP, TFLootTables.BIGHORN_SHEEP_PURPLE, sheepLootTableBuilderWithDrop(Blocks.WOOL.pick(DyeColor.PURPLE)));
+		add(TFEntities.BIGHORN_SHEEP, TFLootTables.BIGHORN_SHEEP_RED, sheepLootTableBuilderWithDrop(Blocks.WOOL.pick(DyeColor.RED)));
+		add(TFEntities.BIGHORN_SHEEP, TFLootTables.BIGHORN_SHEEP_WHITE, sheepLootTableBuilderWithDrop(Blocks.WOOL.pick(DyeColor.WHITE)));
+		add(TFEntities.BIGHORN_SHEEP, TFLootTables.BIGHORN_SHEEP_YELLOW, sheepLootTableBuilderWithDrop(Blocks.WOOL.pick(DyeColor.YELLOW)));
 
 		add(TFEntities.FIRE_BEETLE,
 			LootTable.lootTable()
@@ -117,7 +119,7 @@ public class EntityLootTables extends FabricEntityLootSubProvider {
 			LootTable.lootTable()
 				.withPool(LootPool.lootPool()
 					.setRolls(ConstantValue.exactly(1))
-					.add(NestedLootTable.lootTableReference(EntityType.GHAST.getDefaultLootTable().orElseThrow()))
+					.add(NestedLootTable.lootTableReference(EntityTypes.GHAST.getDefaultLootTable().orElseThrow()))
 					.when(IsMinionCondition.builder(true))));
 
 		/*registerLootTable(TFEntities.BOGGARD,
@@ -606,6 +608,6 @@ public class EntityLootTables extends FabricEntityLootSubProvider {
 	}
 
 	private static LootTable.Builder sheepLootTableBuilderWithDrop(ItemLike wool) {
-		return LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(wool))).withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(NestedLootTable.lootTableReference(EntityType.SHEEP.getDefaultLootTable().orElseThrow())));
+		return LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(wool))).withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(NestedLootTable.lootTableReference(EntityTypes.SHEEP.getDefaultLootTable().orElseThrow())));
 	}
 }

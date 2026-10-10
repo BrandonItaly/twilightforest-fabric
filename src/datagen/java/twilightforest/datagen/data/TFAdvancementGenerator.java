@@ -14,6 +14,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.Unit;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
@@ -333,7 +334,7 @@ public class TFAdvancementGenerator implements AdvancementSubProvider {
 				Component.translatable("advancement.twilightforest.craft_travellers_gear.desc"),
 				null, AdvancementType.TASK, true, true, false)
 			.addCriterion("craft_goggles", RecipeCraftedTrigger.TriggerInstance.craftedItem(this.getRecipeKey(TFCommon.prefix("equipment/travellers_goggles"))))
-			.addCriterion("craft_vest", RecipeCraftedTrigger.TriggerInstance.craftedItem(this.getRecipeKey(TFCommon.prefix("equipment/travellers_chest"))))
+			.addCriterion("craft_vest", RecipeCraftedTrigger.TriggerInstance.craftedItem(this.getRecipeKey(TFCommon.prefix("equipment/travellers_vest"))))
 			.addCriterion("craft_wings", RecipeCraftedTrigger.TriggerInstance.craftedItem(this.getRecipeKey(TFCommon.prefix("equipment/travellers_wings"))))
 			.addCriterion("craft_boots", RecipeCraftedTrigger.TriggerInstance.craftedItem(this.getRecipeKey(TFCommon.prefix("equipment/travellers_boots"))))
 			.addCriterion("craft_belt", RecipeCraftedTrigger.TriggerInstance.craftedItem(this.getRecipeKey(TFCommon.prefix("equipment/travellers_belt"))))
@@ -451,9 +452,9 @@ public class TFAdvancementGenerator implements AdvancementSubProvider {
 				null, AdvancementType.CHALLENGE, true, true, true)
 			.addCriterion("jerky", KilledTrigger.TriggerInstance.playerKilledEntity(
 				EntityPredicate.Builder.entity()
-					.of(entities, EntityType.ZOMBIE)
+					.of(entities, EntityTypes.ZOMBIE)
 					.flags(EntityFlagsPredicate.Builder.flags().setIsBaby(true))
-					.vehicle(EntityPredicate.Builder.entity().of(entities, EntityType.CHICKEN)),
+					.vehicle(EntityPredicate.Builder.entity().of(entities, EntityTypes.CHICKEN)),
 				DamageSourcePredicate.Builder.damageType().direct(EntityPredicate.Builder.entity()
 					.equipment(EntityEquipmentPredicate.Builder.equipment()
 						.mainhand(ItemPredicate.Builder.item().of(items, TFItems.CHICKEN_JERKY))))))

@@ -6,6 +6,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.tags.EntityTypeTagsProvider;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import twilightforest.tags.TFEntityTypeTags;
 import twilightforest.init.TFEntities;
 
@@ -151,19 +152,19 @@ public class EntityTypeTagGenerator extends EntityTypeTagsProvider {
 
 		this.tag(TFEntityTypeTags.LICH_POPPABLES)
 			.addTag(EntityTypeTags.SKELETONS)
-			.add(EntityType.ZOMBIE, EntityType.ENDERMAN, EntityType.SPIDER, EntityType.CREEPER, TFEntities.SWARM_SPIDER)
+			.add(EntityTypes.ZOMBIE, EntityTypes.ENDERMAN, EntityTypes.SPIDER, EntityTypes.CREEPER, TFEntities.SWARM_SPIDER)
 			.removeTag(ConventionalEntityTypeTags.BOSSES);
 
 		this.tag(TFEntityTypeTags.LIFEDRAIN_DROPS_NO_FLESH).addTag(EntityTypeTags.SKELETONS).addTag(EntityTypeTags.FROG_FOOD).add(
-			EntityType.BLAZE,
-			EntityType.BREEZE,
-			EntityType.IRON_GOLEM,
-			EntityType.PHANTOM,
-			EntityType.SHULKER,
-			EntityType.SKELETON_HORSE,
-			EntityType.SNOW_GOLEM,
-			EntityType.VEX,
-			EntityType.WITHER,
+			EntityTypes.BLAZE,
+			EntityTypes.BREEZE,
+			EntityTypes.IRON_GOLEM,
+			EntityTypes.PHANTOM,
+			EntityTypes.SHULKER,
+			EntityTypes.SKELETON_HORSE,
+			EntityTypes.SNOW_GOLEM,
+			EntityTypes.VEX,
+			EntityTypes.WITHER,
 			TFEntities.CARMINITE_GOLEM,
 			TFEntities.DEATH_TOME,
 			TFEntities.ICE_CRYSTAL,
@@ -179,12 +180,12 @@ public class EntityTypeTagGenerator extends EntityTypeTagsProvider {
 		this.tag(TFEntityTypeTags.RIDES_OBSTRUCT_SNATCHING).add(TFEntities.PINCH_BEETLE, TFEntities.YETI, TFEntities.ALPHA_YETI);
 		this.tag(TFEntityTypeTags.DONT_KILL_BUGS).add(TFEntities.MOONWORM_SHOT);
 		this.tag(TFEntityTypeTags.SORTABLE_ENTITIES).add(
-			EntityType.CHEST_MINECART,
-			EntityType.HOPPER_MINECART,
-			EntityType.LLAMA,
-			EntityType.TRADER_LLAMA,
-			EntityType.DONKEY,
-			EntityType.MULE);
+			EntityTypes.CHEST_MINECART,
+			EntityTypes.HOPPER_MINECART,
+			EntityTypes.LLAMA,
+			EntityTypes.TRADER_LLAMA,
+			EntityTypes.DONKEY,
+			EntityTypes.MULE);
 
 		this.tag(TFEntityTypeTags.MULTIPLAYER_INCLUSIVE_ENTITIES).add(
 			TFEntities.NAGA,

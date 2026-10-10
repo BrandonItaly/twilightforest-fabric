@@ -11,7 +11,6 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.AtlasIds;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.item.equipment.trim.MaterialAssetGroup;
 import net.minecraft.world.item.equipment.trim.TrimPattern;
 import net.minecraft.world.item.equipment.trim.TrimPatterns;
 import twilightforest.TFCommon;
@@ -44,7 +43,7 @@ public class AtlasGenerator extends SpriteSourceProvider {
 			}
 		});
 
-		Identifier trimPalette = Identifier.withDefaultNamespace("trims/color_palettes/trim_palette");
+		Identifier trimPalette = Identifier.withDefaultNamespace("trim_base");
 		Map<String, Identifier> trimPermutations = trimPermutations();
 		atlas(AtlasIds.ARMOR_TRIMS).addSource(new PalettedPermutations(armorTrimTextures(), trimPalette, trimPermutations));
 		atlas(AtlasIds.ITEMS).addSource(new PalettedPermutations(
@@ -70,8 +69,8 @@ public class AtlasGenerator extends SpriteSourceProvider {
 		);
 	}
 
-	private Map.Entry<String, Identifier> trimPermutation(MaterialAssetGroup group, String palette) {
-		return Map.entry(group.base().suffix(), TFCommon.prefix("trims/color_palettes/" + palette));
+	private Map.Entry<String, Identifier> trimPermutation(Identifier group, String palette) {
+		return Map.entry(group.toString(), TFCommon.prefix("trim/" + palette));
 	}
 
 	private List<Identifier> armorTrimTextures() {

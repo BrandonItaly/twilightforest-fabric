@@ -26,7 +26,7 @@ public class TFData implements DataGeneratorEntrypoint {
 	@Override
 	public void buildRegistry(RegistrySetBuilder registryBuilder) {
 		registryBuilder
-			.add(Registries.CONFIGURED_FEATURE, TFConfiguredFeatureGenerator::bootstrap)
+			.add(Registries.FEATURE, TFConfiguredFeatureGenerator::bootstrap)
 			.add(Registries.PLACED_FEATURE, TFPlacedFeatureGenerator::bootstrap)
 			.add(TFRegistries.Keys.STRUCTURE_SPELEOTHEM_SETTINGS, StructureSpeleothemConfigGenerator::bootstrap)
 			.add(Registries.STRUCTURE, TFStructureGenerator::bootstrap)
