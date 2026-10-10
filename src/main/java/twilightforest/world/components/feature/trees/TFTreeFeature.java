@@ -2,14 +2,13 @@ package twilightforest.world.components.feature.trees;
 
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;
-import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.TreeFeature;
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecorator;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
@@ -21,18 +20,20 @@ import twilightforest.world.components.feature.config.TFTreeFeatureConfig;
 import java.util.Set;
 import java.util.function.BiConsumer;
 
-public abstract class TFTreeFeature<T extends TFTreeFeatureConfig> extends Feature<T> {
-	public TFTreeFeature(Codec<T> configIn) {
-		super(configIn);
+public abstract class TFTreeFeature<T extends TFTreeFeatureConfig> implements Feature {
+	protected final T config;
+
+	public TFTreeFeature(T config) {
+		this.config = config;
 	}
 
 	// [VanillaCopy] TreeFeature.place, swapped TreeConfiguration for generic <T extends TFTreeFeatureConfig>. Omitted code are commented out instead of deleted
 	@Override
-	public final boolean place(FeaturePlaceContext<T> context) {
-		WorldGenLevel worldgenlevel = context.level();
-		RandomSource randomsource = context.random();
-		BlockPos blockpos = context.origin();
-		T treeconfiguration = context.config();
+	public final boolean place(WorldGenLevel featureLevel, ChunkGenerator generator, RandomSource featureRandom, BlockPos featureOrigin) {
+		WorldGenLevel worldgenlevel = featureLevel;
+		RandomSource randomsource = featureRandom;
+		BlockPos blockpos = featureOrigin;
+		T treeconfiguration = this.config;
 		Set<BlockPos> set = Sets.newHashSet();
 		Set<BlockPos> set1 = Sets.newHashSet();
 		Set<BlockPos> set2 = Sets.newHashSet();

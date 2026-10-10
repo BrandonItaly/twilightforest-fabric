@@ -1,15 +1,14 @@
 package twilightforest.world.components.feature;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import twilightforest.init.TFBlocks;
 
 /**
@@ -17,17 +16,20 @@ import twilightforest.init.TFBlocks;
  *
  * @author Ben
  */
-public class HugeWaterLilyFeature extends Feature<NoneFeatureConfiguration> {
+public class HugeWaterLilyFeature implements Feature {
 
-	public HugeWaterLilyFeature(Codec<NoneFeatureConfiguration> config) {
-		super(config);
+	public static final MapCodec<HugeWaterLilyFeature> CODEC = MapCodec.unit(HugeWaterLilyFeature::new);
+
+	@Override
+	public MapCodec<HugeWaterLilyFeature> codec() {
+		return CODEC;
 	}
 
 	@Override
-	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> ctx) {
-		WorldGenLevel world = ctx.level();
-		BlockPos pos = ctx.origin();
-		RandomSource random = ctx.random();
+	public boolean place(WorldGenLevel featureLevel, ChunkGenerator generator, RandomSource featureRandom, BlockPos featureOrigin) {
+		WorldGenLevel world = featureLevel;
+		BlockPos pos = featureOrigin;
+		RandomSource random = featureRandom;
 
 		for (int i = 0; i < 4; i++) {
 			BlockPos pos_ = pos.offset(

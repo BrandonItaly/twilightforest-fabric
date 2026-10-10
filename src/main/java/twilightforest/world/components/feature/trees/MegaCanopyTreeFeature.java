@@ -1,7 +1,7 @@
 package twilightforest.world.components.feature.trees;
 
 import com.google.common.collect.Lists;
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
@@ -18,8 +18,13 @@ import java.util.List;
 import java.util.function.BiConsumer;
 
 public class MegaCanopyTreeFeature extends CanopyTreeFeature {
+	public static final MapCodec<MegaCanopyTreeFeature> CODEC = TFTreeFeatureConfig.MAP_CODEC.xmap(MegaCanopyTreeFeature::new, feature -> feature.config);
 
-	public MegaCanopyTreeFeature(Codec<TFTreeFeatureConfig> config) {
+	@Override
+	public MapCodec<MegaCanopyTreeFeature> codec() { return CODEC; }
+
+
+	public MegaCanopyTreeFeature(TFTreeFeatureConfig config) {
 		super(config);
 	}
 

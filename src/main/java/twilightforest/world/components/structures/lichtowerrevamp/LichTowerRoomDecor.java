@@ -13,9 +13,10 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.chunk.ChunkGenerator;
-import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.structure.*;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
+import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 import twilightforest.init.TFStructurePieceTypes;
 import twilightforest.util.TFStructureHelper;
@@ -39,7 +40,7 @@ public class LichTowerRoomDecor extends TwilightJigsawPiece implements IPieceBea
 		LichTowerUtil.addDefaultProcessors(this.placeSettings.addProcessor(lichTowerUtil.getRoomSpawnerProcessor()));
 	}
 
-	public static void addDecor(TwilightJigsawPiece parent, StructurePieceAccessor pieceAccessor, Structure.GenerationContext context, JigsawRecord connection, int newDepth, StructureTemplateManager structureManager) {
+	public static void addDecor(TwilightJigsawPiece parent, StructurePiecesBuilder pieceAccessor, Structure.GenerationContext context, JigsawRecord connection, int newDepth, StructureTemplateManager structureManager) {
 		Identifier decorId = lichTowerUtil.rollRandomDecor(context.random(), false);
 		JigsawPlaceContext placeableJunction = JigsawPlaceContext.pickPlaceableJunction(parent.templatePosition(), connection.pos(), connection.orientation(), structureManager, decorId, "twilightforest:lich_tower/decor", context.random());
 
@@ -64,8 +65,8 @@ public class LichTowerRoomDecor extends TwilightJigsawPiece implements IPieceBea
 				level.setBlock(pos, TFStructureHelper.randomPlant(random), Block.UPDATE_CLIENTS);
 			}
 			case "tree" -> {
-				ResourceKey<ConfiguredFeature<?, ?>> randomTree = TFStructureHelper.randomTree(random.nextInt(4));
-				Registry<ConfiguredFeature<?, ?>> featureRegistry = level.registryAccess().lookupOrThrow(Registries.CONFIGURED_FEATURE);
+				ResourceKey<Feature> randomTree = TFStructureHelper.randomTree(random.nextInt(4));
+				Registry<Feature> featureRegistry = level.registryAccess().lookupOrThrow(Registries.FEATURE);
 				if (!featureRegistry.get(randomTree).get().value().place(level, chunkGen, random, pos)) {
 					level.setBlock(pos, TFStructureHelper.randomPlant(random), Block.UPDATE_CLIENTS);
 				}
@@ -74,7 +75,7 @@ public class LichTowerRoomDecor extends TwilightJigsawPiece implements IPieceBea
 	}
 
 	@Override
-	protected void processJigsaw(TwilightJigsawPiece parent, StructurePieceAccessor pieceAccessor, Structure.GenerationContext context, JigsawRecord connection, int jigsawIndex) {
+	protected void processJigsaw(TwilightJigsawPiece parent, StructurePiecesBuilder pieceAccessor, Structure.GenerationContext context, JigsawRecord connection, int jigsawIndex) {
 	}
 
 	@Override

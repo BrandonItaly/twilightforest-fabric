@@ -1,7 +1,7 @@
 package twilightforest.world.components.feature.trees;
 
 import com.google.common.collect.Lists;
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
@@ -22,8 +22,13 @@ import java.util.function.BiConsumer;
  * @author Ben
  */
 public class CanopyTreeFeature extends TFTreeFeature<TFTreeFeatureConfig> {
+	public static final MapCodec<CanopyTreeFeature> CODEC = TFTreeFeatureConfig.MAP_CODEC.xmap(CanopyTreeFeature::new, feature -> feature.config);
 
-	public CanopyTreeFeature(Codec<TFTreeFeatureConfig> config) {
+	@Override
+	public MapCodec<? extends CanopyTreeFeature> codec() { return CODEC; }
+
+
+	public CanopyTreeFeature(TFTreeFeatureConfig config) {
 		super(config);
 	}
 
@@ -97,7 +102,7 @@ public class CanopyTreeFeature extends TFTreeFeature<TFTreeFeatureConfig> {
 		BlockPos dest = FeatureLogic.translate(src, length, angle, tilt);
 
 		// only actually draw the branch if it's not going to load new chunks
-		if (world.carminite$isAreaLoaded(dest, 5)) {
+		if (world.hasChunksAt(dest.offset(-5, -5, -5), dest.offset(5, 5, 5))) {
 
 			if (trunk) {
 				FeaturePlacers.drawBresenhamTree(world, trunkPlacer, FeaturePlacers.VALID_TREE_POS, src, dest, config.trunkProvider, treeRNG);

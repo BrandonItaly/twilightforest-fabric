@@ -1,6 +1,6 @@
 package twilightforest.world.components.feature.trees;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
@@ -11,14 +11,14 @@ import net.minecraft.world.level.block.DirectionalBlock;
 import net.minecraft.world.level.block.HugeMushroomBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.AbstractHugeMushroomFeature;
-import net.minecraft.world.level.levelgen.feature.configurations.HugeMushroomFeatureConfiguration;
 import twilightforest.init.TFBlocks;
 import twilightforest.util.features.FeatureLogic;
 import twilightforest.util.iterators.VoxelBresenhamIterator;
+import twilightforest.world.components.feature.TFMushroomFeature;
 
-public abstract class CanopyMushroomFeature extends AbstractHugeMushroomFeature {
+public abstract class CanopyMushroomFeature extends TFMushroomFeature {
 
-	public CanopyMushroomFeature(Codec<HugeMushroomFeatureConfiguration> featureConfigurationCodec) {
+	public CanopyMushroomFeature(AbstractHugeMushroomFeature featureConfigurationCodec) {
 		super(featureConfigurationCodec);
 	}
 
@@ -26,18 +26,19 @@ public abstract class CanopyMushroomFeature extends AbstractHugeMushroomFeature 
 	 * How much space our mushroom needs, this seems to be about right
 	 */
 	@Override
-	protected int getTreeRadiusForHeight(int i, int i1, int foliageRadius, int treeHeight) {
+	public int getTreeRadiusForHeight(int i, int i1, int foliageRadius, int treeHeight) {
 		return treeHeight <= 3 ? 0 : (int) ((float) foliageRadius * 1.5F);
 	}
 
 	@Override
-	protected void placeTrunk(WorldGenLevel levelAccessor, RandomSource random, BlockPos pos, HugeMushroomFeatureConfiguration featureConfiguration, int height, BlockPos.MutableBlockPos mutableBlockPos) {
+	public void placeTrunk(WorldGenLevel levelAccessor, RandomSource random, BlockPos pos, int height, BlockPos.MutableBlockPos mutableBlockPos) {
+		AbstractHugeMushroomFeature featureConfiguration = this.settings;
 		int bugsLeft = Math.max(0, random.nextInt(10) - 4) / 2; //Weird math, I know, but I like the odds (and weird math, sue me)
 
 		for (int i = 0; i < height; ++i) {
 			mutableBlockPos.set(pos).move(Direction.UP, i);
 			if (this.isReplaceable(levelAccessor, mutableBlockPos)) {
-				this.setBlock(levelAccessor, mutableBlockPos, featureConfiguration.stemProvider().getState(levelAccessor, random, pos));
+				this.setBlock(levelAccessor, mutableBlockPos, featureConfiguration.stemProvider().value().getState(levelAccessor, random, pos));
 
 				if (bugsLeft > 0 && i > height / 2 && random.nextInt(10) == 9)
 					if (this.addFirefly(levelAccessor, mutableBlockPos, random))
@@ -51,7 +52,7 @@ public abstract class CanopyMushroomFeature extends AbstractHugeMushroomFeature 
 		int numBranches = this.getBranches(random);
 		float offset = random.nextFloat();
 		for (int b = 0; b < numBranches; b++) {
-			bugsLeft = this.buildABranch(levelAccessor, pos, height - 6 + b, this.getLength(random), 0.3 * b + offset, random, new HugeMushroomFeatureConfiguration(featureConfiguration.capProvider(), featureConfiguration.stemProvider(), featureConfiguration.foliageRadius() - 1, featureConfiguration.canPlaceOn()), bugsLeft);
+			bugsLeft = this.buildABranch(levelAccessor, pos, height - 6 + b, this.getLength(random), 0.3 * b + offset, random, TFMushroomFeature.settings(featureConfiguration.capProvider(), featureConfiguration.stemProvider(), featureConfiguration.foliageRadius() - 1, featureConfiguration.canPlaceOn()), bugsLeft);
 		}
 	}
 
@@ -78,7 +79,7 @@ public abstract class CanopyMushroomFeature extends AbstractHugeMushroomFeature 
 	}
 
 	@Override
-	protected int getTreeHeight(RandomSource random) {
+	public int getTreeHeight(RandomSource random) {
 		return 9 + random.nextInt(5);
 	}
 
@@ -86,12 +87,12 @@ public abstract class CanopyMushroomFeature extends AbstractHugeMushroomFeature 
 
 	protected abstract double getLength(RandomSource random);
 
-	private int buildABranch(WorldGenLevel levelAccessor, BlockPos pos, int height, double length, double angle, RandomSource random, HugeMushroomFeatureConfiguration featureConfiguration, int bugsLeft) {
+	private int buildABranch(WorldGenLevel levelAccessor, BlockPos pos, int height, double length, double angle, RandomSource random, AbstractHugeMushroomFeature featureConfiguration, int bugsLeft) {
 		BlockPos src = pos.above(height);
 		BlockPos dest = FeatureLogic.translate(src, length, angle, 0.2);
 
 		for (BlockPos pixel : new VoxelBresenhamIterator(src, new BlockPos(dest.getX(), src.getY(), dest.getZ()))) {
-			BlockState blockstate = featureConfiguration.stemProvider().getState(levelAccessor, random, pos);
+			BlockState blockstate = featureConfiguration.stemProvider().value().getState(levelAccessor, random, pos);
 
 			if (blockstate.hasProperty(HugeMushroomBlock.UP) && blockstate.hasProperty(HugeMushroomBlock.DOWN)) {
 				blockstate = blockstate.setValue(HugeMushroomBlock.DOWN, true).setValue(HugeMushroomBlock.UP, true);//Seal up the ups and downs
@@ -105,7 +106,7 @@ public abstract class CanopyMushroomFeature extends AbstractHugeMushroomFeature 
 		int max = Math.max(src.getY(), dest.getY());
 
 		for (int i = Math.min(src.getY(), dest.getY()); i < max + 1; i++) {
-			BlockState blockstate = featureConfiguration.stemProvider().getState(levelAccessor, random, pos);
+			BlockState blockstate = featureConfiguration.stemProvider().value().getState(levelAccessor, random, pos);
 
 			if (blockstate.hasProperty(HugeMushroomBlock.DOWN)) {
 				if (i == Math.min(src.getY(), dest.getY())) blockstate = blockstate.setValue(HugeMushroomBlock.DOWN, true);//Seal up the bottom one, so it looks better
@@ -128,7 +129,7 @@ public abstract class CanopyMushroomFeature extends AbstractHugeMushroomFeature 
 	}
 
 	@Override //Pretty much a 1:1 vanilla copy of the big brown mushroom cap code
-	protected void makeCap(WorldGenLevel levelAccessor, RandomSource random, BlockPos pos, int height, BlockPos.MutableBlockPos mutableBlockPos, HugeMushroomFeatureConfiguration featureConfiguration) {
+	protected void makeCap(WorldGenLevel levelAccessor, RandomSource random, BlockPos pos, int height, BlockPos.MutableBlockPos mutableBlockPos, AbstractHugeMushroomFeature featureConfiguration) {
 		int foliageRadius = featureConfiguration.foliageRadius();
 
 		for (int x = -foliageRadius; x <= foliageRadius; ++x) {
@@ -136,7 +137,7 @@ public abstract class CanopyMushroomFeature extends AbstractHugeMushroomFeature 
 				if (!FeatureLogic.isCornerInSquare(x, z, foliageRadius)) {
 					mutableBlockPos.setWithOffset(pos, x, height, z);
 					if (this.isReplaceable(levelAccessor, mutableBlockPos)) {
-						BlockState blockState = featureConfiguration.capProvider().getState(levelAccessor, random, pos);
+						BlockState blockState = featureConfiguration.capProvider().value().getState(levelAccessor, random, pos);
 						blockState = FeatureLogic.getHorizontalMushroomBlockState(blockState, x, z, foliageRadius);
 						this.setBlock(levelAccessor, mutableBlockPos, blockState);
 					}

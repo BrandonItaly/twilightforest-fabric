@@ -1,6 +1,6 @@
 package twilightforest.world.components.feature.trees;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
@@ -19,7 +19,12 @@ import twilightforest.world.components.feature.config.TFTreeFeatureConfig;
 import java.util.function.BiConsumer;
 
 public class TimeTreeFeature extends HollowTreeFeature {
-	public TimeTreeFeature(Codec<TFTreeFeatureConfig> config) {
+	public static final MapCodec<TimeTreeFeature> CODEC = TFTreeFeatureConfig.MAP_CODEC.xmap(TimeTreeFeature::new, feature -> feature.config);
+
+	@Override
+	public MapCodec<TimeTreeFeature> codec() { return CODEC; }
+
+	public TimeTreeFeature(TFTreeFeatureConfig config) {
 		super(config);
 	}
 

@@ -16,7 +16,7 @@ import java.util.List;
 
 // Similar to RuleProcessor except it uses the ProcessorRule's output state as a template for transferring BlockStates onto, with FeaturePlacers.transferAllStateKeys(...)
 // Despite definitions for BlockStates being supported by the schema, they merely are defaults to be overwritten from the input block's states
-public class StateTransfiguringProcessor extends StructureProcessor {
+public class StateTransfiguringProcessor implements StructureProcessor {
 	public static final MapCodec<StateTransfiguringProcessor> CODEC = ProcessorRule.CODEC.listOf().fieldOf("rules").xmap(StateTransfiguringProcessor::new, p -> p.rules);
 	private final List<ProcessorRule> rules;
 
@@ -25,9 +25,7 @@ public class StateTransfiguringProcessor extends StructureProcessor {
 	}
 
 	@Override
-	public StructureTemplate.@Nullable StructureBlockInfo processBlock(LevelReader level, BlockPos targetPosition, BlockPos referencePos, StructureTemplate.StructureBlockInfo originalBlockInfo, StructureTemplate.StructureBlockInfo processedBlockInfo, StructurePlaceSettings settings) {
-		BlockState state = level.getBlockState(processedBlockInfo.pos());
-
+	public StructureTemplate.@Nullable StructureBlockInfo processBlock(LevelReader level, BlockPos targetPosition, BlockPos referencePos, BlockPos templateRelativePos, StructureTemplate.StructureBlockInfo processedBlockInfo, StructurePlaceSettings settings) {
 		RandomSource random = RandomSource.create(Mth.getSeed(processedBlockInfo.pos()));
 		long i = random.nextLong();
 		// Re-seed the random source for each loop iteration, the positional seed defines the initial random value
@@ -36,7 +34,7 @@ public class StateTransfiguringProcessor extends StructureProcessor {
 			random.setSeed(i * 3);
 			i += 115;
 
-			if (processorRule.test(processedBlockInfo.state(), state, originalBlockInfo.pos(), processedBlockInfo.pos(), referencePos, random))
+			if (processorRule.test(level, processedBlockInfo.state(), templateRelativePos, processedBlockInfo.pos(), referencePos, random))
 				return new StructureTemplate.StructureBlockInfo(processedBlockInfo.pos(), FeaturePlacers.transferAllStateKeys(processedBlockInfo.state(), processorRule.getOutputState()), processorRule.getOutputTag(random, processedBlockInfo.nbt()));
 		}
 
@@ -44,7 +42,7 @@ public class StateTransfiguringProcessor extends StructureProcessor {
 	}
 
 	@Override
-	protected StructureProcessorType<?> getType() {
-		return TFStructureProcessors.STATE_TRANSFIGURING;
+	public MapCodec<? extends StructureProcessor> codec() {
+		return CODEC;
 	}
 }

@@ -18,7 +18,9 @@ import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.structure.*;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
+import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import twilightforest.entity.MagicPainting;
 import twilightforest.entity.MagicPaintingVariant;
@@ -103,7 +105,7 @@ public class LichTowerMagicGallery extends TwilightJigsawPiece implements IPiece
 	}
 
 	@Override
-	protected void processJigsaw(TwilightJigsawPiece parent, StructurePieceAccessor pieceAccessor, Structure.GenerationContext context, JigsawRecord connection, int jigsawIndex) {
+	protected void processJigsaw(TwilightJigsawPiece parent, StructurePiecesBuilder pieceAccessor, Structure.GenerationContext context, JigsawRecord connection, int jigsawIndex) {
 		if ("twilightforest:lich_tower/roof".equals(connection.target())) {
 			Identifier fallbackRoof = lichTowerUtil.rollGalleryRoof(context.random(), this.boundingBox);
 			FrontAndTop orientationToMatch = LichTowerWingRoom.getVerticalOrientation(connection, Direction.UP, this);
@@ -125,7 +127,7 @@ public class LichTowerMagicGallery extends TwilightJigsawPiece implements IPiece
 				galleryPainting.setVariant(variantHolderOpt.get());
 
 				variantHolderOpt.get().value();
-				galleryPainting.snapTo(pos.getBottomCenter(), 0, 0);
+				galleryPainting.snapTo(Vec3.atBottomCenterOf(pos), 0, 0);
 
 				level.addFreshEntityWithPassengers(galleryPainting);
 			}
@@ -149,7 +151,7 @@ public class LichTowerMagicGallery extends TwilightJigsawPiece implements IPiece
 		return level.registryAccess().lookupOrThrow(TFRegistries.Keys.MAGIC_PAINTINGS).get(variantId);
 	}
 
-	public static void tryPlaceGallery(Structure.GenerationContext context, StructurePieceAccessor pieceAccessor, @Nullable Identifier roomId, JigsawRecord connection, TwilightJigsawPiece parent, int newDepth, StructureTemplateManager structureManager, String jigsawLabel) {
+	public static void tryPlaceGallery(Structure.GenerationContext context, StructurePiecesBuilder pieceAccessor, @Nullable Identifier roomId, JigsawRecord connection, TwilightJigsawPiece parent, int newDepth, StructureTemplateManager structureManager, String jigsawLabel) {
 		JigsawPlaceContext placeableJunction = JigsawPlaceContext.pickPlaceableJunction(parent.templatePosition(), connection.pos(), connection.orientation(), structureManager, roomId, jigsawLabel, context.random());
 		if (placeableJunction != null) {
 			LichTowerMagicGallery room = new LichTowerMagicGallery(newDepth, structureManager, roomId, placeableJunction);

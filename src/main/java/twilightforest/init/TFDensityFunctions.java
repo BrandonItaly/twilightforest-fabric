@@ -5,9 +5,10 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.level.levelgen.DensityFunction;
+import net.minecraft.world.level.levelgen.densityfunction.DensityFunction;
 import twilightforest.TFCommon;
 import twilightforest.world.components.chunkgenerators.*;
+import twilightforest.world.components.structures.fallentrunk.TrunkUnderDensityFunction;
 
 @SuppressWarnings("unused")
 public class TFDensityFunctions {
@@ -19,6 +20,8 @@ public class TFDensityFunctions {
 	public static final MapCodec<AbsoluteDifferenceFunction.Min> COORD_MIN = register("coord_min", AbsoluteDifferenceFunction.Min.CODEC);
 	public static final MapCodec<AbsoluteDifferenceFunction.Max> COORD_MAX = register("coord_max", AbsoluteDifferenceFunction.Max.CODEC);
 	public static final MapCodec<SqrtDensityFunction> SQRT = register("sqrt", SqrtDensityFunction.CODEC);
+
+	public static final MapCodec<TrunkUnderDensityFunction> FALLEN_TRUNK = register("fallen_trunk", TrunkUnderDensityFunction.CODEC);
 
 	public static final ResourceKey<DensityFunction> BIOME_TERRAIN_RAW = ResourceKey.create(Registries.DENSITY_FUNCTION, TFCommon.prefix("raw_biome_terrain"));
 	public static final ResourceKey<DensityFunction> BIOME_NOISE_RAW = ResourceKey.create(Registries.DENSITY_FUNCTION, TFCommon.prefix("raw_biome_noise"));

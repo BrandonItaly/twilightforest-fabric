@@ -12,6 +12,7 @@ import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.levelgen.WorldgenRandom;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureType;
+import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
 import twilightforest.init.TFStructureTypes;
 import twilightforest.util.WorldUtil;
 import twilightforest.world.components.structures.TwilightJigsawPiece;

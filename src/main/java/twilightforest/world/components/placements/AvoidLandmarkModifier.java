@@ -7,11 +7,12 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.longs.LongSet;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.core.registries.codec.RegistryCodecs;
+import net.minecraft.core.registries.codec.RegistryCodecs;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.levelgen.placement.PlacementContext;
 import net.minecraft.world.level.levelgen.placement.PlacementModifier;
-import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.StructureStart;
@@ -22,16 +23,17 @@ import twilightforest.world.components.structures.util.DecorationClearance;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.stream.Stream;
 
-public class AvoidLandmarkModifier extends PlacementModifier {
+public class AvoidLandmarkModifier implements PlacementModifier {
 
 	public static final MapCodec<AvoidLandmarkModifier> CODEC = RecordCodecBuilder.<AvoidLandmarkModifier>mapCodec(instance -> instance.group(
 		Codec.BOOL.fieldOf("occupies_surface").forGetter(o -> o.occupiesSurface),
 		Codec.BOOL.fieldOf("occupies_underground").forGetter(o -> o.occupiesUnderground),
 		Codec.BOOL.fieldOf("occupies_vegetation").forGetter(o -> o.occupiesVegetation),
 		Codec.INT.fieldOf("additional_clearance").forGetter(o -> o.additionalClearance),
-		RegistryCodecs.homogeneousList(Registries.STRUCTURE).fieldOf("structures_allowed").forGetter(m -> m.structuresAllowed)
+		RegistryCodecs.holderSet(Registries.STRUCTURE).fieldOf("structures_allowed").forGetter(m -> m.structuresAllowed)
 	).apply(instance, AvoidLandmarkModifier::new)).validate(AvoidLandmarkModifier::validate);
 
 	private final boolean occupiesSurface;
@@ -73,15 +75,15 @@ public class AvoidLandmarkModifier extends PlacementModifier {
 	}
 
 	@Override
-	public Stream<BlockPos> getPositions(PlacementContext worldDecoratingHelper, RandomSource random, BlockPos blockPos) {
+	public void modify(PlacementContext worldDecoratingHelper, RandomSource random, BlockPos blockPos, Consumer<BlockPos> output) {
 		ChunkAccess chunk = worldDecoratingHelper.getLevel().getChunk(blockPos);
 		Set<Map.Entry<Structure, LongSet>> structuresOverlappingChunk = chunk.getAllReferences().entrySet();
 
 		for (Map.Entry<Structure, LongSet> startsForStructure : structuresOverlappingChunk)
 			if (this.structureTypeBlocksFeaturePlacement(worldDecoratingHelper, blockPos, startsForStructure.getKey(), startsForStructure.getValue()))
-				return Stream.empty();
+				return;
 
-		return Stream.of(blockPos);
+		output.accept(blockPos);
 	}
 
 	private boolean structureTypeBlocksFeaturePlacement(PlacementContext worldDecoratingHelper, BlockPos blockPos, Structure structure, LongSet coordsForStarts) {
@@ -154,9 +156,7 @@ public class AvoidLandmarkModifier extends PlacementModifier {
 	}
 
 	@Override
-	public PlacementModifierType<?> type() {
-		return TFFeatureModifiers.NO_STRUCTURE;
-	}
+	public MapCodec<? extends PlacementModifier> codec() { return CODEC; }
 
 	private static DataResult<AvoidLandmarkModifier> validate(AvoidLandmarkModifier config) {
 		return config.occupiesSurface || config.occupiesUnderground || config.occupiesVegetation ? DataResult.success(config) : DataResult.error(() -> "Feature Decorator cannot have no occupancy");

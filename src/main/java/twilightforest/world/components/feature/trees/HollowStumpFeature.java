@@ -1,6 +1,6 @@
 package twilightforest.world.components.feature.trees;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
@@ -20,8 +20,13 @@ import java.util.function.BiConsumer;
  * @author Ben
  */
 public class HollowStumpFeature extends HollowTreeFeature {
+	public static final MapCodec<HollowStumpFeature> CODEC = TFTreeFeatureConfig.MAP_CODEC.xmap(HollowStumpFeature::new, feature -> feature.config);
 
-	public HollowStumpFeature(Codec<TFTreeFeatureConfig> config) {
+	@Override
+	public MapCodec<HollowStumpFeature> codec() { return CODEC; }
+
+
+	public HollowStumpFeature(TFTreeFeatureConfig config) {
 		super(config);
 	}
 

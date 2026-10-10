@@ -1,23 +1,29 @@
 package twilightforest.world.components.feature.trollcave;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.feature.AbstractHugeMushroomFeature;
 import net.minecraft.world.level.levelgen.feature.HugeBrownMushroomFeature;
-import net.minecraft.world.level.levelgen.feature.configurations.HugeMushroomFeatureConfiguration;
 import twilightforest.util.features.FeatureLogic;
+import twilightforest.world.components.feature.TFMushroomFeature;
 
 // [VanillaCopy]
-public class TrollHugeBrownMushroomFeature extends HugeBrownMushroomFeature {
-	public TrollHugeBrownMushroomFeature(Codec<HugeMushroomFeatureConfiguration> config) {
+public class TrollHugeBrownMushroomFeature extends TFMushroomFeature {
+	public static final MapCodec<TrollHugeBrownMushroomFeature> CODEC = settingsCodec(TrollHugeBrownMushroomFeature::new);
+
+	@Override
+	public MapCodec<TrollHugeBrownMushroomFeature> codec() { return CODEC; }
+
+	public TrollHugeBrownMushroomFeature(AbstractHugeMushroomFeature config) {
 		super(config);
 	}
 
 	@Override
-	protected void makeCap(WorldGenLevel levelAccessor, RandomSource random, BlockPos pos, int height, BlockPos.MutableBlockPos mutableBlockPos, HugeMushroomFeatureConfiguration featureConfiguration) {
+	protected void makeCap(WorldGenLevel levelAccessor, RandomSource random, BlockPos pos, int height, BlockPos.MutableBlockPos mutableBlockPos, AbstractHugeMushroomFeature featureConfiguration) {
 		int foliageRadius = featureConfiguration.foliageRadius();
 
 		for (int x = -foliageRadius; x <= foliageRadius; x++) {
@@ -26,7 +32,7 @@ public class TrollHugeBrownMushroomFeature extends HugeBrownMushroomFeature {
 					mutableBlockPos.setWithOffset(pos, x, height, z);
 
 					if (!levelAccessor.getBlockState(mutableBlockPos).is(BlockTags.FEATURES_CANNOT_REPLACE)) {
-						BlockState blockState = featureConfiguration.capProvider().getState(levelAccessor, random, pos);
+						BlockState blockState = featureConfiguration.capProvider().value().getState(levelAccessor, random, pos);
 						if (FeatureLogic.hasHorizontalMushroomProperties(blockState)) {
 							blockState = FeatureLogic.getHorizontalMushroomBlockState(blockState, x, z, foliageRadius);
 						}

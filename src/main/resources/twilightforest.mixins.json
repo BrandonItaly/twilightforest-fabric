@@ -10,7 +10,6 @@
     "ServerPlayerGameModeMixin",
     "coremod.BlockTransformersMixin",
     "coremod.ChunkGeneratorMixin",
-    "coremod.ChunkStatusTasksMixin",
     "coremod.EntityMixin",
     "coremod.LeashFenceKnotEntityMixin",
     "coremod.LevelMixin",

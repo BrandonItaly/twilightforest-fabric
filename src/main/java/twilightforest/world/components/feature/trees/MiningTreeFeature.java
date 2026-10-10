@@ -1,6 +1,6 @@
 package twilightforest.world.components.feature.trees;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
@@ -18,8 +18,13 @@ import twilightforest.world.components.feature.config.TFTreeFeatureConfig;
 import java.util.function.BiConsumer;
 
 public class MiningTreeFeature extends TFTreeFeature<TFTreeFeatureConfig> {
+	public static final MapCodec<MiningTreeFeature> CODEC = TFTreeFeatureConfig.MAP_CODEC.xmap(MiningTreeFeature::new, feature -> feature.config);
 
-	public MiningTreeFeature(Codec<TFTreeFeatureConfig> config) {
+	@Override
+	public MapCodec<MiningTreeFeature> codec() { return CODEC; }
+
+
+	public MiningTreeFeature(TFTreeFeatureConfig config) {
 		super(config);
 	}
 

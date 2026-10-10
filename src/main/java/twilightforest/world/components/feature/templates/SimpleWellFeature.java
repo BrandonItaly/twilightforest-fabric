@@ -1,6 +1,6 @@
 package twilightforest.world.components.feature.templates;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.Identifier;
@@ -18,10 +18,15 @@ import twilightforest.world.components.feature.config.SwizzleConfig;
 import twilightforest.world.components.processors.SmartGrassProcessor;
 
 public class SimpleWellFeature extends TemplateFeature<SwizzleConfig> {
+	public static final MapCodec<SimpleWellFeature> CODEC = SwizzleConfig.MAP_CODEC.xmap(SimpleWellFeature::new, feature -> feature.config);
+
+	@Override
+	public MapCodec<SimpleWellFeature> codec() { return CODEC; }
+
 	private static final Identifier WELL_TOP = TFCommon.prefix("feature/well/simple_well_top");
 	private static final Identifier WELL_BOTTOM = TFCommon.prefix("feature/well/simple_well_bottom");
 
-	public SimpleWellFeature(Codec<SwizzleConfig> config) {
+	public SimpleWellFeature(SwizzleConfig config) {
 		super(config);
 	}
 

@@ -1,7 +1,7 @@
 package twilightforest.world.components.feature;
 
 import com.llamalad7.mixinextras.lib.apache.commons.tuple.Pair;
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
@@ -10,24 +10,28 @@ import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.VineBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import twilightforest.init.TFBlocks;
 
 import java.util.*;
 
-public class EnchantedForestVinesFeature extends Feature<NoneFeatureConfiguration> {
+public class EnchantedForestVinesFeature implements Feature {
 	private static final int rarity = 7;
 	private static final int extraRarityOnTrees = 8;
 
-	public EnchantedForestVinesFeature(Codec<NoneFeatureConfiguration> codec) {super(codec);}
+	public static final MapCodec<EnchantedForestVinesFeature> CODEC = MapCodec.unit(EnchantedForestVinesFeature::new);
 
 	@Override
-	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
-		WorldGenLevel world = context.level();
-		setAllPossibleStates(world, context.random(), context.origin());
+	public MapCodec<EnchantedForestVinesFeature> codec() {
+		return CODEC;
+	}
+
+	@Override
+	public boolean place(WorldGenLevel featureLevel, ChunkGenerator generator, RandomSource featureRandom, BlockPos featureOrigin) {
+		WorldGenLevel world = featureLevel;
+		setAllPossibleStates(world, featureRandom, featureOrigin);
 		return true;
 	}
 

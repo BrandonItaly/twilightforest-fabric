@@ -1,5 +1,6 @@
 package twilightforest.init;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer;
@@ -9,7 +10,6 @@ import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecoratorTy
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
 import net.minecraft.world.level.levelgen.placement.PlacementModifier;
-import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 import twilightforest.TFCommon;
 import twilightforest.world.components.feature.trees.treeplacers.*;
 import twilightforest.world.components.placements.AvoidLandmarkModifier;
@@ -28,9 +28,9 @@ public final class TFFeatureModifiers {
 	public static final TreeDecoratorType<TreeRootsDecorator> TREE_ROOTS = registerTreeDecoratorType("tree_roots", new TreeDecoratorType<>(TreeRootsDecorator.CODEC));
 	public static final TreeDecoratorType<DangleFromTreeDecorator> DANGLING_DECORATOR = registerTreeDecoratorType("dangle_from_tree_decorator", new TreeDecoratorType<>(DangleFromTreeDecorator.CODEC));
 
-	public static final PlacementModifierType<AvoidLandmarkModifier> NO_STRUCTURE = registerPlacementModifierType("no_structure", () -> AvoidLandmarkModifier.CODEC);
-	public static final PlacementModifierType<ChunkCenterModifier> CHUNK_CENTERER = registerPlacementModifierType("chunk_centerer", () -> ChunkCenterModifier.CODEC);
-	public static final PlacementModifierType<ChunkBlanketingModifier> CHUNK_BLANKETING = registerPlacementModifierType("chunk_blanketing", () -> ChunkBlanketingModifier.CODEC);
+	public static final MapCodec<AvoidLandmarkModifier> NO_STRUCTURE = registerPlacementModifierType("no_structure", AvoidLandmarkModifier.CODEC);
+	public static final MapCodec<ChunkCenterModifier> CHUNK_CENTERER = registerPlacementModifierType("chunk_centerer", ChunkCenterModifier.CODEC);
+	public static final MapCodec<ChunkBlanketingModifier> CHUNK_BLANKETING = registerPlacementModifierType("chunk_blanketing", ChunkBlanketingModifier.CODEC);
 
 	private static <T extends TrunkPlacer> TrunkPlacerType<T> registerTrunkPlacerType(String name, TrunkPlacerType<T> type) {
 		return Registry.register(
@@ -56,7 +56,7 @@ public final class TFFeatureModifiers {
 		);
 	}
 
-	private static <T extends PlacementModifier> PlacementModifierType<T> registerPlacementModifierType(String name, PlacementModifierType<T> type) {
+	private static <T extends PlacementModifier> MapCodec<T> registerPlacementModifierType(String name, MapCodec<T> type) {
 		return Registry.register(
 			BuiltInRegistries.PLACEMENT_MODIFIER_TYPE,
 			TFCommon.prefix(name),

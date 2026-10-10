@@ -1,6 +1,6 @@
 package twilightforest.world.components.feature.templates;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.Identifier;
@@ -26,7 +26,12 @@ import twilightforest.world.components.processors.CobbleVariants;
 import twilightforest.world.components.processors.StoneBricksVariants;
 
 public class DruidHutFeature extends TemplateFeature<SwizzleConfig> {
-	public DruidHutFeature(Codec<SwizzleConfig> config) {
+	public static final MapCodec<DruidHutFeature> CODEC = SwizzleConfig.MAP_CODEC.xmap(DruidHutFeature::new, feature -> feature.config);
+
+	@Override
+	public MapCodec<DruidHutFeature> codec() { return CODEC; }
+
+	public DruidHutFeature(SwizzleConfig config) {
 		super(config);
 	}
 

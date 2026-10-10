@@ -7,12 +7,10 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
-import net.minecraft.world.level.levelgen.structure.StructurePieceAccessor;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
 import twilightforest.init.TFStructurePieceTypes;
 import twilightforest.util.BoundingBoxUtils;
-
 
 public class IceTowerMainComponent extends IceTowerWingComponent {
 	public boolean hasBossWing = false;
@@ -42,8 +40,9 @@ public class IceTowerMainComponent extends IceTowerWingComponent {
 	}
 
 	@Override
-	public void addChildren(StructurePiece parent, StructurePieceAccessor list, RandomSource rand) {
-		if (!(list instanceof StructurePiecesBuilder start))  // should never happen
+	public void addChildren(StructurePiece parent, StructurePiecesBuilder list, RandomSource rand) {
+		StructurePiecesBuilder start = list;
+		if (start == null)  // should never happen
 			return;
 
 		while (!((IceTowerMainComponent) parent).hasBossWing) {
@@ -61,7 +60,7 @@ public class IceTowerMainComponent extends IceTowerWingComponent {
 
 			// TODO: make this more general
 			BlockPos myDoor = this.openings.getFirst();
-			BlockPos entranceDoor = new BlockPos(myDoor);
+			BlockPos entranceDoor = myDoor.immutable();
 
 
 			if (myDoor.getX() == 0) {
@@ -87,26 +86,28 @@ public class IceTowerMainComponent extends IceTowerWingComponent {
 		}
 	}
 
-	private void makeEntranceBridge(StructurePieceAccessor list, RandomSource rand, int index, int x, int y, int z, int length, Rotation rotation) {
+	private void makeEntranceBridge(StructurePiecesBuilder list, RandomSource rand, int index, int x, int y, int z, int length, Rotation rotation) {
 		Direction direction = getStructureRelativeRotation(rotation);
 		BlockPos dest = offsetTowerCCoords(x, y, z, 5, direction);
 
 		IceTowerBridgeComponent bridge = new IceTowerBridgeComponent(index, dest.getX(), dest.getY(), dest.getZ(), length, 4, direction);
 
 		list.addPiece(bridge);
-		if (list instanceof StructurePiecesBuilder start) {
+		if (list != null) {
+			StructurePiecesBuilder start = list;
 			bridge.addChildren(start.pieces.getFirst(), list, rand);
 		}
 	}
 
-	public boolean makeEntranceTower(StructurePieceAccessor list, RandomSource rand, int index, int x, int y, int z, int wingSize, int wingHeight, Rotation rotation) {
+	public boolean makeEntranceTower(StructurePiecesBuilder list, RandomSource rand, int index, int x, int y, int z, int wingSize, int wingHeight, Rotation rotation) {
 		Direction direction = getStructureRelativeRotation(rotation);
 		int[] dx = offsetTowerCoords(x, y, z, wingSize, direction);
 
 		IceTowerWingComponent entrance = new IceTowerEntranceComponent(index, dx[0], dx[1], dx[2], wingSize, wingHeight, direction);
 
 		list.addPiece(entrance);
-		if (list instanceof StructurePiecesBuilder start) {
+		if (list != null) {
+			StructurePiecesBuilder start = list;
 			entrance.addChildren(start.pieces.getFirst(), list, rand);
 		}
 		addOpening(x, y, z, rotation);

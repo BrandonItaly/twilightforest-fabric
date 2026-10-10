@@ -1,6 +1,6 @@
 package twilightforest.world.components.feature;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
@@ -10,8 +10,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import org.jetbrains.annotations.Nullable;
 import twilightforest.block.HorizontalHollowLogBlock;
 import twilightforest.enums.HollowLogVariants;
@@ -19,18 +19,26 @@ import twilightforest.init.TFBlocks;
 import twilightforest.util.features.FeatureUtil;
 import twilightforest.world.components.feature.config.HollowLogConfig;
 
-public class SmallFallenLogFeature extends Feature<HollowLogConfig> {
+public class SmallFallenLogFeature implements Feature {
 
-	public SmallFallenLogFeature(Codec<HollowLogConfig> configIn) {
-		super(configIn);
+	public static final MapCodec<SmallFallenLogFeature> CODEC = HollowLogConfig.MAP_CODEC.xmap(SmallFallenLogFeature::new, feature -> feature.config);
+	private final HollowLogConfig config;
+
+	public SmallFallenLogFeature(HollowLogConfig config) {
+		this.config = config;
 	}
 
 	@Override
-	public boolean place(FeaturePlaceContext<HollowLogConfig> ctx) {
-		WorldGenLevel world = ctx.level();
-		BlockPos pos = ctx.origin();
-		RandomSource rand = ctx.random();
-		HollowLogConfig config = ctx.config();
+	public MapCodec<SmallFallenLogFeature> codec() {
+		return CODEC;
+	}
+
+	@Override
+	public boolean place(WorldGenLevel featureLevel, ChunkGenerator generator, RandomSource featureRandom, BlockPos featureOrigin) {
+		WorldGenLevel world = featureLevel;
+		BlockPos pos = featureOrigin;
+		RandomSource rand = featureRandom;
+		HollowLogConfig config = this.config;
 		boolean shouldMakeAllHollow = rand.nextBoolean();
 
 		// determine direction

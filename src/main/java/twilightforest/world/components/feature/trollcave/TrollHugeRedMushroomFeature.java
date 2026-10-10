@@ -1,25 +1,30 @@
 package twilightforest.world.components.feature.trollcave;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.HugeMushroomBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.feature.AbstractHugeMushroomFeature;
 import net.minecraft.world.level.levelgen.feature.HugeRedMushroomFeature;
-import net.minecraft.world.level.levelgen.feature.configurations.HugeMushroomFeatureConfiguration;
 import twilightforest.util.features.FeatureLogic;
-
+import twilightforest.world.components.feature.TFMushroomFeature;
 
 // [VanillaCopy]
-public class TrollHugeRedMushroomFeature extends HugeRedMushroomFeature {
-	public TrollHugeRedMushroomFeature(Codec<HugeMushroomFeatureConfiguration> config) {
-		super(config);
+public class TrollHugeRedMushroomFeature extends TFMushroomFeature {
+	public static final MapCodec<TrollHugeRedMushroomFeature> CODEC = settingsCodec(TrollHugeRedMushroomFeature::new);
+
+	@Override
+	public MapCodec<TrollHugeRedMushroomFeature> codec() { return CODEC; }
+
+	public TrollHugeRedMushroomFeature(AbstractHugeMushroomFeature config) {
+		super(new HugeRedMushroomFeature(config.capProvider(), config.stemProvider(), config.foliageRadius(), config.canPlaceOn()));
 	}
 
 	@Override
-	protected void makeCap(WorldGenLevel levelAccessor, RandomSource random, BlockPos pos, int height, BlockPos.MutableBlockPos mutableBlockPos, HugeMushroomFeatureConfiguration featureConfiguration) {
+	protected void makeCap(WorldGenLevel levelAccessor, RandomSource random, BlockPos pos, int height, BlockPos.MutableBlockPos mutableBlockPos, AbstractHugeMushroomFeature featureConfiguration) {
 		for (int y = height - 3; y <= height; y++) {
 			int foliageRadius = y < height ? featureConfiguration.foliageRadius() : featureConfiguration.foliageRadius() - 1;
 			int innerRadius = featureConfiguration.foliageRadius() - 2;
@@ -29,7 +34,7 @@ public class TrollHugeRedMushroomFeature extends HugeRedMushroomFeature {
 					if (y >= height || FeatureLogic.isEdge(x, z, foliageRadius)) {
 						mutableBlockPos.setWithOffset(pos, x, y, z);
 						if (!levelAccessor.getBlockState(mutableBlockPos).is(BlockTags.FEATURES_CANNOT_REPLACE)) {
-							BlockState blockState = featureConfiguration.capProvider().getState(levelAccessor, random, pos);
+							BlockState blockState = featureConfiguration.capProvider().value().getState(levelAccessor, random, pos);
 							if (FeatureLogic.hasAllMushroomsProperties(blockState)) {
 								blockState = blockState.setValue(HugeMushroomBlock.UP, y >= height - 1)
 									.setValue(HugeMushroomBlock.WEST, x < -innerRadius)

@@ -1,6 +1,7 @@
 package twilightforest.world.components.feature;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
@@ -9,9 +10,8 @@ import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import org.jetbrains.annotations.Nullable;
 import twilightforest.tags.TFBlockTags;
@@ -19,19 +19,23 @@ import twilightforest.tags.TFBlockTags;
 import java.util.Optional;
 
 @SuppressWarnings("deprecation")
-public class TFSmallLakeFeature extends Feature<TFSmallLakeFeature.Configuration> {
+public class TFSmallLakeFeature implements Feature {
 	private static final BlockState AIR = Blocks.CAVE_AIR.defaultBlockState();
 
-	public TFSmallLakeFeature(Codec<TFSmallLakeFeature.Configuration> codec) {
-		super(codec);
-	}
+	public static final MapCodec<TFSmallLakeFeature> CODEC = Configuration.MAP_CODEC.xmap(TFSmallLakeFeature::new, feature -> feature.config);
+	private final Configuration config;
+
+	public TFSmallLakeFeature(Configuration config) { this.config = config; }
 
 	@Override
-	public boolean place(FeaturePlaceContext<TFSmallLakeFeature.Configuration> context) {
-		BlockPos blockpos = context.origin();
-		WorldGenLevel worldgenlevel = context.level();
-		RandomSource randomsource = context.random();
-		TFSmallLakeFeature.Configuration config = context.config();
+	public MapCodec<TFSmallLakeFeature> codec() { return CODEC; }
+
+	@Override
+	public boolean place(WorldGenLevel featureLevel, ChunkGenerator generator, RandomSource featureRandom, BlockPos featureOrigin) {
+		BlockPos blockpos = featureOrigin;
+		WorldGenLevel worldgenlevel = featureLevel;
+		RandomSource randomsource = featureRandom;
+		TFSmallLakeFeature.Configuration config = this.config;
 
 		if (blockpos.getY() <= worldgenlevel.getMinY() + 4) {
 			return false;
@@ -152,15 +156,17 @@ public class TFSmallLakeFeature extends Feature<TFSmallLakeFeature.Configuration
 		}
 	}
 
-	public record Configuration(BlockStateProvider fluid, @Nullable BlockStateProvider barrier, @Nullable BlockStateProvider ice) implements FeatureConfiguration {
-		public static final Codec<TFSmallLakeFeature.Configuration> CODEC = RecordCodecBuilder.create(
+	public record Configuration(BlockStateProvider fluid, @Nullable BlockStateProvider barrier, @Nullable BlockStateProvider ice) {
+		public static final MapCodec<TFSmallLakeFeature.Configuration> MAP_CODEC = RecordCodecBuilder.mapCodec(
 			instance -> instance.group(
-					BlockStateProvider.CODEC.fieldOf("fluid").forGetter(Configuration::fluid),
-					BlockStateProvider.CODEC.optionalFieldOf("barrier").forGetter(configuration -> Optional.ofNullable(configuration.barrier())),
-					BlockStateProvider.CODEC.optionalFieldOf("ice").forGetter(configuration -> Optional.ofNullable(configuration.ice()))
+					BlockStateProvider.DIRECT_CODEC.fieldOf("fluid").forGetter(Configuration::fluid),
+					BlockStateProvider.DIRECT_CODEC.optionalFieldOf("barrier").forGetter(configuration -> Optional.ofNullable(configuration.barrier())),
+					BlockStateProvider.DIRECT_CODEC.optionalFieldOf("ice").forGetter(configuration -> Optional.ofNullable(configuration.ice()))
 				)
 				.apply(instance, TFSmallLakeFeature.Configuration::new)
 		);
+
+		public static final Codec<Configuration> CODEC = MAP_CODEC.codec();
 
 		@SuppressWarnings("OptionalUsedAsFieldOrParameterType") // Vanilla does this shit too
 		private Configuration(BlockStateProvider fluid, Optional<BlockStateProvider> barrier, Optional<BlockStateProvider> ice) {

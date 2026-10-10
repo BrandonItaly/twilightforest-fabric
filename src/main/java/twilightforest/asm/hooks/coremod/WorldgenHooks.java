@@ -7,8 +7,10 @@ import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.levelgen.Beardifier;
-import net.minecraft.world.level.levelgen.DensityFunction;
-import net.minecraft.world.level.levelgen.DensityFunctions;
+import net.minecraft.world.level.levelgen.RandomState;
+import net.minecraft.world.level.levelgen.densityfunction.DensityFunction;
+import net.minecraft.world.level.levelgen.densityfunction.DensityFunctions;
+import net.minecraft.world.level.levelgen.densityfunction.DensitySampler;
 import net.minecraft.world.level.levelgen.structure.StructureStart;
 import net.minecraft.world.level.levelgen.structure.pieces.PiecesContainer;
 import twilightforest.init.custom.ChunkBlanketProcessors;
@@ -19,23 +21,20 @@ import twilightforest.world.components.structures.util.CustomStructureData;
 import java.util.List;
 
 public final class WorldgenHooks {
-	public static DensityFunctions.BeardifierOrMarker gatherCustomTerrain(DensityFunctions.BeardifierOrMarker vanilla, StructureManager structureManager, ChunkAccess chunkAccess) {
-		if (!(vanilla instanceof Beardifier beardifier))
-			return vanilla;
-
+	public static Beardifier gatherCustomTerrain(Beardifier vanilla, StructureManager structureManager, ChunkAccess chunkAccess, RandomState randomState) {
 		ChunkPos chunkPos = chunkAccess.getPos();
-		List<StructureStart> structureStarts = structureManager.startsForStructure(chunkPos, s -> s instanceof CustomDensitySource);
+		List<StructureStart> structureStarts = structureManager.startsForStructure(chunkPos.x(), chunkPos.z(), s -> s instanceof CustomDensitySource);
 
 		if (structureStarts.isEmpty())
-			return beardifier;
+			return vanilla;
 
-		ObjectArrayList<DensityFunction> customStructureTerraforms = new ObjectArrayList<>(structureStarts.size());
+		ObjectArrayList<DensitySampler> customStructureTerraforms = new ObjectArrayList<>(structureStarts.size());
 
 		for (StructureStart structureStart : structureStarts)
 			if (structureStart.getStructure() instanceof CustomDensitySource customDensitySource)
-				customStructureTerraforms.add(customDensitySource.getStructureTerraformer(chunkPos, structureStart));
+				customStructureTerraforms.add(randomState.getSampler(customDensitySource.getStructureTerraformer(chunkPos, structureStart)));
 
-		return customStructureTerraforms.isEmpty() ? beardifier : new CustomTerrainBeardifier(beardifier, customStructureTerraforms);
+		return customStructureTerraforms.isEmpty() ? vanilla : new CustomTerrainBeardifier(vanilla, customStructureTerraforms);
 	}
 
 	public static void chunkBlanketing(ChunkAccess access, WorldGenRegion region) {

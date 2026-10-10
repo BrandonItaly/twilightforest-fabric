@@ -2,7 +2,7 @@ package twilightforest.world.components.feature;
 
 import com.mojang.datafixers.util.Either;
 import com.mojang.datafixers.util.Pair;
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
@@ -13,27 +13,29 @@ import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import twilightforest.tags.TFBlockTags;
 import twilightforest.util.features.FeatureLogic;
 import twilightforest.world.components.speleothem.Stalactite;
 
 import java.util.List;
 
-public class BlockSpikeFeature extends Feature<NoneFeatureConfiguration> {
+public class BlockSpikeFeature implements Feature {
 	public static final Stalactite STONE_STALACTITE = new Stalactite(Either.right(Blocks.STONE), 0.25F, 11, 1);
 
-	public BlockSpikeFeature(Codec<NoneFeatureConfiguration> codec) {
-		super(codec);
+	public static final MapCodec<BlockSpikeFeature> CODEC = MapCodec.unit(BlockSpikeFeature::new);
+
+	@Override
+	public MapCodec<BlockSpikeFeature> codec() {
+		return CODEC;
 	}
 
 	@Override
-	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
-		RandomSource random = context.random();
-		return startSpike(context.level(), context.origin(), STONE_STALACTITE, random, false);
+	public boolean place(WorldGenLevel featureLevel, ChunkGenerator generator, RandomSource featureRandom, BlockPos featureOrigin) {
+		RandomSource random = featureRandom;
+		return startSpike(featureLevel, featureOrigin, STONE_STALACTITE, random, false);
 	}
 
 	public static boolean startSpike(WorldGenLevel level, BlockPos startPos, Stalactite config, RandomSource random, boolean hanging) {

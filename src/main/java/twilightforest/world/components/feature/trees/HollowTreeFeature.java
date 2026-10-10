@@ -1,6 +1,6 @@
 package twilightforest.world.components.feature.trees;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
@@ -28,7 +28,7 @@ public abstract class HollowTreeFeature extends TFTreeFeature<TFTreeFeatureConfi
 
 	private static final int LEAF_DUNGEON_CHANCE = 8;
 
-	public HollowTreeFeature(Codec<TFTreeFeatureConfig> config) {
+	public HollowTreeFeature(TFTreeFeatureConfig config) {
 		super(config);
 	}
 

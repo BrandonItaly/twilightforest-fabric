@@ -132,7 +132,7 @@ public class LichYardBox extends StructurePiece implements IPieceBeardifierModif
 					if (this.direction.getAxis() == Direction.Axis.Z ? x == this.boundingBox.minX() + noiseRounded || x == this.boundingBox.maxX() - noiseRounded : z == this.boundingBox.minZ() + noiseRounded || z == this.boundingBox.maxZ() - noiseRounded) {
 						BlockPos fenceAt = placeAt.above();
 						level.setBlock(fenceAt, Blocks.SPRUCE_FENCE.defaultBlockState(), Block.UPDATE_ALL);
-						chunk.markPosForPostprocessing(fenceAt);
+						chunk.markPosForPostProcessing(fenceAt);
 					}
 				}
 			}
@@ -256,7 +256,7 @@ public class LichYardBox extends StructurePiece implements IPieceBeardifierModif
 		return new BlockPos(Mth.lerpDiscrete(delta, first.getX(), second.getX()), Mth.lerpDiscrete(delta, first.getY(), second.getY()), Mth.lerpDiscrete(delta, first.getZ(), second.getZ()));
 	}
 
-	public void addDecoration(TwilightJigsawPiece parent, StructurePieceAccessor pieces, RandomSource random, Structure.GenerationContext context) {
+	public void addDecoration(TwilightJigsawPiece parent, StructurePiecesBuilder pieces, RandomSource random, Structure.GenerationContext context) {
 		this.addChildren(parent, pieces, random);
 
 		Direction.Axis axis = this.direction.getAxis();

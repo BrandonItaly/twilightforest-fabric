@@ -14,14 +14,13 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
-import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
-import net.minecraft.world.level.levelgen.structure.StructurePieceAccessor;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
+import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
 import twilightforest.init.TFConfiguredFeatures;
 import twilightforest.init.TFStructurePieceTypes;
-
 
 public class StrongholdAtriumComponent extends KnightStrongholdComponent {
 
@@ -65,7 +64,7 @@ public class StrongholdAtriumComponent extends KnightStrongholdComponent {
 	 * Initiates construction of the Structure Component picked, at the current Location of StructGen
 	 */
 	@Override
-	public void addChildren(StructurePiece parent, StructurePieceAccessor list, RandomSource random) {
+	public void addChildren(StructurePiece parent, StructurePiecesBuilder list, RandomSource random) {
 		super.addChildren(parent, list, random);
 
 		if (this.enterBottom) {
@@ -134,7 +133,7 @@ public class StrongholdAtriumComponent extends KnightStrongholdComponent {
 		BlockPos pos = getBlockPosWithOffset(x, y, z);
 
 		if (sbb.isInside(pos)) {
-			ResourceKey<ConfiguredFeature<?, ?>> treeGen = switch (treeNum) {
+			ResourceKey<Feature> treeGen = switch (treeNum) {
 				case 1 ->
 					// jungle tree
 					TreeFeatures.JUNGLE_TREE;
@@ -150,7 +149,7 @@ public class StrongholdAtriumComponent extends KnightStrongholdComponent {
 			// grow a tree
 
 			for (int i = 0; i < 100; i++) {
-				if (world.registryAccess().lookupOrThrow(Registries.CONFIGURED_FEATURE).get(treeGen).orElseThrow().value().place(world, generator, world.getRandom(), pos)) {
+				if (world.registryAccess().lookupOrThrow(Registries.FEATURE).get(treeGen).orElseThrow().value().place(world, generator, world.getRandom(), pos)) {
 					break;
 				}
 			}

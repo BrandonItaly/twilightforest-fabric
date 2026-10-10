@@ -1,6 +1,6 @@
 package twilightforest.world.components.feature;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
@@ -12,30 +12,38 @@ import net.minecraft.world.level.block.DirectionalBlock;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import twilightforest.init.TFBlocks;
 import twilightforest.util.WorldUtil;
 import twilightforest.world.components.feature.config.ThornsConfig;
 
-public class ThornFeature extends Feature<ThornsConfig> {
-	public ThornFeature(Codec<ThornsConfig> config) {
-		super(config);
+public class ThornFeature implements Feature {
+	public static final MapCodec<ThornFeature> CODEC = ThornsConfig.MAP_CODEC.xmap(ThornFeature::new, feature -> feature.config);
+	private final ThornsConfig config;
+
+	public ThornFeature(ThornsConfig config) {
+		this.config = config;
 	}
 
 	@Override
-	public boolean place(FeaturePlaceContext<ThornsConfig> ctx) {
-		WorldGenLevel world = ctx.level();
-		BlockPos pos = ctx.origin();
-		RandomSource rand = ctx.random();
+	public MapCodec<ThornFeature> codec() {
+		return CODEC;
+	}
+
+	@Override
+	public boolean place(WorldGenLevel featureLevel, ChunkGenerator generator, RandomSource featureRandom, BlockPos featureOrigin) {
+		WorldGenLevel world = featureLevel;
+		BlockPos pos = featureOrigin;
+		RandomSource rand = featureRandom;
 
 
 		// make a 3-5 long stack going up
 		int nextLength = 2 + rand.nextInt(4);
 		int maxLength = 2 + rand.nextInt(4) + rand.nextInt(4) + rand.nextInt(4);
 
-		placeThorns(world, rand, pos, nextLength, Direction.UP, maxLength, pos, ctx.config(), true);
+		placeThorns(world, rand, pos, nextLength, Direction.UP, maxLength, pos, this.config, true);
 
 		return true;
 	}
@@ -49,7 +57,7 @@ public class ThornFeature extends Feature<ThornsConfig> {
 			if (!avoidGiantCloud || checkIsUnderCloud(world, pos, dPos)) {
 				if (Math.abs(dPos.getX() - oPos.getX()) < config.maxSpread() && Math.abs(dPos.getZ() - oPos.getZ()) < config.maxSpread() && canPlaceThorns(world, dPos)) {
 					world.setBlock(dPos, TFBlocks.BROWN_THORNS.defaultBlockState().setValue(RotatedPillarBlock.AXIS, dir.getAxis()), Block.UPDATE_CLIENTS);
-					world.getChunk(dPos).markPosForPostprocessing(dPos);
+					world.getChunk(dPos).markPosForPostProcessing(dPos);
 
 					// did we make it to the end?
 					if (i == length - 1) {

@@ -12,11 +12,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
-import net.minecraft.world.level.levelgen.structure.StructurePieceAccessor;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
+import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
 import twilightforest.init.TFBlocks;
 import twilightforest.init.TFStructurePieceTypes;
-
 
 public class FinalCastleDungeonEntranceComponent extends FinalCastleDungeonRoom31Component {
 
@@ -31,7 +30,7 @@ public class FinalCastleDungeonEntranceComponent extends FinalCastleDungeonRoom3
 	}
 
 	@Override
-	public void addChildren(StructurePiece parent, StructurePieceAccessor list, RandomSource rand) {
+	public void addChildren(StructurePiece parent, StructurePiecesBuilder list, RandomSource rand) {
 		this.deco = new StructureTFDecoratorCastle();
 		this.deco.blockState = TFBlocks.PINK_CASTLE_RUNE_BRICK.defaultBlockState();
 		this.deco.fenceState = TFBlocks.PINK_FORCE_FIELD.defaultBlockState();

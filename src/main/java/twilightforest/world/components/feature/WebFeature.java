@@ -1,20 +1,23 @@
 package twilightforest.world.components.feature;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-public class WebFeature extends Feature<NoneFeatureConfiguration> {
+public class WebFeature implements Feature {
 
-	public WebFeature(Codec<NoneFeatureConfiguration> config) {
-		super(config);
+	public static final MapCodec<WebFeature> CODEC = MapCodec.unit(WebFeature::new);
+
+	@Override
+	public MapCodec<WebFeature> codec() {
+		return CODEC;
 	}
 
 	private static boolean isValidMaterial(BlockState state) {
@@ -22,14 +25,14 @@ public class WebFeature extends Feature<NoneFeatureConfiguration> {
 	}
 
 	@Override
-	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> config) {
-		WorldGenLevel world = config.level();
-		BlockPos pos = config.origin().above(config.random().nextInt(world.getMaxY() - config.origin().getY()));
-		while (pos.getY() > config.origin().getY()) {
+	public boolean place(WorldGenLevel featureLevel, ChunkGenerator generator, RandomSource featureRandom, BlockPos featureOrigin) {
+		WorldGenLevel world = featureLevel;
+		BlockPos pos = featureOrigin.above(featureRandom.nextInt(world.getMaxY() - featureOrigin.getY()));
+		while (pos.getY() > featureOrigin.getY()) {
 			pos = pos.below();
 			BlockState state = world.getBlockState(pos);
 			if (world.isEmptyBlock(pos.below()) && isValidMaterial(state)) {
-				world.setBlock(state.is(BlockTags.LEAVES) && config.random().nextBoolean() ? pos : pos.below(), Blocks.COBWEB.defaultBlockState(), Block.UPDATE_KNOWN_SHAPE | Block.UPDATE_CLIENTS);
+				world.setBlock(state.is(BlockTags.LEAVES) && featureRandom.nextBoolean() ? pos : pos.below(), Blocks.COBWEB.defaultBlockState(), Block.UPDATE_KNOWN_SHAPE | Block.UPDATE_CLIENTS);
 				return true;
 			}
 		}

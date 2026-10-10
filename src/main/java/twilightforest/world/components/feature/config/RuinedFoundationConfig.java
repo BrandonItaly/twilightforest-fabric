@@ -13,7 +13,6 @@ import net.minecraft.util.valueproviders.*;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -21,15 +20,16 @@ import twilightforest.loot.TFLootTables;
 import twilightforest.util.TFBlockFamilies;
 
 @SuppressWarnings("ConstantValue")
-public record RuinedFoundationConfig(RuinedFoundationDimensions dimensions, RuinedFoundationBlocks blocks, ResourceKey<LootTable> lootTable) implements FeatureConfiguration {
-	public static final Codec<RuinedFoundationConfig> CODEC = RecordCodecBuilder.create(inst -> inst.group(
+public record RuinedFoundationConfig(RuinedFoundationDimensions dimensions, RuinedFoundationBlocks blocks, ResourceKey<LootTable> lootTable) {
+	public static final MapCodec<RuinedFoundationConfig> MAP_CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
 		RuinedFoundationDimensions.CODEC.forGetter(RuinedFoundationConfig::dimensions),
 		RuinedFoundationBlocks.CODEC.forGetter(RuinedFoundationConfig::blocks),
 		ResourceKey.codec(Registries.LOOT_TABLE).fieldOf("loot_table").forGetter(RuinedFoundationConfig::lootTable)
 	).apply(inst, RuinedFoundationConfig::new));
+	public static final Codec<RuinedFoundationConfig> CODEC = MAP_CODEC.codec();
 
 	public static RuinedFoundationConfig withDefaultBlocks(boolean floorWaterlogged) {
-		RuinedFoundationBlocks foundationBlocks = RuinedFoundationBlocks.blocksFromFamilies(floorWaterlogged, BlockFamilies.OAK_PLANKS, BlockFamilies.COBBLESTONE, BlockFamilies.MOSSY_COBBLESTONE, BlockStateProvider.simple(Blocks.CHEST));
+		RuinedFoundationBlocks foundationBlocks = RuinedFoundationBlocks.blocksFromFamilies(floorWaterlogged, BlockFamilies.OAK_PLANKS, BlockFamilies.COBBLESTONE, BlockFamilies.MOSSY_COBBLESTONE, BlockStateProvider.of(Blocks.CHEST));
 
 		return new RuinedFoundationConfig(RuinedFoundationDimensions.makeDefault(), foundationBlocks, TFLootTables.FOUNDATION_BASEMENT);
 	}
@@ -57,13 +57,13 @@ public record RuinedFoundationConfig(RuinedFoundationDimensions dimensions, Ruin
 	// Blockstates given are treated as the north orientation. Rotations apply for other-facing walls; corners resolving randomly.
 	public record RuinedFoundationBlocks(BlockStateProvider floor, BlockStateProvider basementPosts, BlockStateProvider lootContainer, BlockStateProvider wallBlock, BlockStateProvider wallTop, BlockStateProvider decayedWall, BlockStateProvider decayedTop) {
 		public static final MapCodec<RuinedFoundationBlocks> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
-			BlockStateProvider.CODEC.fieldOf("floor").forGetter(RuinedFoundationBlocks::floor),
-			BlockStateProvider.CODEC.fieldOf("basement_posts").forGetter(RuinedFoundationBlocks::basementPosts),
-			BlockStateProvider.CODEC.fieldOf("loot_container").forGetter(RuinedFoundationBlocks::lootContainer),
-			BlockStateProvider.CODEC.fieldOf("wall_block").forGetter(RuinedFoundationBlocks::wallBlock),
-			BlockStateProvider.CODEC.fieldOf("wall_top_block").forGetter(RuinedFoundationBlocks::wallTop),
-			BlockStateProvider.CODEC.fieldOf("decayed_wall_block").forGetter(RuinedFoundationBlocks::decayedWall),
-			BlockStateProvider.CODEC.fieldOf("decayed_wall_top_block").forGetter(RuinedFoundationBlocks::decayedTop)
+			BlockStateProvider.DIRECT_CODEC.fieldOf("floor").forGetter(RuinedFoundationBlocks::floor),
+			BlockStateProvider.DIRECT_CODEC.fieldOf("basement_posts").forGetter(RuinedFoundationBlocks::basementPosts),
+			BlockStateProvider.DIRECT_CODEC.fieldOf("loot_container").forGetter(RuinedFoundationBlocks::lootContainer),
+			BlockStateProvider.DIRECT_CODEC.fieldOf("wall_block").forGetter(RuinedFoundationBlocks::wallBlock),
+			BlockStateProvider.DIRECT_CODEC.fieldOf("wall_top_block").forGetter(RuinedFoundationBlocks::wallTop),
+			BlockStateProvider.DIRECT_CODEC.fieldOf("decayed_wall_block").forGetter(RuinedFoundationBlocks::decayedWall),
+			BlockStateProvider.DIRECT_CODEC.fieldOf("decayed_wall_top_block").forGetter(RuinedFoundationBlocks::decayedTop)
 		).apply(inst, RuinedFoundationBlocks::new));
 
 		public static RuinedFoundationBlocks blocksFromFamilies(boolean floorWaterlogged, BlockFamily floorMaterial, BlockFamily wallMaterial, BlockFamily decayedMaterial, BlockStateProvider chestBlockProvider) {
@@ -109,7 +109,7 @@ public record RuinedFoundationConfig(RuinedFoundationDimensions dimensions, Ruin
 				.build()
 			);
 
-			return new RuinedFoundationBlocks(floor, BlockStateProvider.simple(floorMaterial.get(basementSupports).defaultBlockState()), chestBlockProvider, BlockStateProvider.simple(wallBlock), wallTop, BlockStateProvider.simple(decayedWall), decayedTop);
+			return new RuinedFoundationBlocks(floor, BlockStateProvider.of(floorMaterial.get(basementSupports).defaultBlockState()), chestBlockProvider, BlockStateProvider.of(wallBlock), wallTop, BlockStateProvider.of(decayedWall), decayedTop);
 		}
 	}
 }

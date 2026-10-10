@@ -16,6 +16,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.structure.*;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
+import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
 import net.minecraft.world.level.levelgen.structure.templatesystem.*;
 import org.apache.commons.lang3.StringUtils;
 import org.jspecify.annotations.Nullable;
@@ -59,7 +60,7 @@ public final class LichTowerBase extends TwilightJigsawPiece implements IPieceBe
 	}
 
 	@Override
-	protected void processJigsaw(TwilightJigsawPiece parent, StructurePieceAccessor pieceAccessor, Structure.GenerationContext context, JigsawRecord connection, int jigsawIndex) {
+	protected void processJigsaw(TwilightJigsawPiece parent, StructurePiecesBuilder pieceAccessor, Structure.GenerationContext context, JigsawRecord connection, int jigsawIndex) {
 		switch (connection.target()) {
 			case "twilightforest:lich_tower/tower_below" -> LichTowerSegment.buildTowerBySegments(pieceAccessor, context, connection.pos(), connection.orientation(), this, this.structureManager, context.random().nextIntBetweenInclusive(12, 15));
 			case "twilightforest:lich_tower/bridge" -> {
@@ -140,22 +141,22 @@ public final class LichTowerBase extends TwilightJigsawPiece implements IPieceBe
 		return 1;
 	}
 
-	private static class TrimProcessor extends StructureProcessor {
+	private static class TrimProcessor implements StructureProcessor {
 		private static final TrimProcessor INSTANCE = new TrimProcessor();
 
 		@Override
-		public StructureTemplate.@Nullable StructureBlockInfo processBlock(LevelReader level, BlockPos targetPosition, BlockPos referencePos, StructureTemplate.StructureBlockInfo originalBlockInfo, StructureTemplate.StructureBlockInfo processedBlockInfo, StructurePlaceSettings settings) {
+		public StructureTemplate.@Nullable StructureBlockInfo processBlock(LevelReader level, BlockPos targetPosition, BlockPos referencePos, BlockPos templateRelativePos, StructureTemplate.StructureBlockInfo processedBlockInfo, StructurePlaceSettings settings) {
 			if (processedBlockInfo.state().is(Blocks.POLISHED_ANDESITE_STAIRS) && level.getBlockState(processedBlockInfo.pos()).is(BlockTags.STONE_BRICKS)) {
 				// Don't replace trim blocks placed by tower wings
 				return null;
 			}
 
-			return super.processBlock(level, targetPosition, referencePos, originalBlockInfo, processedBlockInfo, settings);
+			return processedBlockInfo;
 		}
 
 		@Override
-		protected StructureProcessorType<?> getType() {
-			return null; // not serialized
+		public com.mojang.serialization.MapCodec<? extends StructureProcessor> codec() {
+			return com.mojang.serialization.MapCodec.unit(INSTANCE); // Only used while placing this structure.
 		}
 	}
 }

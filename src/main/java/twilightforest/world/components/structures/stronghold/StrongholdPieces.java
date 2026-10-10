@@ -3,11 +3,10 @@ package twilightforest.world.components.structures.stronghold;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
-import net.minecraft.world.level.levelgen.structure.StructurePieceAccessor;
+import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class StrongholdPieces {
 
@@ -62,7 +61,7 @@ public class StrongholdPieces {
 		return flag;
 	}
 
-	public KnightStrongholdComponent getNextComponent(StructurePiece parent, StructurePieceAccessor list, RandomSource random, int index, Direction facing, int x, int y, int z) {
+	public KnightStrongholdComponent getNextComponent(StructurePiece parent, StructurePiecesBuilder list, RandomSource random, int index, Direction facing, int x, int y, int z) {
 		if (!hasMoreLimitedPieces()) {
 			return null;
 		} else {

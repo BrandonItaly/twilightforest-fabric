@@ -1,7 +1,7 @@
 package twilightforest.world.components.feature;
 
 import com.mojang.datafixers.util.Pair;
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
@@ -11,8 +11,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import twilightforest.block.SnowLoggable;
 import twilightforest.tags.TFBlockTags;
 import twilightforest.util.TFMathUtil;
@@ -21,25 +21,33 @@ import twilightforest.world.components.feature.config.BerryBushConfig;
 
 import java.util.List;
 
-public class BerryBushFeature extends Feature<BerryBushConfig> {
+public class BerryBushFeature implements Feature {
 	private static final float DEFAULT_RIPE_PROBABILITY = 0.2F;
 
-	public BerryBushFeature(Codec<BerryBushConfig> codec) {
-		super(codec);
+	public static final MapCodec<BerryBushFeature> CODEC = BerryBushConfig.MAP_CODEC.xmap(BerryBushFeature::new, feature -> feature.config);
+	private final BerryBushConfig config;
+
+	public BerryBushFeature(BerryBushConfig config) {
+		this.config = config;
 	}
 
 	@Override
-	public boolean place(FeaturePlaceContext<BerryBushConfig> context) {
-		WorldGenLevel level = context.level();
-		BlockPos pos = context.origin();
-		BlockState stateToPlace = context.config().bushState();
-		RandomSource random = context.random();
-		TagKey<Block> generatesOn = context.config().placesOn();
+	public MapCodec<BerryBushFeature> codec() {
+		return CODEC;
+	}
+
+	@Override
+	public boolean place(WorldGenLevel featureLevel, ChunkGenerator generator, RandomSource featureRandom, BlockPos featureOrigin) {
+		WorldGenLevel level = featureLevel;
+		BlockPos pos = featureOrigin;
+		BlockState stateToPlace = this.config.bushState();
+		RandomSource random = featureRandom;
+		TagKey<Block> generatesOn = this.config.placesOn();
 
 		if (!level.getBlockState(pos.below()).is(generatesOn))
 			return false;
 
-		boolean isInSnowyBiome = context.config().canBeSnowy() && level.getBiome(pos).value().shouldSnow(level, pos);
+		boolean isInSnowyBiome = this.config.canBeSnowy() && level.getBiome(pos).value().shouldSnow(level, pos);
 		return switch (this.chooseSize(random)) {
 			case LARGE -> this.generateLargeNode(level, pos, stateToPlace, generatesOn, random, isInSnowyBiome);
 			case MEDIUM -> this.generateMediumNode(level, pos, stateToPlace, generatesOn, random, isInSnowyBiome);

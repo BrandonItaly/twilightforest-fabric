@@ -1,22 +1,28 @@
 package twilightforest.world.components.feature.trollcave;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.feature.configurations.HugeMushroomFeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.AbstractHugeMushroomFeature;
 import twilightforest.util.features.FeatureLogic;
 import twilightforest.world.components.feature.BigMushgloomFeature;
+import twilightforest.world.components.feature.TFMushroomFeature;
 
 public class TrollBigMushgloomFeature extends BigMushgloomFeature {
-	public TrollBigMushgloomFeature(Codec<HugeMushroomFeatureConfiguration> config) {
+	public static final MapCodec<TrollBigMushgloomFeature> CODEC = settingsCodec(TrollBigMushgloomFeature::new);
+
+	@Override
+	public MapCodec<TrollBigMushgloomFeature> codec() { return CODEC; }
+
+	public TrollBigMushgloomFeature(AbstractHugeMushroomFeature config) {
 		super(config);
 	}
 
 	@Override
-	protected void makeCap(WorldGenLevel levelAccessor, RandomSource random, BlockPos pos, int height, BlockPos.MutableBlockPos mutableBlockPos, HugeMushroomFeatureConfiguration featureConfiguration) {
+	protected void makeCap(WorldGenLevel levelAccessor, RandomSource random, BlockPos pos, int height, BlockPos.MutableBlockPos mutableBlockPos, AbstractHugeMushroomFeature featureConfiguration) {
 		int foliageRadius = featureConfiguration.foliageRadius();
 		int capHeight = random.nextBoolean() ? 1 : 2;
 
@@ -25,7 +31,7 @@ public class TrollBigMushgloomFeature extends BigMushgloomFeature {
 				for (int z = -foliageRadius; z <= foliageRadius; ++z) {
 					mutableBlockPos.setWithOffset(pos, x, height + y, z);
 					if (!levelAccessor.getBlockState(mutableBlockPos).is(BlockTags.FEATURES_CANNOT_REPLACE)) {
-						BlockState blockstate = featureConfiguration.capProvider().getState(levelAccessor, random, pos);
+						BlockState blockstate = featureConfiguration.capProvider().value().getState(levelAccessor, random, pos);
 						blockstate = FeatureLogic.getSphericalMushroomBlockState(blockstate, x, y, z, foliageRadius, capHeight);
 						this.setBlock(levelAccessor, mutableBlockPos, blockstate);
 					}

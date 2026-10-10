@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.structure.*;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
+import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 import twilightforest.TFCommon;
 import twilightforest.init.TFBlocks;
@@ -61,7 +62,7 @@ public final class LichTowerFoyer extends TwilightJigsawPiece implements IPieceB
 	// No need to serialize, this stateful object only needs to exist globally within this StructurePiece for the structure instance's initialization
 	private final List<BlockPos> shelfPositions = new ArrayList<>();
 	@Override
-	protected void processJigsaw(TwilightJigsawPiece parent, StructurePieceAccessor pieceAccessor, Structure.GenerationContext context, JigsawRecord connection, int jigsawIndex) {
+	protected void processJigsaw(TwilightJigsawPiece parent, StructurePiecesBuilder pieceAccessor, Structure.GenerationContext context, JigsawRecord connection, int jigsawIndex) {
 		if ("twilightforest:lich_tower/tower_base".equals(connection.target())) {
 			JigsawPlaceContext placeableJunction = JigsawPlaceContext.pickPlaceableJunction(this.templatePosition(), connection.pos(), connection.orientation(), this.structureManager, TFCommon.prefix("lich_tower/tower_base"), "twilightforest:lich_tower/tower_base", context.random());
 

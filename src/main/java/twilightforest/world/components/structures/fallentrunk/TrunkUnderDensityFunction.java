@@ -1,12 +1,18 @@
 package twilightforest.world.components.structures.fallentrunk;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectList;
+import net.minecraft.util.Interval;
 import net.minecraft.util.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.levelgen.Beardifier.Rigid;
 import net.minecraft.world.level.levelgen.Beardifier;
+import net.minecraft.world.level.levelgen.densityfunction.*;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import twilightforest.world.components.chunkgenerators.TanhHillFunction;
 
@@ -15,7 +21,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-public class TrunkUnderDensityFunction extends Beardifier {
+public class TrunkUnderDensityFunction implements DensityFunction, DensitySampler {
+	public static final MapCodec<TrunkUnderDensityFunction> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
+		Codec.BOOL.fieldOf("big_tree").forGetter(f -> f.isBigTree),
+		BoundingBox.CODEC.fieldOf("bounding_box").forGetter(f -> f.boundingBox),
+		Codec.INT.fieldOf("ground_level_delta").forGetter(f -> f.groundLevelDelta),
+		TanhHillFunction.CODEC.codec().listOf().fieldOf("mounds").forGetter(f -> f.tanhHillFunctions)
+	).apply(i, TrunkUnderDensityFunction::new));
 	private final boolean isBigTree;
 	private final boolean isXOriented;
 	private final RandomSource random;  // used to create dirt mounds
@@ -30,11 +42,18 @@ public class TrunkUnderDensityFunction extends Beardifier {
 	protected static final float NON_BIG_TREE_MOUND_HEIGHT = 1.5F;
 
 	public TrunkUnderDensityFunction(ObjectList<Rigid> pieceIterator, FallenTrunkPiece piece, boolean isBigTree, int minMounds, int maxMounds, BoundingBox box) {
-		super(pieceIterator, List.of(), box);
+		this(isBigTree, pieceIterator.getFirst().box(), pieceIterator.getFirst().groundLevelDelta(), new ArrayList<>());
+		int attemptedMoundsNumber = random.nextInt(minMounds, maxMounds + 1);
+		for(int i = 0; i < attemptedMoundsNumber; i++) {
+			Optional<TanhHillFunction> function = getTanhHillFunctionWithoutCoveringHole(piece, i % 2 == 0);
+			function.ifPresent(tanhHillFunctions::add);
+		}
+	}
+
+	private TrunkUnderDensityFunction(boolean isBigTree, BoundingBox box, int groundLevelDelta, List<TanhHillFunction> mounds) {
 		this.isBigTree = isBigTree;
-		Rigid first = pieceIterator.getFirst();
-		this.groundLevelDelta = first.groundLevelDelta();
-		boundingBox = first.box();
+		this.groundLevelDelta = groundLevelDelta;
+		boundingBox = box;
 		random = RandomSource.create(boundingBox.minX() * 14413411L + boundingBox.minZ() * 43387781L);
 		isXOriented = boundingBox.maxX() - boundingBox.minX() > boundingBox.maxZ() - boundingBox.minZ();
 		int length = isXOriented ? boundingBox.getXSpan() : boundingBox.getZSpan();
@@ -43,29 +62,31 @@ public class TrunkUnderDensityFunction extends Beardifier {
 			1,
 			!isXOriented ? length / 2 : 0);
 		this.moundBase = BoundingBox.fromCorners(moundBaseCorner, moundBaseCorner);
-		this.tanhHillFunctions = new ArrayList<>();
-		int attemptedMoundsNumber = random.nextInt(minMounds, maxMounds + 1);
-		for(int i = 0; i < attemptedMoundsNumber; i++) {
-			Optional<TanhHillFunction> function = getTanhHillFunctionWithoutCoveringHole(piece, i % 2 == 0);
-			function.ifPresent(tanhHillFunctions::add);
-		}
+		this.tanhHillFunctions = new ArrayList<>(mounds);
 	}
 
-	@Override
-	public double compute(FunctionContext context) {
-		int x = context.blockX();
-		int y = context.blockY();
-		int z = context.blockZ();
+	@Override public DensitySampler compileSampler(CompileContext context) { return this; }
+	@Override public DensityFunction rewriteChildren(DfRewriteRule rule) { return this; }
+	@Override public Interval range() { return Interval.encapsulating(-30, 30); }
+	@Override public int domainAxes() { return ALL_AXES; }
+	@Override public MapCodec<TrunkUnderDensityFunction> codec() { return CODEC; }
 
+	@Override
+	public float sampleValue(SamplerContext context, int x, int y, int z) {
 		int horizontalDistanceX = Math.max(0, Math.max(boundingBox.minX() - x, x - boundingBox.maxX()));
 		int horizontalDistanceZ = Math.max(0, Math.max(boundingBox.minZ() - z, z - boundingBox.maxZ()));
 		int adjustedGroundLevel = boundingBox.minY() + groundLevelDelta + (isBigTree ? 1 : 0);
 		int verticalDistance = y - adjustedGroundLevel;
 
-		double moundContribution = computeMoundsContribution(context);
+		double moundContribution = computeMoundsContribution(x, y, z);
 		if (moundContribution > 0)
-			return moundContribution;
-		return flatSurroundingTerrain(horizontalDistanceX, verticalDistance, horizontalDistanceZ);
+			return (float)moundContribution;
+		return (float)flatSurroundingTerrain(horizontalDistanceX, verticalDistance, horizontalDistanceZ);
+	}
+
+	@Override
+	public void sampleVolume(SamplerContext context, DensityBuffer output, DensityVolume volume) {
+		DensitySampler.sampleVolumeNaive(context, output, volume, this);
 	}
 
 	public static double flatSurroundingTerrain(double x, double y, double z) {
@@ -91,10 +112,10 @@ public class TrunkUnderDensityFunction extends Beardifier {
 		return -y * factor / verticalScale * (Math.exp(-normalizedDistance / (Math.max(1 - normalizedDistance, 1e-8))));
 	}
 
-	protected double computeMoundsContribution(FunctionContext context) {
-		int x = context.blockX() - boundingBox.minX();
-		int y = context.blockY() - boundingBox.minY();
-		int z = context.blockZ() - boundingBox.minZ();
+	protected double computeMoundsContribution(int blockX, int blockY, int blockZ) {
+		int x = blockX - boundingBox.minX();
+		int y = blockY - boundingBox.minY();
+		int z = blockZ - boundingBox.minZ();
 		int radius = getRadius(boundingBox);
 		double ax = Math.abs((isXOriented ? z : x) - radius + 1);
 		double az = Math.abs(y - radius + 1);
@@ -108,7 +129,7 @@ public class TrunkUnderDensityFunction extends Beardifier {
 
 		double max = -1D;
 		for (TanhHillFunction h : tanhHillFunctions) {
-			double value = h.compute(context);
+			double value = h.compute(blockX, blockY, blockZ);
 			if (value > max)
 				max = value;
 		}

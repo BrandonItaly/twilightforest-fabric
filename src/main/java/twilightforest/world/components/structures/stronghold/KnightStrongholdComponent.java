@@ -12,7 +12,6 @@ import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
-import net.minecraft.world.level.levelgen.structure.StructurePieceAccessor;
 import net.minecraft.world.level.levelgen.structure.TerrainAdjustment;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType;
@@ -24,7 +23,6 @@ import twilightforest.world.components.structures.TFStructureComponentOld;
 import java.nio.IntBuffer;
 import java.util.ArrayList;
 import java.util.List;
-
 
 public abstract class KnightStrongholdComponent extends TFStructureComponentOld {
 	private static final StrongholdStonesRandomBlockSelectorFactory strongholdStones = StrongholdStonesRandomBlockSelectorFactory.INSTANCE;
@@ -92,7 +90,7 @@ public abstract class KnightStrongholdComponent extends TFStructureComponentOld 
 	}
 
 	@Override
-	public void addChildren(StructurePiece parent, StructurePieceAccessor list, RandomSource rand) {
+	public void addChildren(StructurePiece parent, StructurePiecesBuilder list, RandomSource rand) {
 		if (parent != null && parent instanceof TFStructureComponentOld) {
 			this.deco = ((TFStructureComponentOld) parent).deco;
 		}
@@ -101,7 +99,7 @@ public abstract class KnightStrongholdComponent extends TFStructureComponentOld 
 	/**
 	 * Add a new component in the specified direction
 	 */
-	protected void addNewComponent(StructurePiece entrance, StructurePieceAccessor list, RandomSource random, Rotation facing, int x, int y, int z) {
+	protected void addNewComponent(StructurePiece entrance, StructurePiecesBuilder list, RandomSource random, Rotation facing, int x, int y, int z) {
 		int index = this.genDepth + 1;
 		Direction nFacing = getStructureRelativeRotation(facing);
 		int nx = this.getWorldX(x, z);
@@ -137,9 +135,10 @@ public abstract class KnightStrongholdComponent extends TFStructureComponentOld 
 	/**
 	 * Check the list for components we can break in to at the specified point
 	 */
-	protected StructurePiece findBreakInComponent(StructurePieceAccessor list, int x, int y, int z) {
+	protected StructurePiece findBreakInComponent(StructurePiecesBuilder list, int x, int y, int z) {
 		BlockPos pos = new BlockPos(x, y, z);
-		if (list instanceof StructurePiecesBuilder start) {
+		if (list != null) {
+			StructurePiecesBuilder start = list;
 			for (StructurePiece component : start.pieces) {
 				if (component.getBoundingBox() != null && component.getBoundingBox().isInside(pos)) {
 					return component;
@@ -150,7 +149,7 @@ public abstract class KnightStrongholdComponent extends TFStructureComponentOld 
 		return null;
 	}
 
-	protected void addNewUpperComponent(StructurePiece parent, StructurePieceAccessor list, RandomSource random, Rotation facing, int x, int y, int z) {
+	protected void addNewUpperComponent(StructurePiece parent, StructurePiecesBuilder list, RandomSource random, Rotation facing, int x, int y, int z) {
 		KnightStrongholdComponent attempted;
 
 		int index = this.genDepth + 1;

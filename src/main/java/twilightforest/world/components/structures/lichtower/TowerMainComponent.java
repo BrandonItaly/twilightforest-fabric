@@ -5,6 +5,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.WorldGenLevel;
@@ -14,9 +15,9 @@ import net.minecraft.world.level.block.state.properties.SlabType;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
-import net.minecraft.world.level.levelgen.structure.StructurePieceAccessor;
 import net.minecraft.world.level.levelgen.structure.TerrainAdjustment;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
+import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
 import net.minecraft.world.phys.AABB;
 import twilightforest.init.TFBlocks;
 import twilightforest.init.TFEntities;
@@ -37,7 +38,7 @@ public class TowerMainComponent extends TowerWingComponent {
 	}
 
 	@Override
-	public void addChildren(StructurePiece parent, StructurePieceAccessor list, RandomSource rand) {
+	public void addChildren(StructurePiece parent, StructurePiecesBuilder list, RandomSource rand) {
 		// add a roof?
 		makeARoof(parent, list, rand);
 
@@ -139,7 +140,7 @@ public class TowerMainComponent extends TowerWingComponent {
 		return new int[]{rx, ry, rz};
 	}
 
-	public boolean makeTowerOutbuilding(StructurePieceAccessor list, RandomSource rand, int index, int x, int y, int z, int wingSize, int wingHeight, Rotation rotation) {
+	public boolean makeTowerOutbuilding(StructurePiecesBuilder list, RandomSource rand, int index, int x, int y, int z, int wingSize, int wingHeight, Rotation rotation) {
 		Direction direction = getStructureRelativeRotation(rotation);
 		int[] dx = offsetTowerCoords(x, y, z, wingSize, direction);
 		TowerOutbuildingComponent outbuilding = new TowerOutbuildingComponent(index, dx[0], dx[1], dx[2], wingSize, wingHeight, direction);
@@ -250,9 +251,9 @@ public class TowerMainComponent extends TowerWingComponent {
 
 		// place spawner in the middle
 		EntityType<?> mobID = switch (rand.nextInt(4)) {
-			case 2 -> EntityType.ZOMBIE;
+			case 2 -> EntityTypes.ZOMBIE;
 			case 3 -> TFEntities.SWARM_SPIDER;
-			default -> EntityType.SKELETON;
+			default -> EntityTypes.SKELETON;
 		};
 		setSpawner(world, 7, floorLevel + 2, 7, sbb, mobID);
 

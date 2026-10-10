@@ -1,13 +1,13 @@
 package twilightforest.world.components.feature;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import twilightforest.util.features.FeatureLogic;
 import twilightforest.util.features.FeaturePlacers;
@@ -15,16 +15,24 @@ import twilightforest.util.RootPlacer;
 import twilightforest.util.iterators.VoxelBresenhamIterator;
 import twilightforest.world.components.feature.config.RootConfig;
 
-public class WoodRootFeature extends Feature<RootConfig> {
-	public WoodRootFeature(Codec<RootConfig> configIn) {
-		super(configIn);
+public class WoodRootFeature implements Feature {
+	public static final MapCodec<WoodRootFeature> CODEC = RootConfig.MAP_CODEC.xmap(WoodRootFeature::new, feature -> feature.config);
+	private final RootConfig config;
+
+	public WoodRootFeature(RootConfig config) {
+		this.config = config;
 	}
 
 	@Override
-	public boolean place(FeaturePlaceContext<RootConfig> ctx) {
-		WorldGenLevel world = ctx.level();
-		BlockPos pos = ctx.origin();
-		RandomSource rand = ctx.random();
+	public MapCodec<WoodRootFeature> codec() {
+		return CODEC;
+	}
+
+	@Override
+	public boolean place(WorldGenLevel featureLevel, ChunkGenerator generator, RandomSource featureRandom, BlockPos featureOrigin) {
+		WorldGenLevel world = featureLevel;
+		BlockPos pos = featureOrigin;
+		RandomSource rand = featureRandom;
 
 		// start must be in stone
 		if (world.getBlockState(pos).getBlock() != Blocks.STONE) {
@@ -39,7 +47,7 @@ public class WoodRootFeature extends Feature<RootConfig> {
 		// tilt between 0.6 and 0.9
 		float tilt = 0.6F + rand.nextFloat() * 0.3F;
 
-		return drawRoot(world, rand, pos, pos, length, rand.nextFloat(), tilt, ctx.config().blockRoot(), ctx.config().oreRoot());
+		return drawRoot(world, rand, pos, pos, length, rand.nextFloat(), tilt, this.config.blockRoot(), this.config.oreRoot());
 	}
 
 	private boolean drawRoot(WorldGenLevel world, RandomSource rand, BlockPos oPos, BlockPos pos, float length, float angle, float tilt, BlockStateProvider rootBlock, BlockStateProvider oreBlock) {

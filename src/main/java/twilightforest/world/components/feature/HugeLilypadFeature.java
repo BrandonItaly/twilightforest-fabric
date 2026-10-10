@@ -1,6 +1,6 @@
 package twilightforest.world.components.feature;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
@@ -9,9 +9,8 @@ import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import twilightforest.init.TFBlocks;
 
 import static twilightforest.block.HugeLilyPadBlock.FACING;
@@ -23,17 +22,20 @@ import static twilightforest.enums.HugeLilypadPiece.*;
  *
  * @author Ben
  */
-public class HugeLilypadFeature extends Feature<NoneFeatureConfiguration> {
+public class HugeLilypadFeature implements Feature {
 
-	public HugeLilypadFeature(Codec<NoneFeatureConfiguration> config) {
-		super(config);
+	public static final MapCodec<HugeLilypadFeature> CODEC = MapCodec.unit(HugeLilypadFeature::new);
+
+	@Override
+	public MapCodec<HugeLilypadFeature> codec() {
+		return CODEC;
 	}
 
 	@Override
-	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> ctx) {
-		WorldGenLevel world = ctx.level();
-		BlockPos pos = ctx.origin();
-		RandomSource random = ctx.random();
+	public boolean place(WorldGenLevel featureLevel, ChunkGenerator generator, RandomSource featureRandom, BlockPos featureOrigin) {
+		WorldGenLevel world = featureLevel;
+		BlockPos pos = featureOrigin;
+		RandomSource random = featureRandom;
 
 		for (int i = 0; i < 10; i++) {
 			BlockPos dPos = pos.offset(
@@ -42,7 +44,7 @@ public class HugeLilypadFeature extends Feature<NoneFeatureConfiguration> {
 				random.nextInt(8) - random.nextInt(8)
 			);
 
-			if (shouldPlacePadAt(world, dPos) && world.carminite$isAreaLoaded(dPos, 1)) {
+			if (shouldPlacePadAt(world, dPos) && world.hasChunksAt(dPos.offset(-1, -1, -1), dPos.offset(1, 1, 1))) {
 				final Direction horizontal = Direction.from2DDataValue(random.nextInt(4));
 				final BlockState lilypad = TFBlocks.HUGE_LILY_PAD.defaultBlockState().setValue(FACING, horizontal);
 

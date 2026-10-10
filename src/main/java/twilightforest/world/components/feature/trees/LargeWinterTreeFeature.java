@@ -1,6 +1,6 @@
 package twilightforest.world.components.feature.trees;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
@@ -16,8 +16,13 @@ import twilightforest.world.components.feature.config.TFTreeFeatureConfig;
 import java.util.function.BiConsumer;
 
 public class LargeWinterTreeFeature extends TFTreeFeature<TFTreeFeatureConfig> {
+	public static final MapCodec<LargeWinterTreeFeature> CODEC = TFTreeFeatureConfig.MAP_CODEC.xmap(LargeWinterTreeFeature::new, feature -> feature.config);
 
-	public LargeWinterTreeFeature(Codec<TFTreeFeatureConfig> config) {
+	@Override
+	public MapCodec<LargeWinterTreeFeature> codec() { return CODEC; }
+
+
+	public LargeWinterTreeFeature(TFTreeFeatureConfig config) {
 		super(config);
 	}
 

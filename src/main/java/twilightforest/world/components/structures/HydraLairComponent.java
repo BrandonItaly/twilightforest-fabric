@@ -13,12 +13,11 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
-import net.minecraft.world.level.levelgen.structure.StructurePieceAccessor;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
+import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
 import twilightforest.init.TFBlocks;
 import twilightforest.init.TFStructurePieceTypes;
 import twilightforest.util.features.FeaturePlacers;
-
 
 public class HydraLairComponent extends HollowHillComponent {
 	public HydraLairComponent(StructurePieceSerializationContext ctx, CompoundTag nbt) {
@@ -30,7 +29,7 @@ public class HydraLairComponent extends HollowHillComponent {
 	}
 
 	@Override
-	public void addChildren(StructurePiece structurecomponent, StructurePieceAccessor accessor, RandomSource random) {
+	public void addChildren(StructurePiece structurecomponent, StructurePiecesBuilder accessor, RandomSource random) {
 		// NO-OP
 	}
 

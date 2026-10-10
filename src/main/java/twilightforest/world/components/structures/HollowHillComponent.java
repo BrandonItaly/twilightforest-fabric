@@ -10,6 +10,8 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.CommonLevelAccessor;
 import net.minecraft.world.level.StructureManager;
@@ -111,7 +113,7 @@ public class HollowHillComponent extends TFStructureComponentOld {
 		}
 
 		// Cakes!
-		//drainWater(generator, writeableBounds, this.boundingBox, world, this.hillSize * 3 + 2, Blocks.MAGENTA_CANDLE.defaultBlockState(), center.getX(), center.getZ(), drainRadius * drainRadius, Blocks.CAKE.defaultBlockState());
+		//drainWater(generator, writeableBounds, this.boundingBox, world, this.hillSize * 3 + 2, Blocks.DYED_CANDLE.pick(DyeColor.MAGENTA).defaultBlockState(), center.getX(), center.getZ(), drainRadius * drainRadius, Blocks.CAKE.defaultBlockState());
 	}
 
 	public static void drainWater(ChunkGenerator generator, BoundingBox chunkBox, BoundingBox structureBox, CommonLevelAccessor level, int maxDepth, BlockState airState, int xCenter, int zCenter, double radiusSq, BlockState undergroundBlock) {
@@ -261,7 +263,7 @@ public class HollowHillComponent extends TFStructureComponentOld {
 			return this.getLevel3Mob(rand);
 		}
 
-		return EntityType.SPIDER;
+		return EntityTypes.SPIDER;
 	}
 
 	/**
@@ -269,9 +271,9 @@ public class HollowHillComponent extends TFStructureComponentOld {
 	 */
 	public EntityType<?> getLevel1Mob(RandomSource rand) {
 		return switch (rand.nextInt(10)) {
-			case 3, 4, 5 -> EntityType.SPIDER;
-			case 6, 7 -> EntityType.ZOMBIE;
-			case 8 -> EntityType.SILVERFISH;
+			case 3, 4, 5 -> EntityTypes.SPIDER;
+			case 6, 7 -> EntityTypes.ZOMBIE;
+			case 8 -> EntityTypes.SILVERFISH;
 			case 9 -> TFEntities.REDCAP;
 			default -> TFEntities.SWARM_SPIDER;
 		};
@@ -282,10 +284,10 @@ public class HollowHillComponent extends TFStructureComponentOld {
 	 */
 	public EntityType<?> getLevel2Mob(RandomSource rand) {
 		return switch (rand.nextInt(10)) {
-			case 3, 4, 5 -> EntityType.ZOMBIE;
-			case 6, 7 -> EntityType.SKELETON;
+			case 3, 4, 5 -> EntityTypes.ZOMBIE;
+			case 6, 7 -> EntityTypes.SKELETON;
 			case 8 -> TFEntities.SWARM_SPIDER;
-			case 9 -> EntityType.CAVE_SPIDER;
+			case 9 -> EntityTypes.CAVE_SPIDER;
 			default -> TFEntities.REDCAP;
 		};
 	}
@@ -298,9 +300,9 @@ public class HollowHillComponent extends TFStructureComponentOld {
 			case 0 -> TFEntities.SLIME_BEETLE;
 			case 1 -> TFEntities.FIRE_BEETLE;
 			case 2 -> TFEntities.PINCH_BEETLE;
-			case 3, 4, 5 -> EntityType.SKELETON;
-			case 6, 7, 8 -> EntityType.CAVE_SPIDER;
-			case 9 -> EntityType.CREEPER;
+			case 3, 4, 5 -> EntityTypes.SKELETON;
+			case 6, 7, 8 -> EntityTypes.CAVE_SPIDER;
+			case 9 -> EntityTypes.CREEPER;
 			default -> TFEntities.WRAITH;
 		};
 	}

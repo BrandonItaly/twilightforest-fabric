@@ -1,7 +1,6 @@
 package twilightforest.world.components.feature.templates;
 
 import com.google.common.math.StatsAccumulator;
-import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.util.RandomSource;
@@ -15,10 +14,9 @@ import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.StructureMode;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
@@ -26,19 +24,21 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 import org.jetbrains.annotations.Nullable;
 import twilightforest.util.features.FeatureLogic;
 
-public abstract class TemplateFeature<T extends FeatureConfiguration> extends Feature<T> {
-	public TemplateFeature(Codec<T> config) {
-		super(config);
+public abstract class TemplateFeature<T> implements Feature {
+	protected final T config;
+
+	public TemplateFeature(T config) {
+		this.config = config;
 	}
 
 	@Override // Loosely based on WorldGenFossils
-	public final boolean place(FeaturePlaceContext<T> ctx) {
-		WorldGenLevel world = ctx.level();
-		BlockPos pos = ctx.origin();
+	public final boolean place(WorldGenLevel featureLevel, ChunkGenerator generator, RandomSource featureRandom, BlockPos featureOrigin) {
+		WorldGenLevel world = featureLevel;
+		BlockPos pos = featureOrigin;
 		RandomSource random = world.getRandom();
-		T config = ctx.config();
+		T config = this.config;
 
-		StructureTemplateManager templateManager = world.getLevel().getServer().getStructureManager();
+		StructureTemplateManager templateManager = world.getLevel().getServer().getStructureTemplateManager();
 		StructureTemplate template = this.getTemplate(templateManager, random);
 
 		if (template == null)

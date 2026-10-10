@@ -1,11 +1,17 @@
 package twilightforest.world.components.feature.trees;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.levelgen.feature.configurations.HugeMushroomFeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.AbstractHugeMushroomFeature;
+import twilightforest.world.components.feature.TFMushroomFeature;
 
 public class BrownCanopyMushroomFeature extends CanopyMushroomFeature {
-	public BrownCanopyMushroomFeature(Codec<HugeMushroomFeatureConfiguration> featureConfigurationCodec) {
+	public static final MapCodec<BrownCanopyMushroomFeature> CODEC = settingsCodec(BrownCanopyMushroomFeature::new);
+
+	@Override
+	public MapCodec<BrownCanopyMushroomFeature> codec() { return CODEC; }
+
+	public BrownCanopyMushroomFeature(AbstractHugeMushroomFeature featureConfigurationCodec) {
 		super(featureConfigurationCodec);
 	}
 

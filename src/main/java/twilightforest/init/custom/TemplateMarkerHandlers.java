@@ -3,7 +3,7 @@ package twilightforest.init.custom;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
-import net.minecraft.resources.RegistryFileCodec;
+import net.minecraft.core.registries.codec.RegistryFileCodec;
 import net.minecraft.resources.ResourceKey;
 import twilightforest.TFCommon;
 import twilightforest.init.TFRegistries;
@@ -14,7 +14,7 @@ public class TemplateMarkerHandlers {
 
 	public static final Codec<TemplateMarkerHandlerType> TYPE_CODEC = Codec.lazyInitialized(TFRegistries.TEMPLATE_MARKER_HANDLER_TYPES::byNameCodec);
 	public static final Codec<TemplateMarkerHandler> DISPATCH_CODEC = TYPE_CODEC.dispatch("type", TemplateMarkerHandler::getType, TemplateMarkerHandlerType::getCodec);
-	public static final Codec<Holder<TemplateMarkerHandler>> HOLDER_CODEC = RegistryFileCodec.create(TFRegistries.Keys.TEMPLATE_MARKER_HANDLER, DISPATCH_CODEC);
+	public static final Codec<Holder<TemplateMarkerHandler>> HOLDER_CODEC = RegistryFileCodec.create(TFRegistries.Keys.TEMPLATE_MARKER_HANDLER, DISPATCH_CODEC, false);
 
 	public static final TemplateMarkerHandlerType BLOCK_PLACEMENT = register("block_placement", () -> BlockPlaceMarkerHandler.CODEC);
 	public static final TemplateMarkerHandlerType HANDLER_SWITCH = register("handler_switch", () -> SwitchMarkerHandler.CODEC);

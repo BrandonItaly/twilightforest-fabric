@@ -8,11 +8,10 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
-import net.minecraft.world.level.levelgen.structure.StructurePieceAccessor;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
+import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
 import twilightforest.init.TFBlocks;
 import twilightforest.init.TFStructurePieceTypes;
-
 
 public class IceTowerBossWingComponent extends IceTowerWingComponent {
 
@@ -29,7 +28,7 @@ public class IceTowerBossWingComponent extends IceTowerWingComponent {
 	}
 
 	@Override
-	protected boolean shouldHaveBase(StructurePieceAccessor list, RandomSource rand) {
+	protected boolean shouldHaveBase(StructurePiecesBuilder list, RandomSource rand) {
 		return false;
 	}
 

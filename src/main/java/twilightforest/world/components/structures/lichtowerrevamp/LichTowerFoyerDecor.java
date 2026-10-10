@@ -15,6 +15,7 @@ import net.minecraft.world.level.block.state.properties.Half;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.structure.*;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
+import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 import twilightforest.TFCommon;
 import twilightforest.block.CandelabraBlock;
@@ -60,7 +61,7 @@ public class LichTowerFoyerDecor extends TwilightJigsawPiece implements IPieceBe
 	}
 
 	@Override
-	protected void processJigsaw(TwilightJigsawPiece parent, StructurePieceAccessor pieceAccessor, Structure.GenerationContext context, JigsawRecord connection, int jigsawIndex) {
+	protected void processJigsaw(TwilightJigsawPiece parent, StructurePiecesBuilder pieceAccessor, Structure.GenerationContext context, JigsawRecord connection, int jigsawIndex) {
 	}
 
 	@Override
@@ -119,7 +120,7 @@ public class LichTowerFoyerDecor extends TwilightJigsawPiece implements IPieceBe
 
 		BlockPos behind = placePos.relative(this.getSourceJigsaw().orientation().front().getOpposite());
 		if (chunkBounds.isInside(placePos)) {
-			level.getChunk(behind).markPosForPostprocessing(behind);
+			level.getChunk(behind).markPosForPostProcessing(behind);
 		}
 	}
 }

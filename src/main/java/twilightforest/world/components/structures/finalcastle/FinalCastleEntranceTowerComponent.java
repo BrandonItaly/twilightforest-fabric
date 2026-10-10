@@ -7,13 +7,12 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
-import net.minecraft.world.level.levelgen.structure.StructurePieceAccessor;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
+import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
 import twilightforest.init.TFBlocks;
 import twilightforest.init.TFStructurePieceTypes;
 import twilightforest.util.BoundingBoxUtils;
 import twilightforest.world.components.structures.TFStructureComponentOld;
-
 
 public class FinalCastleEntranceTowerComponent extends FinalCastleMazeTower13Component {
 
@@ -26,7 +25,7 @@ public class FinalCastleEntranceTowerComponent extends FinalCastleMazeTower13Com
 	}
 
 	@Override
-	public void addChildren(StructurePiece parent, StructurePieceAccessor list, RandomSource rand) {
+	public void addChildren(StructurePiece parent, StructurePiecesBuilder list, RandomSource rand) {
 		if (parent != null && parent instanceof TFStructureComponentOld) {
 			this.deco = ((TFStructureComponentOld) parent).deco;
 		}
@@ -77,7 +76,7 @@ public class FinalCastleEntranceTowerComponent extends FinalCastleMazeTower13Com
 		bridge.addChildren(this, list, rand);
 	}
 
-	private boolean buildSideTower(StructurePieceAccessor list, RandomSource rand, int middleFloors, Direction facing, int howFar) {
+	private boolean buildSideTower(StructurePiecesBuilder list, RandomSource rand, int middleFloors, Direction facing, int howFar) {
 		BlockPos opening = this.getValidOpeningCC(rand, facing);
 
 		// build towards

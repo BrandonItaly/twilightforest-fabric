@@ -10,12 +10,11 @@ import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
-import net.minecraft.world.level.levelgen.structure.StructurePieceAccessor;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
+import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
 import twilightforest.init.TFStructurePieceTypes;
 import twilightforest.util.BoundingBoxUtils;
 import twilightforest.world.components.structures.TFStructureComponentOld;
-
 
 /**
  * This component is the base for the maze/ruins combo feature.  There are village-like ruins above and a maze underneath.
@@ -38,7 +37,7 @@ public class MazeRuinsComponent extends TFStructureComponentOld {
 	 * Initiates construction of the Structure Component picked, at the current Location of StructGen
 	 */
 	@Override
-	public void addChildren(StructurePiece structurecomponent, StructurePieceAccessor list, RandomSource random) {
+	public void addChildren(StructurePiece structurecomponent, StructurePiecesBuilder list, RandomSource random) {
 		super.addChildren(structurecomponent, list, random);
 
 		// add a maze

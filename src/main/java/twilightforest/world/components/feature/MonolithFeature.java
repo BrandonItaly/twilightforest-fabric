@@ -1,16 +1,15 @@
 package twilightforest.world.components.feature;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import twilightforest.entity.passive.Raven;
 import twilightforest.init.TFEntities;
 import twilightforest.util.features.FeatureUtil;
@@ -20,17 +19,20 @@ import twilightforest.util.features.FeatureUtil;
  *
  * @author Ben
  */
-public class MonolithFeature extends Feature<NoneFeatureConfiguration> {
+public class MonolithFeature implements Feature {
 
-	public MonolithFeature(Codec<NoneFeatureConfiguration> configIn) {
-		super(configIn);
+	public static final MapCodec<MonolithFeature> CODEC = MapCodec.unit(MonolithFeature::new);
+
+	@Override
+	public MapCodec<MonolithFeature> codec() {
+		return CODEC;
 	}
 
 	@Override
-	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> ctx) {
-		WorldGenLevel world = ctx.level();
-		BlockPos pos = ctx.origin();
-		RandomSource rand = ctx.random();
+	public boolean place(WorldGenLevel featureLevel, ChunkGenerator generator, RandomSource featureRandom, BlockPos featureOrigin) {
+		WorldGenLevel world = featureLevel;
+		BlockPos pos = featureOrigin;
+		RandomSource rand = featureRandom;
 
 		int ht = rand.nextInt(10) + 10;
 		int dir = rand.nextInt(4);

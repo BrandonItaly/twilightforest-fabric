@@ -1,7 +1,6 @@
 package twilightforest.world.components.feature.templates;
 
 import com.google.common.math.StatsAccumulator;
-import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -16,10 +15,9 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.StructureMode;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.templatesystem.*;
 import org.apache.commons.lang3.tuple.Pair;
@@ -34,13 +32,16 @@ import twilightforest.util.features.FeatureLogic;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GraveyardFeature extends Feature<NoneFeatureConfiguration> {
+public class GraveyardFeature implements Feature {
 	private static final Identifier GRAVEYARD = TFCommon.prefix("feature/graveyard/graveyard");
 	private static final Identifier TRAP = TFCommon.prefix("feature/graveyard/grave_trap");
 
-	public GraveyardFeature(Codec<NoneFeatureConfiguration> config) {
-		super(config);
-	}
+	public GraveyardFeature() {  }
+
+	public static final MapCodec<GraveyardFeature> CODEC = MapCodec.unit(GraveyardFeature::new);
+
+	@Override
+	public MapCodec<GraveyardFeature> codec() { return CODEC; }
 
 	private static boolean offsetToAverageGroundLevel(WorldGenLevel world, BlockPos.MutableBlockPos startPos, Vec3i size) {
 		StatsAccumulator heights = new StatsAccumulator();
@@ -82,14 +83,14 @@ public class GraveyardFeature extends Feature<NoneFeatureConfiguration> {
 	}
 
 	@Override
-	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> ctx) {
-		WorldGenLevel world = ctx.level();
-		BlockPos pos = ctx.origin();
-		RandomSource rand = ctx.random();
+	public boolean place(WorldGenLevel featureLevel, ChunkGenerator generator, RandomSource featureRandom, BlockPos featureOrigin) {
+		WorldGenLevel world = featureLevel;
+		BlockPos pos = featureOrigin;
+		RandomSource rand = featureRandom;
 
 		int flags = 16 | 2 | 1;
 
-		StructureTemplateManager templatemanager = world.getLevel().getServer().getStructureManager();
+		StructureTemplateManager templatemanager = world.getLevel().getServer().getStructureTemplateManager();
 		StructureTemplate base = templatemanager.getOrCreate(GRAVEYARD);
 		if (base == null)
 			return false;
@@ -220,7 +221,7 @@ public class GraveyardFeature extends Feature<NoneFeatureConfiguration> {
 		}
 	}
 
-	public static class WebTemplateProcessor extends StructureProcessor {
+	public static class WebTemplateProcessor implements StructureProcessor {
 		public static final WebTemplateProcessor INSTANCE = new WebTemplateProcessor();
 		public static final MapCodec<WebTemplateProcessor> CODEC = MapCodec.unit(() -> INSTANCE);
 
@@ -228,12 +229,12 @@ public class GraveyardFeature extends Feature<NoneFeatureConfiguration> {
 		}
 
 		@Override
-		protected StructureProcessorType<?> getType() {
-			return TFStructureProcessors.WEB;
-		}
+		public MapCodec<? extends StructureProcessor> codec() {
+		return CODEC;
+	}
 
 		@Override
-		public StructureTemplate.@Nullable StructureBlockInfo processBlock(LevelReader level, BlockPos targetPosition, BlockPos referencePos, StructureTemplate.StructureBlockInfo originalBlockInfo, StructureTemplate.StructureBlockInfo processedBlockInfo, StructurePlaceSettings settings) {
+		public StructureTemplate.@Nullable StructureBlockInfo processBlock(LevelReader level, BlockPos targetPosition, BlockPos referencePos, BlockPos templateRelativePos, StructureTemplate.StructureBlockInfo processedBlockInfo, StructurePlaceSettings settings) {
 			return processedBlockInfo.state().getBlock() == Blocks.GRASS_BLOCK ? processedBlockInfo : settings.getRandom(targetPosition).nextInt(5) == 0 ? new StructureTemplate.StructureBlockInfo(targetPosition, Blocks.COBWEB.defaultBlockState(), null) : processedBlockInfo;
 		}
 	}

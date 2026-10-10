@@ -1,28 +1,31 @@
 package twilightforest.world.components.feature;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.BlockStateConfiguration;
 import twilightforest.util.features.FeatureUtil;
 
-public class FireJetFeature extends Feature<BlockStateConfiguration> {
+public class FireJetFeature implements Feature {
 
-	public FireJetFeature(Codec<BlockStateConfiguration> configIn) {
-		super(configIn);
-	}
+	public static final MapCodec<FireJetFeature> CODEC = BlockState.CODEC.fieldOf("state").xmap(FireJetFeature::new, feature -> feature.state);
+	private final BlockState state;
+
+	public FireJetFeature(BlockState state) { this.state = state; }
 
 	@Override
-	public boolean place(FeaturePlaceContext<BlockStateConfiguration> ctx) {
-		WorldGenLevel world = ctx.level();
-		BlockPos pos = ctx.origin();
-		RandomSource rand = ctx.random();
-		BlockStateConfiguration config = ctx.config();
+	public MapCodec<FireJetFeature> codec() { return CODEC; }
+
+	@Override
+	public boolean place(WorldGenLevel featureLevel, ChunkGenerator generator, RandomSource featureRandom, BlockPos featureOrigin) {
+		WorldGenLevel world = featureLevel;
+		BlockPos pos = featureOrigin;
+		RandomSource rand = featureRandom;
 
 		if (!FeatureUtil.isAreaSuitable(world, pos, 5, 2, 5)) return false;
 
@@ -46,7 +49,7 @@ public class FireJetFeature extends Feature<BlockStateConfiguration> {
 				}
 
 				// jet
-				world.setBlock(dPos.below(), config.state, 0);
+				world.setBlock(dPos.below(), this.state, 0);
 
 				// create reservoir with stone walls
 				for (int rx = -2; rx <= 2; rx++) {

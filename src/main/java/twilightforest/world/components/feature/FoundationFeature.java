@@ -1,6 +1,6 @@
 package twilightforest.world.components.feature;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.FluidTags;
@@ -14,28 +14,36 @@ import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.storage.loot.LootTable;
 import twilightforest.util.features.FeatureLogic;
 import twilightforest.util.features.FeatureUtil;
 import twilightforest.world.components.feature.config.RuinedFoundationConfig;
 
-public class FoundationFeature extends Feature<RuinedFoundationConfig> {
+public class FoundationFeature implements Feature {
 
-	public FoundationFeature(Codec<RuinedFoundationConfig> configIn) {
-		super(configIn);
+	public static final MapCodec<FoundationFeature> CODEC = RuinedFoundationConfig.MAP_CODEC.xmap(FoundationFeature::new, feature -> feature.config);
+	private final RuinedFoundationConfig config;
+
+	public FoundationFeature(RuinedFoundationConfig config) {
+		this.config = config;
 	}
 
 	@Override
-	public boolean place(FeaturePlaceContext<RuinedFoundationConfig> ctx) {
-		WorldGenLevel world = ctx.level();
-		BlockPos pos = ctx.origin();
-		RandomSource rand = ctx.random();
-		RuinedFoundationConfig config = ctx.config();
-		RuinedFoundationConfig.RuinedFoundationDimensions dimensions = ctx.config().dimensions();
-		RuinedFoundationConfig.RuinedFoundationBlocks blocks = ctx.config().blocks();
+	public MapCodec<FoundationFeature> codec() {
+		return CODEC;
+	}
+
+	@Override
+	public boolean place(WorldGenLevel featureLevel, ChunkGenerator generator, RandomSource featureRandom, BlockPos featureOrigin) {
+		WorldGenLevel world = featureLevel;
+		BlockPos pos = featureOrigin;
+		RandomSource rand = featureRandom;
+		RuinedFoundationConfig config = this.config;
+		RuinedFoundationConfig.RuinedFoundationDimensions dimensions = this.config.dimensions();
+		RuinedFoundationConfig.RuinedFoundationBlocks blocks = this.config.blocks();
 
 		IntProvider wallWidths = dimensions.wallWidth();
 		int xWidth = wallWidths.sample(rand);
@@ -149,6 +157,6 @@ public class FoundationFeature extends Feature<RuinedFoundationConfig> {
 
 		world.setBlock(placeAt, state, Block.UPDATE_ALL);
 
-		world.getChunk(placeAt).markPosForPostprocessing(placeAt);
+		world.getChunk(placeAt).markPosForPostProcessing(placeAt);
 	}
 }
