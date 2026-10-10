@@ -81,7 +81,6 @@ public class BlockTagGenerator extends IntrinsicHolderTagsProvider<Block> {
 		this.tag(BlockTags.GUARDED_BY_PIGLINS).addTag(TFBlockTags.TF_CHESTS);
 		this.tag(BlockTags.EDIBLE_FOR_SHEEP).add(TFBlocks.MAYAPPLE, TFBlocks.FIDDLEHEAD);
 		this.tag(BlockTags.CAN_GLIDE_THROUGH).add(TFBlocks.ROOT_STRAND);
-		this.tag(BlockTags.OVERWORLD_CARVER_REPLACEABLES).add(TFBlocks.TROLLSTEINN);
 		this.tag(BlockTags.INSIDE_STEP_SOUND_BLOCKS).add(TFBlocks.HUGE_LILY_PAD, TFBlocks.FALLEN_LEAVES, TFBlocks.ROOT_STRAND);
 		this.tag(BlockTags.DRIPSTONE_REPLACEABLE).add(TFBlocks.TROLLSTEINN, TFBlocks.ROOT_BLOCK, TFBlocks.LIVEROOT_BLOCK);
 		this.tag(BlockTags.MOSS_REPLACEABLE).add(TFBlocks.TROLLSTEINN, TFBlocks.ROOT_BLOCK, TFBlocks.LIVEROOT_BLOCK);
@@ -483,7 +482,12 @@ public class BlockTagGenerator extends IntrinsicHolderTagsProvider<Block> {
 			.forceAddTag(BlockTags.LEAVES)
 			.forceAddTag(BlockTags.LOGS)
 			.forceAddTag(BlockTags.PLANKS)
-			.forceAddTag(BlockTags.OVERWORLD_CARVER_REPLACEABLES)
+			.forceAddTag(BlockTags.SAND)
+			.forceAddTag(BlockTags.TERRACOTTA)
+			.forceAddTag(BlockTags.IRON_ORES)
+			.forceAddTag(BlockTags.COPPER_ORES)
+			.forceAddTag(BlockTags.SNOW)
+			.add(Blocks.WATER, Blocks.GRAVEL, Blocks.SUSPICIOUS_GRAVEL, Blocks.SANDSTONE, Blocks.RED_SANDSTONE, Blocks.CALCITE, Blocks.PACKED_ICE, Blocks.RAW_IRON_BLOCK, Blocks.RAW_COPPER_BLOCK, TFBlocks.TROLLSTEINN)
 			.forceAddTag(BlockTags.BASE_STONE_OVERWORLD)
 			.forceAddTag(BlockTags.BASE_STONE_NETHER)
 			.forceAddTag(BlockTags.SUBSTRATE_OVERWORLD)
@@ -517,7 +521,15 @@ public class BlockTagGenerator extends IntrinsicHolderTagsProvider<Block> {
 		this.tag(TFBlockTags.GIANTS_SPAWNABLE_ON).addTag(TFBlockTags.CLOUDS);
 
 		this.tag(TFBlockTags.SUPPORTS_STALAGMITES).addTag(TFBlockTags.DEADROCK).add(Blocks.PACKED_ICE);
-		this.tag(TFBlockTags.CARVER_REPLACEABLES).forceAddTag(BlockTags.OVERWORLD_CARVER_REPLACEABLES).add(Blocks.SNOW_BLOCK);
+		this.tag(TFBlockTags.CARVER_REPLACEABLES)
+			.forceAddTag(BlockTags.BASE_STONE_OVERWORLD)
+			.forceAddTag(BlockTags.SUBSTRATE_OVERWORLD)
+			.forceAddTag(BlockTags.SAND)
+			.forceAddTag(BlockTags.TERRACOTTA)
+			.forceAddTag(BlockTags.IRON_ORES)
+			.forceAddTag(BlockTags.COPPER_ORES)
+			.forceAddTag(BlockTags.SNOW)
+			.add(Blocks.WATER, Blocks.GRAVEL, Blocks.SUSPICIOUS_GRAVEL, Blocks.SANDSTONE, Blocks.RED_SANDSTONE, Blocks.CALCITE, Blocks.PACKED_ICE, Blocks.RAW_IRON_BLOCK, Blocks.RAW_COPPER_BLOCK, TFBlocks.TROLLSTEINN, Blocks.SNOW_BLOCK);
 		this.tag(TFBlockTags.MINEABLE_WITH_BLOCK_AND_CHAIN).forceAddTag(BlockTags.MINEABLE_WITH_PICKAXE).forceAddTag(BlockTags.MINEABLE_WITH_AXE).forceAddTag(BlockTags.MINEABLE_WITH_SHOVEL).forceAddTag(BlockTags.MINEABLE_WITH_HOE);
 		this.tag(TFBlockTags.BLOCK_AND_CHAIN_NEVER_BREAKS).addTag(TFBlockTags.MAZESTONE).addTag(TFBlockTags.CASTLE_BLOCKS).addTag(TFBlockTags.DEADROCK).forceAddTag(BlockTags.WITHER_IMMUNE)
 			.add(TFBlocks.TIME_LOG_CORE, TFBlocks.TRANSFORMATION_LOG_CORE, TFBlocks.MINING_LOG_CORE, TFBlocks.SORTING_LOG_CORE)
