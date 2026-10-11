@@ -83,16 +83,34 @@ public abstract class WoodBlockBuilders extends BlockModelGenerators {
 	}
 
 	public void generateSign(Block floor, Block wall, TextureMapping mapping) {
-		MultiVariant model = plainVariant(ModelTemplates.PARTICLE_ONLY.create(floor, mapping, this.modelOutput));
-		this.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(floor, model));
-		this.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(wall, model));
+		TextureMapping signMapping = new TextureMapping()
+			.put(TextureSlot.ALL, TextureMapping.getBlockTexture(floor))
+			.put(TextureSlot.PARTICLE, mapping.get(TextureSlot.PARTICLE));
+		this.blockStateOutput.accept(BlockModelGenerators.createSign(floor,
+			plainVariant(ModelTemplates.SIGN_ROT_0.create(ModelLocationUtils.getModelLocation(floor, "_rot_0"), signMapping, this.modelOutput)),
+			plainVariant(ModelTemplates.SIGN_ROT_1.create(ModelLocationUtils.getModelLocation(floor, "_rot_1"), signMapping, this.modelOutput)),
+			plainVariant(ModelTemplates.SIGN_ROT_2.create(ModelLocationUtils.getModelLocation(floor, "_rot_2"), signMapping, this.modelOutput)),
+			plainVariant(ModelTemplates.SIGN_ROT_3.create(ModelLocationUtils.getModelLocation(floor, "_rot_3"), signMapping, this.modelOutput))));
+		MultiVariant wallModel = plainVariant(ModelTemplates.WALL_SIGN.create(wall, signMapping, this.modelOutput));
+		this.blockStateOutput.accept(MultiVariantGenerator.dispatch(wall, wallModel).with(ROTATION_HORIZONTAL_FACING_ALT));
 		this.registerSimpleFlatItemModel(floor.asItem());
 	}
 
 	public void generateHangingSign(Block ceiling, Block wall, Block particle) {
-		MultiVariant sign = plainVariant(ModelTemplates.PARTICLE_ONLY.create(ceiling, new TextureMapping().put(TextureSlot.PARTICLE, TextureMapping.getBlockTexture(particle)), this.modelOutput));
-		this.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(ceiling, sign));
-		this.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(wall, sign));
+		TextureMapping mapping = new TextureMapping()
+			.put(TextureSlot.ALL, TextureMapping.getBlockTexture(ceiling))
+			.put(TextureSlot.PARTICLE, TextureMapping.getBlockTexture(particle));
+		this.blockStateOutput.accept(BlockModelGenerators.createHangingSign(ceiling,
+			plainVariant(ModelTemplates.HANGING_SIGN_ROT_0.create(ModelLocationUtils.getModelLocation(ceiling, "_rot_0"), mapping, this.modelOutput)),
+			plainVariant(ModelTemplates.HANGING_SIGN_ROT_1.create(ModelLocationUtils.getModelLocation(ceiling, "_rot_1"), mapping, this.modelOutput)),
+			plainVariant(ModelTemplates.HANGING_SIGN_ROT_2.create(ModelLocationUtils.getModelLocation(ceiling, "_rot_2"), mapping, this.modelOutput)),
+			plainVariant(ModelTemplates.HANGING_SIGN_ROT_3.create(ModelLocationUtils.getModelLocation(ceiling, "_rot_3"), mapping, this.modelOutput)),
+			plainVariant(ModelTemplates.ATTACHED_HANGING_SIGN_ROT_0.create(ModelLocationUtils.getModelLocation(ceiling, "_attached_rot_0"), mapping, this.modelOutput)),
+			plainVariant(ModelTemplates.ATTACHED_HANGING_SIGN_ROT_1.create(ModelLocationUtils.getModelLocation(ceiling, "_attached_rot_1"), mapping, this.modelOutput)),
+			plainVariant(ModelTemplates.ATTACHED_HANGING_SIGN_ROT_2.create(ModelLocationUtils.getModelLocation(ceiling, "_attached_rot_2"), mapping, this.modelOutput)),
+			plainVariant(ModelTemplates.ATTACHED_HANGING_SIGN_ROT_3.create(ModelLocationUtils.getModelLocation(ceiling, "_attached_rot_3"), mapping, this.modelOutput))));
+		MultiVariant wallModel = plainVariant(ModelTemplates.WALL_HANGING_SIGN.create(wall, mapping, this.modelOutput));
+		this.blockStateOutput.accept(MultiVariantGenerator.dispatch(wall, wallModel).with(ROTATION_HORIZONTAL_FACING_ALT));
 		this.registerSimpleFlatItemModel(ceiling.asItem());
 	}
 
