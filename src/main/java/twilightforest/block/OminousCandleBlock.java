@@ -20,7 +20,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -38,7 +37,6 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import twilightforest.block.entity.OminousCandleBlockEntity;
-import twilightforest.init.TFBlocks;
 import twilightforest.init.TFParticleType;
 
 import java.util.HashMap;
@@ -52,25 +50,7 @@ public class OminousCandleBlock extends BaseEntityBlock {
 	private static final VoxelShape FOUR_AABB = Block.box(5.0, 0.0, 5.0, 11.0, 6.0, 10.0);
 	public static final IntegerProperty CANDLES = BlockStateProperties.CANDLES;
 
-	public static final HashMap<Block, OminousCandleBlock> CANDLE_MAP = Util.make(new HashMap<>(), map -> {
-		map.put(Blocks.CANDLE, TFBlocks.OMINOUS_CANDLE);
-		map.put(Blocks.DYED_CANDLE.pick(DyeColor.WHITE), TFBlocks.OMINOUS_WHITE_CANDLE);
-		map.put(Blocks.DYED_CANDLE.pick(DyeColor.ORANGE), TFBlocks.OMINOUS_ORANGE_CANDLE);
-		map.put(Blocks.DYED_CANDLE.pick(DyeColor.MAGENTA), TFBlocks.OMINOUS_MAGENTA_CANDLE);
-		map.put(Blocks.DYED_CANDLE.pick(DyeColor.LIGHT_BLUE), TFBlocks.OMINOUS_LIGHT_BLUE_CANDLE);
-		map.put(Blocks.DYED_CANDLE.pick(DyeColor.YELLOW), TFBlocks.OMINOUS_YELLOW_CANDLE);
-		map.put(Blocks.DYED_CANDLE.pick(DyeColor.LIME), TFBlocks.OMINOUS_LIME_CANDLE);
-		map.put(Blocks.DYED_CANDLE.pick(DyeColor.PINK), TFBlocks.OMINOUS_PINK_CANDLE);
-		map.put(Blocks.DYED_CANDLE.pick(DyeColor.GRAY), TFBlocks.OMINOUS_GRAY_CANDLE);
-		map.put(Blocks.DYED_CANDLE.pick(DyeColor.LIGHT_GRAY), TFBlocks.OMINOUS_LIGHT_GRAY_CANDLE);
-		map.put(Blocks.DYED_CANDLE.pick(DyeColor.CYAN), TFBlocks.OMINOUS_CYAN_CANDLE);
-		map.put(Blocks.DYED_CANDLE.pick(DyeColor.PURPLE), TFBlocks.OMINOUS_PURPLE_CANDLE);
-		map.put(Blocks.DYED_CANDLE.pick(DyeColor.BLUE), TFBlocks.OMINOUS_BLUE_CANDLE);
-		map.put(Blocks.DYED_CANDLE.pick(DyeColor.BROWN), TFBlocks.OMINOUS_BROWN_CANDLE);
-		map.put(Blocks.DYED_CANDLE.pick(DyeColor.GREEN), TFBlocks.OMINOUS_GREEN_CANDLE);
-		map.put(Blocks.DYED_CANDLE.pick(DyeColor.RED), TFBlocks.OMINOUS_RED_CANDLE);
-		map.put(Blocks.DYED_CANDLE.pick(DyeColor.BLACK), TFBlocks.OMINOUS_BLACK_CANDLE);
-	});
+	public static final HashMap<Block, OminousCandleBlock> CANDLE_MAP = new HashMap<>();
 
 	public static final Int2ObjectMap<List<Vec2>> CANDLE_OFFSETS = Util.make(
 		() -> {
@@ -90,6 +70,7 @@ public class OminousCandleBlock extends BaseEntityBlock {
 		super(properties);
 		this.registerDefaultState(this.getStateDefinition().any().setValue(CANDLES, 1));
 		this.candle = candle;
+		CANDLE_MAP.put(candle, this);
 	}
 
 	@Override
