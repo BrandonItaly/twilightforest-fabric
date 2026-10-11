@@ -194,6 +194,7 @@ accessible field net/minecraft/world/entity/ai/goal/MeleeAttackGoal speedModifie
 
 # CountTemplateCommand
 accessible method net/minecraft/client/renderer/item/ItemStackRenderState firstLayer ()Lnet/minecraft/client/renderer/item/ItemStackRenderState$LayerRenderState;
+accessible field net/minecraft/client/renderer/item/ItemStackRenderState displayContext Lnet/minecraft/world/item/ItemDisplayContext;
 
 accessible class net/minecraft/client/data/models/ModelProvider$ItemInfoCollector
 accessible class net/minecraft/client/data/models/ModelProvider$BlockStateGeneratorCollector

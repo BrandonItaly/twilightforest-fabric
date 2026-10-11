@@ -195,6 +195,7 @@ public class JarRenderer<T extends JarBlockEntity> implements BlockEntityRendere
 			super.extractRenderState(blockEntity, state, partialTicks, cameraPosition, breakProgress);
 			state.itemRotation = RotationSegment.convertToDegrees(blockEntity.getItemRotation());
 			this.resolver.updateForTopItem(state.item, blockEntity.getItemHandler().getStack().copy(), ItemDisplayContext.TWILIGHTFOREST_JARRED, blockEntity.getLevel(), null, 0);
+			state.item.displayContext = ItemDisplayContext.FIXED;
 		}
 
 		@Override
