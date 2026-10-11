@@ -143,6 +143,11 @@ public class BiomeDensitySource {
 			double xQuartDelta = (blockXWithOffset - (xQuartStart << QuartPos.BITS)) * (1.0 / QuartPos.SIZE);
 			double zQuartDelta = (blockZWithOffset - (zQuartStart << QuartPos.BITS)) * (1.0 / QuartPos.SIZE);
 
+			TerrainColumn.Compiled sampledColumn = null;
+			double neighborWeight = 0.0;
+			double neighborDepth = 0.0;
+			double neighborScale = 0.0;
+
 			for (int cz = 0, cx = 0; ; ) {
 				double dX = xQuartDelta - cx;
 				double dZ = zQuartDelta - cz;
@@ -152,11 +157,15 @@ public class BiomeDensitySource {
 				if (distSq < BLEND_RADIUS * BLEND_RADIUS) {
 					TerrainColumn.Compiled terrainColumn = this.columns.get(BiomeDensitySource.this.genBiomes.get().getBiome(cx + xQuartStart, cz + zQuartStart));
 					if (terrainColumn != null) {
-						double falloff = BLEND_RADIUS * BLEND_RADIUS * terrainColumn.weight().sampleValue(context, blockX, blockY, blockZ);
-						double scaleFalloff = BLEND_RADIUS * BLEND_RADIUS * terrainColumn.weight().sampleValue(context, blockX, blockY, blockZ);
-
-						double neighborDepth = terrainColumn.depth().sampleValue(context, blockX, blockY, blockZ);
-						double neighborScale = terrainColumn.scale().sampleValue(context, blockX, blockY, blockZ);
+						// Every neighbor samples its column at the same block position.
+						if (terrainColumn != sampledColumn) {
+							neighborWeight = terrainColumn.weight().sampleValue(context, blockX, blockY, blockZ);
+							neighborDepth = terrainColumn.depth().sampleValue(context, blockX, blockY, blockZ);
+							neighborScale = terrainColumn.scale().sampleValue(context, blockX, blockY, blockZ);
+							sampledColumn = terrainColumn;
+						}
+						double falloff = BLEND_RADIUS * BLEND_RADIUS * neighborWeight;
+						double scaleFalloff = BLEND_RADIUS * BLEND_RADIUS * neighborWeight;
 
 						falloff *= Math.exp((distSq * 2f + neighborDepth) * -0.4f);
 						totalMappedDepth += neighborDepth * falloff;
