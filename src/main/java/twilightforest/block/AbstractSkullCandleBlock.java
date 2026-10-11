@@ -125,7 +125,7 @@ public abstract class AbstractSkullCandleBlock extends BaseEntityBlock implement
 				}
 			}
 		}
-		return this.tryLightCandles(stack, state, level, pos, player);
+		return this.tryLightCandles(stack, state, level, pos, player, hand);
 	}
 
 	@Override

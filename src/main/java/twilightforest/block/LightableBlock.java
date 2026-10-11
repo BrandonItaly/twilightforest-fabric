@@ -5,9 +5,11 @@ import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.stats.Stats;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
@@ -31,13 +33,24 @@ public interface LightableBlock {
 
 	EnumProperty<Lighting> LIGHTING = EnumProperty.create("lighting", Lighting.class);
 
-	default InteractionResult tryLightCandles(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player) {
+	default InteractionResult tryLightCandles(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand) {
 		if (stack.isEmpty() && player.getAbilities().mayBuild && state.getValue(LIGHTING) != Lighting.NONE) {
 			this.extinguish(player, state, level, pos);
 			return InteractionResult.SUCCESS;
 		} else if (this.canBeLit(state)) {
 			if (stack.is(Items.FLINT_AND_STEEL) || stack.is(Items.FIRE_CHARGE)) {
-				return InteractionResult.PASS;
+				boolean flintAndSteel = stack.is(Items.FLINT_AND_STEEL);
+				float pitch = flintAndSteel ? level.getRandom().nextFloat() * 0.4F + 0.8F : (level.getRandom().nextFloat() - level.getRandom().nextFloat()) * 0.2F + 1.0F;
+				level.playSound(flintAndSteel ? player : null, pos, flintAndSteel ? SoundEvents.FLINTANDSTEEL_USE : SoundEvents.FIRECHARGE_USE, SoundSource.BLOCKS, 1.0F, pitch);
+				this.setLit(level, state, pos, true);
+				level.gameEvent(player, GameEvent.BLOCK_CHANGE, pos);
+				player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
+				if (flintAndSteel) {
+					stack.hurtAndBreak(1, player, hand.asEquipmentSlot());
+				} else {
+					stack.consume(1, player);
+				}
+				return InteractionResult.SUCCESS;
 			}
 		}
 		return InteractionResult.TRY_WITH_EMPTY_HAND;
