@@ -1,5 +1,7 @@
 package twilightforest.network;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
@@ -42,25 +44,33 @@ public class TravellersWingsStatePacket implements CustomPacketPayload {
 		this.sidestepTimer = buf.readInt();
 	}
 
+	@Environment(EnvType.CLIENT)
 	public static void handle(TravellersWingsStatePacket message, ClientPlayNetworking.Context ctx) {
-		Runnable task = () -> {
-			Player player = ctx.player();
-			if (player != null && player.level() != null) {
-				Entity entity = player.level().getEntity(message.entityId);
-				if (entity instanceof LivingEntity livingEntity) {
-					TravellersWingsAttachment attachment = livingEntity.getAttachedOrCreate(TFDataAttachments.TRAVELLERS_WINGS);
-					attachment.state = message.state;
-					attachment.sidestepLeft = message.sidestepLeft;
-					attachment.doubleJumpTimer = message.doubleJumpTimer;
-					attachment.sidestepTimer = message.sidestepTimer;
-				}
-			}
-		};
+		ClientHandler.handle(message, ctx);
+	}
 
-		if (ctx.client().isSameThread()) {
-			task.run();
-		} else {
-			ctx.client().schedule(task);
+	@Environment(EnvType.CLIENT)
+	private static final class ClientHandler {
+		private static void handle(TravellersWingsStatePacket message, ClientPlayNetworking.Context ctx) {
+			Runnable task = () -> {
+				Player player = ctx.player();
+				if (player != null && player.level() != null) {
+					Entity entity = player.level().getEntity(message.entityId);
+					if (entity instanceof LivingEntity livingEntity) {
+						TravellersWingsAttachment attachment = livingEntity.getAttachedOrCreate(TFDataAttachments.TRAVELLERS_WINGS);
+						attachment.state = message.state;
+						attachment.sidestepLeft = message.sidestepLeft;
+						attachment.doubleJumpTimer = message.doubleJumpTimer;
+						attachment.sidestepTimer = message.sidestepTimer;
+					}
+				}
+			};
+
+			if (ctx.client().isSameThread()) {
+				task.run();
+			} else {
+				ctx.client().schedule(task);
+			}
 		}
 	}
 

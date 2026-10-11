@@ -141,8 +141,10 @@ public final class TravellersGearEventListeners {
 		LivingEntity livingEntity = event.getEntity();
 		ItemStack boots = livingEntity.getItemBySlot(EquipmentSlot.FEET);
 		Float coefficient = boots.get(TFDataComponents.SLIMY_SOLES_COEFFICIENT);
-		SlimySolesAttachment slimySolesAttachment = livingEntity.getAttached(TFDataAttachments.SLIMY_SOLES_BOUNCE_INFO);
-		if (!livingEntity.isShiftKeyDown() && TravellersModifiersManager.isModifierActive(livingEntity, boots, TravellersModifiersManager.SLIMY_SOLES_MODIFIER) && coefficient != null && (calculateFallDamage(event) > 0 || slimySolesAttachment.forceBounce)) {
+		if (livingEntity.isShiftKeyDown() || !TravellersModifiersManager.isModifierActive(livingEntity, boots, TravellersModifiersManager.SLIMY_SOLES_MODIFIER) || coefficient == null)
+			return;
+		SlimySolesAttachment slimySolesAttachment = livingEntity.getAttachedOrCreate(TFDataAttachments.SLIMY_SOLES_BOUNCE_INFO);
+		if (calculateFallDamage(event) > 0 || slimySolesAttachment.forceBounce) {
 			event.setCanceled(true);
 			slimySolesAttachment.bounceVelocity = -livingEntity.getDeltaMovement().y() * Math.sqrt(coefficient);
 			slimySolesAttachment.doubleJumpBoostVelocity = slimySolesAttachment.bounceVelocity;
@@ -162,6 +164,8 @@ public final class TravellersGearEventListeners {
 	public static void cancelSlimySolesJump(LivingEvent.LivingJumpEvent event) {
 		LivingEntity livingEntity = event.getEntity();
 		SlimySolesAttachment slimySolesAttachment = livingEntity.getAttached(TFDataAttachments.SLIMY_SOLES_BOUNCE_INFO);
+		if (slimySolesAttachment == null)
+			return;
 		slimySolesAttachment.bounceVelocity = 0;
 		slimySolesAttachment.forceBounce = false;
 		livingEntity.setAttached(TFDataAttachments.SLIMY_SOLES_BOUNCE_INFO, slimySolesAttachment);
