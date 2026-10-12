@@ -2,13 +2,11 @@ package twilightforest.world.components.feature.trees;
 
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import twilightforest.init.TFBlocks;
 import twilightforest.util.RootPlacer;
@@ -65,7 +63,7 @@ public class TimeTreeFeature extends HollowTreeFeature {
 		BlockPos corePos = pos.offset(-1, 2, 0);
 		BlockState stateAtCorePos = world.getBlockState(pos.above());
 		if (stateAtCorePos.is(BlockTags.LOGS) || stateAtCorePos.canBeReplaced()) {
-			world.setBlock(corePos, TFBlocks.TIME_LOG_CORE.defaultBlockState().setValue(RotatedPillarBlock.AXIS, Direction.Axis.Y), Block.UPDATE_ALL);
+			world.setBlock(corePos, TFBlocks.TIME_LOG_CORE.defaultBlockState(), Block.UPDATE_ALL);
 			world.scheduleTick(corePos, TFBlocks.TIME_LOG_CORE, 20);
 		}
 

@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.registry.DynamicRegistries;
 import net.fabricmc.fabric.api.item.v1.BlockTransformerHelper;
 import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents;
+import net.fabricmc.fabric.api.item.v1.ItemComponentTooltipProviderRegistry;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
@@ -163,6 +164,7 @@ public final class TFCommon implements ModInitializer {
 		registerReloadListeners();
 		registerCauldronInteractions();
 		registerItemStorage();
+		registerComponentTooltips();
 	}
 
 	private static void setupCommonEvents() {
@@ -549,6 +551,22 @@ public final class TFCommon implements ModInitializer {
 			setCompostable(context, TFBlocks.HUGE_MUSHGLOOM.asItem(), ContextIntProviders.COMPOSTABLE_MEDIUM_HIGH);
 			setCompostable(context, TFItems.EXPERIMENT_115, ContextIntProviders.COMPOSTABLE_MEDIUM_HIGH);
 			setCompostable(context, TFItems.MAGIC_BEANS, ContextIntProviders.COMPOSTABLE_MEDIUM_HIGH);
+			setCompostable(context, TFBlocks.RASPBERRY_BUSH.asItem(), ContextIntProviders.COMPOSTABLE_LOW_MEDIUM);
+			setCompostable(context, TFItems.RASPBERRY, ContextIntProviders.COMPOSTABLE_LOW);
+			setCompostable(context, TFBlocks.BLUEBERRY_BUSH.asItem(), ContextIntProviders.COMPOSTABLE_LOW_MEDIUM);
+			setCompostable(context, TFItems.BLUEBERRY, ContextIntProviders.COMPOSTABLE_LOW);
+			setCompostable(context, TFBlocks.BLACKBERRY_BUSH.asItem(), ContextIntProviders.COMPOSTABLE_LOW_MEDIUM);
+			setCompostable(context, TFItems.BLACKBERRY, ContextIntProviders.COMPOSTABLE_LOW);
+			setCompostable(context, TFBlocks.MALOBERRY_BUSH.asItem(), ContextIntProviders.COMPOSTABLE_LOW_MEDIUM);
+			setCompostable(context, TFItems.MALOBERRY, ContextIntProviders.COMPOSTABLE_LOW);
+			setCompostable(context, TFBlocks.BLIGHTBERRY_BUSH.asItem(), ContextIntProviders.COMPOSTABLE_LOW_MEDIUM);
+			setCompostable(context, TFItems.BLIGHTBERRY, ContextIntProviders.COMPOSTABLE_LOW);
+			setCompostable(context, TFBlocks.DUSKBERRY_BUSH.asItem(), ContextIntProviders.COMPOSTABLE_LOW_MEDIUM);
+			setCompostable(context, TFItems.DUSKBERRY, ContextIntProviders.COMPOSTABLE_LOW);
+			setCompostable(context, TFBlocks.SKYBERRY_BUSH.asItem(), ContextIntProviders.COMPOSTABLE_LOW_MEDIUM);
+			setCompostable(context, TFItems.SKYBERRY, ContextIntProviders.COMPOSTABLE_LOW);
+			setCompostable(context, TFBlocks.STINGBERRY_BUSH.asItem(), ContextIntProviders.COMPOSTABLE_LOW_MEDIUM);
+			setCompostable(context, TFItems.STINGBERRY, ContextIntProviders.COMPOSTABLE_LOW);
 		});
 	}
 
@@ -867,6 +885,10 @@ public final class TFCommon implements ModInitializer {
 			(entity, side) -> entity.getBlockState().getValue(ChiseledCanopyShelfBlock.SPAWNER) ? null : ContainerStorage.of(entity, side),
 			TFBlockEntities.CHISELED_CANOPY_BOOKSHELF
 		);
+	}
+
+	private static void registerComponentTooltips() {
+		ItemComponentTooltipProviderRegistry.addLast(TFDataComponents.SKULL_CANDLES);
 	}
 
 	public static Identifier prefix(String name) {

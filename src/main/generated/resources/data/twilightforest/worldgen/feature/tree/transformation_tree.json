@@ -30,7 +30,7 @@
           "id": "twilightforest:transformation_log_core",
           "properties": {
             "active": "false",
-            "axis": "y"
+            "facing": "up"
           }
         }
       }

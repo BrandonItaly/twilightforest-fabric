@@ -5,8 +5,87 @@
       "bonus_rolls": 0.0,
       "entries": [
         {
-          "type": "minecraft:item",
-          "name": "twilightforest:candelabra"
+          "type": "minecraft:dynamic",
+          "condition": {
+            "type": "minecraft:all_of",
+            "terms": [
+              {
+                "type": "minecraft:inverted",
+                "term": {
+                  "type": "minecraft:match_tool",
+                  "predicate": {
+                    "predicates": {
+                      "minecraft:enchantments": [
+                        {
+                          "enchantments": "minecraft:silk_touch",
+                          "levels": {
+                            "min": 1
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "name": "twilightforest:candles"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:alternatives",
+          "children": [
+            {
+              "type": "minecraft:alternatives",
+              "children": [
+                {
+                  "type": "minecraft:item",
+                  "condition": {
+                    "type": "minecraft:all_of",
+                    "terms": [
+                      {
+                        "type": "minecraft:inverted",
+                        "term": {
+                          "type": "minecraft:match_tool",
+                          "predicate": {
+                            "predicates": {
+                              "minecraft:enchantments": [
+                                {
+                                  "enchantments": "minecraft:silk_touch",
+                                  "levels": {
+                                    "min": 1
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "name": "twilightforest:candelabra"
+                },
+                {
+                  "type": "minecraft:item",
+                  "modifier": [
+                    {
+                      "type": "minecraft:copy_components",
+                      "include": [
+                        "twilightforest:candelabra_data"
+                      ],
+                      "source": "block_entity"
+                    }
+                  ],
+                  "name": "twilightforest:candelabra"
+                }
+              ]
+            }
+          ]
         }
       ],
       "rolls": 1.0,

@@ -236,6 +236,11 @@ public class QuestRam extends Animal implements EnforcedHomePoint {
 	}
 
 	@Override
+	protected boolean canBeABaby() {
+		return false;
+	}
+
+	@Override
 	protected AABB makeBoundingBox(Vec3 pos) {
 		return super.makeBoundingBox(pos);
 	}

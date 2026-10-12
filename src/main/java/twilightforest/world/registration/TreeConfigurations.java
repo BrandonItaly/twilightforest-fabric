@@ -9,7 +9,6 @@ import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LanternBlock;
-import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import net.minecraft.world.level.levelgen.feature.TreeFeature;
@@ -265,7 +264,7 @@ public class TreeConfigurations {
 		SOIL_BENEATH_TRUNK
 	)
 		.ignoreVines()
-		.decorators(ImmutableList.of(new TreeCorePlacer(3, BlockStateProvider.of(TFBlocks.TRANSFORMATION_LOG_CORE.defaultBlockState().setValue(RotatedPillarBlock.AXIS, Direction.Axis.Y)))))
+		.decorators(ImmutableList.of(new TreeCorePlacer(3, BlockStateProvider.of(TFBlocks.TRANSFORMATION_LOG_CORE.defaultBlockState()))))
 		.build();
 
 	public static final TFTreeFeatureConfig MINING_TREE = new TFTreeFeatureConfig.Builder(
@@ -278,14 +277,14 @@ public class TreeConfigurations {
 
 	public static final TreeFeature SORT_TREE = new TreeFeature.Builder(
 		BlockStateProvider.of(TFBlocks.SORTING_LOG),
-		new StraightTrunkPlacer(3, 0, 0),
+		new StraightTrunkPlacer(5, 0, 0),
 		BlockStateProvider.of(TFBlocks.SORTING_LEAVES),
-		new LeafSpheroidFoliagePlacer(1.5f, 2.25f, ConstantInt.of(0), 1, 0, 0.5f, 0),
+		new LeafSpheroidFoliagePlacer(1.5F, 2.5F, ConstantInt.of(-2), 0, 0, 0.5F, 0),
 		new TwoLayersFeatureSize(1, 1, 1),
 		SOIL_BENEATH_TRUNK
 	)
 		.ignoreVines()
-		.decorators(ImmutableList.of(new TreeCorePlacer(2, BlockStateProvider.of(TFBlocks.SORTING_LOG_CORE.defaultBlockState().setValue(RotatedPillarBlock.AXIS, Direction.Axis.Y)))))
+		.decorators(ImmutableList.of(new TreeCorePlacer(2, BlockStateProvider.of(TFBlocks.SORTING_LOG_CORE.defaultBlockState()))))
 		.build();
 
 	public static final TFTreeFeatureConfig LARGE_WINTER = new TFTreeFeatureConfig.Builder(

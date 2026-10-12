@@ -64,6 +64,5 @@
     ]
   ],
   "has_precipitation": true,
-  "temperature": 0.08,
-  "temperature_modifier": "frozen"
+  "temperature": 0.08
 }

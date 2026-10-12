@@ -1,5 +1,6 @@
 package twilightforest.client.renderer.entity;
 
+import net.minecraft.client.model.monster.zombie.BabyZombieModel;
 import net.minecraft.client.model.monster.zombie.ZombieModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
@@ -10,11 +11,11 @@ import twilightforest.client.model.TFModelLayers;
 import twilightforest.entity.monster.LoyalZombie;
 
 public class LoyalZombieRenderer extends HumanoidMobRenderer<LoyalZombie, ZombieRenderState, ZombieModel<ZombieRenderState>> {
-
-	private static final Identifier TEXTURE = Identifier.withDefaultNamespace("textures/entity/zombie/zombie.png");
+	private static final Identifier ZOMBIE_LOCATION = Identifier.withDefaultNamespace("textures/entity/zombie/zombie.png");
+	private static final Identifier BABY_ZOMBIE_LOCATION = Identifier.withDefaultNamespace("textures/entity/zombie/zombie_baby.png");
 
 	public LoyalZombieRenderer(EntityRendererProvider.Context context) {
-		super(context, new ZombieModel<>(context.bakeLayer(TFModelLayers.LOYAL_ZOMBIE)), 0.5F);
+		super(context, new ZombieModel<>(context.bakeLayer(TFModelLayers.LOYAL_ZOMBIE)), new BabyZombieModel<>(context.bakeLayer(TFModelLayers.LOYAL_ZOMBIE_BABY)), 0.5F);
 	}
 
 	@Override
@@ -35,6 +36,6 @@ public class LoyalZombieRenderer extends HumanoidMobRenderer<LoyalZombie, Zombie
 
 	@Override
 	public Identifier getTextureLocation(ZombieRenderState state) {
-		return TEXTURE;
+		return state.isBaby ? BABY_ZOMBIE_LOCATION : ZOMBIE_LOCATION;
 	}
 }
