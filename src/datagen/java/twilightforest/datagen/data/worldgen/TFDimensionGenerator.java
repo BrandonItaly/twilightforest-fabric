@@ -15,6 +15,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.dimension.LevelStem;
 import net.minecraft.world.level.levelgen.*;
+import net.minecraft.world.level.levelgen.densityfunction.DensityFunction;
+import net.minecraft.world.level.levelgen.densityfunction.DensityFunctions;
 import net.minecraft.world.timeline.Timeline;
 import twilightforest.TFCommon;
 import twilightforest.datagen.data.TFWorldClockGenerator;
@@ -96,7 +98,7 @@ public class TFDimensionGenerator {
 				DensityFunctions.zero(),
 				DensityFunctions.zero(),
 				finalDensity,
-				finalDensity,
+				DensityFunctions.add(finalDensity, DensityFunctions.beardifier()),
 				DensityFunctions.zero(),
 				DensityFunctions.zero(),
 				DensityFunctions.zero()
