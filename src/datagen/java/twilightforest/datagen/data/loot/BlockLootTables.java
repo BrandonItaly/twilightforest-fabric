@@ -10,6 +10,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.storage.loot.LootPool;
@@ -68,6 +69,7 @@ public class BlockLootTables extends FabricBlockLootSubProvider {
 		dropSelf(TFBlocks.MOSSY_UNDERBRICK);
 		dropSelf(TFBlocks.UNDERBRICK_FLOOR);
 		dropSelf(TFBlocks.THORN_ROSE);
+		registerLeavesWithItem(TFBlocks.THORN_LEAVES, Items.STICK, registrylookup);
 		dropSelf(TFBlocks.DEADROCK);
 		dropSelf(TFBlocks.CRACKED_DEADROCK);
 		dropSelf(TFBlocks.WEATHERED_DEADROCK);
@@ -82,6 +84,7 @@ public class BlockLootTables extends FabricBlockLootSubProvider {
 		dropSelf(TFBlocks.GIANT_OBSIDIAN);
 		add(TFBlocks.UBEROUS_SOIL, createSingleItemTable(Blocks.DIRT));
 		dropSelf(TFBlocks.HUGE_STALK);
+		registerLeavesWithItem(TFBlocks.BEANSTALK_LEAVES, TFItems.MAGIC_BEANS, registrylookup);
 		add(TFBlocks.HUGE_MUSHGLOOM, createMushroomBlockDrop(TFBlocks.HUGE_MUSHGLOOM, TFBlocks.MUSHGLOOM));
 		add(TFBlocks.HUGE_MUSHGLOOM_STEM, createMushroomBlockDrop(TFBlocks.HUGE_MUSHGLOOM_STEM, TFBlocks.MUSHGLOOM));
 		add(TFBlocks.TROLLVIDR, createShearsOnlyDrop(TFBlocks.TROLLVIDR));
@@ -398,7 +401,9 @@ public class BlockLootTables extends FabricBlockLootSubProvider {
 		dropSelf(TFBlocks.TWILIGHT_OAK_WOOD);
 		dropSelf(TFBlocks.STRIPPED_TWILIGHT_OAK_WOOD);
 		dropSelf(TFBlocks.TWILIGHT_OAK_SAPLING);
+		add(TFBlocks.TWILIGHT_OAK_LEAVES, createLeavesDrops(TFBlocks.TWILIGHT_OAK_LEAVES, TFBlocks.TWILIGHT_OAK_SAPLING, DEFAULT_SAPLING_DROP_RATES));
 		dropSelf(TFBlocks.RAINBOW_OAK_SAPLING);
+		add(TFBlocks.RAINBOW_OAK_LEAVES, createLeavesDrops(TFBlocks.RAINBOW_OAK_LEAVES, TFBlocks.RAINBOW_OAK_SAPLING, RARE_SAPLING_DROP_RATES));
 		dropSelf(TFBlocks.HOLLOW_OAK_SAPLING);
 		dropSelf(TFBlocks.TWILIGHT_OAK_PLANKS);
 		dropSelf(TFBlocks.TWILIGHT_OAK_STAIRS);
@@ -423,6 +428,7 @@ public class BlockLootTables extends FabricBlockLootSubProvider {
 		dropSelf(TFBlocks.CANOPY_WOOD);
 		dropSelf(TFBlocks.STRIPPED_CANOPY_WOOD);
 		dropSelf(TFBlocks.CANOPY_SAPLING);
+		add(TFBlocks.CANOPY_LEAVES, createLeavesDrops(TFBlocks.CANOPY_LEAVES, TFBlocks.CANOPY_SAPLING, DEFAULT_SAPLING_DROP_RATES));
 		dropSelf(TFBlocks.CANOPY_PLANKS);
 		dropSelf(TFBlocks.CANOPY_STAIRS);
 		add(TFBlocks.CANOPY_SLAB, createSlabItemTable(TFBlocks.CANOPY_SLAB));
@@ -448,6 +454,7 @@ public class BlockLootTables extends FabricBlockLootSubProvider {
 		dropSelf(TFBlocks.MANGROVE_WOOD);
 		dropSelf(TFBlocks.STRIPPED_MANGROVE_WOOD);
 		dropSelf(TFBlocks.MANGROVE_SAPLING);
+		add(TFBlocks.MANGROVE_LEAVES, createLeavesDrops(TFBlocks.MANGROVE_LEAVES, TFBlocks.MANGROVE_SAPLING, DEFAULT_SAPLING_DROP_RATES));
 		dropSelf(TFBlocks.MANGROVE_PLANKS);
 		dropSelf(TFBlocks.MANGROVE_STAIRS);
 		add(TFBlocks.MANGROVE_SLAB, createSlabItemTable(TFBlocks.MANGROVE_SLAB));
@@ -471,6 +478,8 @@ public class BlockLootTables extends FabricBlockLootSubProvider {
 		dropSelf(TFBlocks.DARK_WOOD);
 		dropSelf(TFBlocks.STRIPPED_DARK_WOOD);
 		dropSelf(TFBlocks.DARKWOOD_SAPLING);
+		add(TFBlocks.HARDENED_DARK_LEAVES, createLeavesDrops(TFBlocks.DARK_LEAVES, TFBlocks.DARKWOOD_SAPLING, RARE_SAPLING_DROP_RATES));
+		add(TFBlocks.DARK_LEAVES, createLeavesDrops(TFBlocks.DARK_LEAVES, TFBlocks.DARKWOOD_SAPLING, RARE_SAPLING_DROP_RATES));
 		dropSelf(TFBlocks.DARK_PLANKS);
 		dropSelf(TFBlocks.DARK_STAIRS);
 		add(TFBlocks.DARK_SLAB, createSlabItemTable(TFBlocks.DARK_SLAB));
@@ -607,6 +616,16 @@ public class BlockLootTables extends FabricBlockLootSubProvider {
 		ominousCandle(TFBlocks.OMINOUS_GREEN_CANDLE);
 		ominousCandle(TFBlocks.OMINOUS_RED_CANDLE);
 		ominousCandle(TFBlocks.OMINOUS_BLACK_CANDLE);
+	}
+
+	private void registerLeavesWithItem(Block leaves, ItemLike drop, HolderLookup.RegistryLookup<Enchantment> registrylookup) {
+		add(leaves, createSilkTouchOrShearsDispatchTable(leaves, applyExplosionCondition(leaves, LootItem.lootTableItem(drop))
+			.when(BonusLevelTableCondition.bonusLevelFlatChance(registrylookup.getOrThrow(Enchantments.FORTUNE), RARE_SAPLING_DROP_RATES)))
+			.withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+				.when(doesNotHaveShearsOrSilkTouch())
+				.add(applyExplosionDecay(leaves, LootItem.lootTableItem(Items.STICK)
+					.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
+					.when(BonusLevelTableCondition.bonusLevelFlatChance(registrylookup.getOrThrow(Enchantments.FORTUNE), 0.02F, 0.022222223F, 0.025F, 0.033333335F, 0.1F)))));
 	}
 
 	private void registerLeavesNoSapling(Block leaves, HolderLookup.RegistryLookup<Enchantment> registrylookup) {
