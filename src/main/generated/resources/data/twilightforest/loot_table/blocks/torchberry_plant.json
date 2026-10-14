@@ -1,0 +1,38 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "condition": {
+            "type": "minecraft:match_tool",
+            "predicate": {
+              "items": "minecraft:shears"
+            }
+          },
+          "name": "twilightforest:torchberry_plant"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "condition": {
+            "type": "minecraft:match_block",
+            "blocks": "twilightforest:torchberry_plant",
+            "state": {
+              "has_torchberries": "true"
+            }
+          },
+          "name": "twilightforest:torchberries"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ]
+}

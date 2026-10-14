@@ -41,16 +41,13 @@ import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.StructureStart;
 import twilightforest.block.TFPortalBlock;
 import twilightforest.config.TFConfig;
-import twilightforest.entity.monster.Kobold;
 import twilightforest.init.TFAdvancements;
 import twilightforest.init.TFBlocks;
 import twilightforest.init.TFDimension;
 import twilightforest.init.TFGameRules;
-import twilightforest.network.AreaProtectionPacket;
-import twilightforest.network.EnforceProgressionStatusPacket;
-import twilightforest.network.MissingAdvancementToastPacket;
-import twilightforest.network.StructureProtectionPacket;
+import twilightforest.network.*;
 import twilightforest.tags.TFBlockTags;
+import twilightforest.tags.TFEntityTypeTags;
 import twilightforest.tags.TFItemTags;
 import twilightforest.util.Enforcement;
 import twilightforest.util.PlayerHelper;
@@ -156,10 +153,9 @@ public final class ProgressionEventListeners {
 		return false;
 	}
 
-	//TODO make ignored entities into a tag
 	public static boolean preventLockedAreaEntityDamage(LivingEntity entity, DamageSource source) {
 		// cancel attacks in protected areas
-		if (entity.level() instanceof ServerLevel serverLevel && entity instanceof Enemy && source.getEntity() instanceof Player && !(entity instanceof Kobold)
+		if (entity.level() instanceof ServerLevel serverLevel && entity instanceof Enemy && source.getEntity() instanceof Player && !entity.is(TFEntityTypeTags.PROGRESSION_LOCK_VULNERABLE)
 			&& isAreaProtected(serverLevel, (Player) source.getEntity(), entity.blockPosition().immutable())) {
 
 			return false;
@@ -193,11 +189,12 @@ public final class ProgressionEventListeners {
 		ServerLevel level = player.level();
 
 		// check for portal creation, at least if it's not disabled
-		if (!TFConfig.disablePortalCreation && player.tickCount % (!TFConfig.checkPortalPlacement ? 100 : 20) == 0) {
+		int portalCheckInterval = !TFConfig.checkPortalPlacement ? 100 : 20;
+		if (!TFConfig.disablePortalCreation && player.tickCount % portalCheckInterval == 0) {
 			// skip non admin players when the option is on
 			if (level.getServer().getProfilePermissions(player.nameAndId()).level().isEqualOrHigherThan(TFConfig.portalCreationPermission)) {
 				// reduce range to 4.0 if config is set to admins/owners only
-				checkForPortalCreation(player, level, TFConfig.portalCreationPermission.isEqualOrHigherThan(PermissionLevel.ADMINS)  ? 4.0F : 32.0F);
+				checkForPortalCreation(player, level, TFConfig.portalCreationPermission.isEqualOrHigherThan(PermissionLevel.ADMINS)  ? 4.0F : 32.0F, portalCheckInterval);
 			}
 		}
 
@@ -216,7 +213,7 @@ public final class ProgressionEventListeners {
 		}
 	}
 
-	private static void checkForPortalCreation(ServerPlayer player, ServerLevel level, float rangeToCheck) {
+	private static void checkForPortalCreation(ServerPlayer player, ServerLevel level, float rangeToCheck, int checkInterval) {
 		if (level.dimension().identifier().equals(Identifier.parse(TFConfig.originDimension))
 			|| TFDimension.isTwilightPortalDestination(level)
 			|| TFConfig.allowPortalsInOtherDimensions) {
@@ -253,18 +250,13 @@ public final class ProgressionEventListeners {
 				}
 			}
 
-			Random rand = new Random();
-			for (int i = 0; i < 2; i++) {
-				double vx = rand.nextGaussian() * 0.02D;
-				double vy = rand.nextGaussian() * 0.02D;
-				double vz = rand.nextGaussian() * 0.02D;
-
-				level.addParticle(SpellParticleOption.create(ParticleTypes.EFFECT, -1, 1.0F), qualified.getX(), qualified.getY() + 0.2, qualified.getZ(), vx, vy, vz);
-			}
-
-			if (TFBlocks.TWILIGHT_PORTAL.tryToCreatePortal(level, qualified.blockPosition(), qualified, player))
+			if (TFBlocks.TWILIGHT_PORTAL.tryToCreatePortal(level, qualified.blockPosition(), qualified, player)) {
 				TFAdvancements.MADE_TF_PORTAL.trigger(player);
-
+			} else {
+				for (ServerPlayer serverPlayer : PlayerLookup.tracking(qualified)) {
+					ServerPlayNetworking.send(serverPlayer, new CreatePortalItemEmitterPacket(qualified.getId(), checkInterval));
+				}
+			}
 		}
 	}
 

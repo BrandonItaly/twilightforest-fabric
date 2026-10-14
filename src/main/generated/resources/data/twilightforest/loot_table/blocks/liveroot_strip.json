@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:block_interact",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "condition": {
+        "type": "minecraft:match_tool",
+        "predicate": {
+          "items": "#minecraft:axes"
+        }
+      },
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "modifier": [
+            {
+              "enchantment": "minecraft:fortune",
+              "formula": "minecraft:ore_drops",
+              "type": "minecraft:apply_bonus"
+            }
+          ],
+          "name": "twilightforest:liveroot"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "twilightforest:blocks/liveroot_strip"
+}

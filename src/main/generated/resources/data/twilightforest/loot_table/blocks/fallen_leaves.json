@@ -1,0 +1,171 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:alternatives",
+          "children": [
+            {
+              "type": "minecraft:alternatives",
+              "children": [
+                {
+                  "type": "minecraft:item",
+                  "condition": {
+                    "type": "minecraft:match_block",
+                    "blocks": "twilightforest:fallen_leaves",
+                    "state": {
+                      "layers": "1"
+                    }
+                  },
+                  "modifier": [
+                    {
+                      "add": false,
+                      "count": 1.0,
+                      "type": "minecraft:set_count"
+                    }
+                  ],
+                  "name": "twilightforest:fallen_leaves"
+                },
+                {
+                  "type": "minecraft:item",
+                  "condition": {
+                    "type": "minecraft:match_block",
+                    "blocks": "twilightforest:fallen_leaves",
+                    "state": {
+                      "layers": "2"
+                    }
+                  },
+                  "modifier": [
+                    {
+                      "add": false,
+                      "count": 2.0,
+                      "type": "minecraft:set_count"
+                    }
+                  ],
+                  "name": "twilightforest:fallen_leaves"
+                },
+                {
+                  "type": "minecraft:item",
+                  "condition": {
+                    "type": "minecraft:match_block",
+                    "blocks": "twilightforest:fallen_leaves",
+                    "state": {
+                      "layers": "3"
+                    }
+                  },
+                  "modifier": [
+                    {
+                      "add": false,
+                      "count": 3.0,
+                      "type": "minecraft:set_count"
+                    }
+                  ],
+                  "name": "twilightforest:fallen_leaves"
+                },
+                {
+                  "type": "minecraft:item",
+                  "condition": {
+                    "type": "minecraft:match_block",
+                    "blocks": "twilightforest:fallen_leaves",
+                    "state": {
+                      "layers": "4"
+                    }
+                  },
+                  "modifier": [
+                    {
+                      "add": false,
+                      "count": 4.0,
+                      "type": "minecraft:set_count"
+                    }
+                  ],
+                  "name": "twilightforest:fallen_leaves"
+                },
+                {
+                  "type": "minecraft:item",
+                  "condition": {
+                    "type": "minecraft:match_block",
+                    "blocks": "twilightforest:fallen_leaves",
+                    "state": {
+                      "layers": "5"
+                    }
+                  },
+                  "modifier": [
+                    {
+                      "add": false,
+                      "count": 5.0,
+                      "type": "minecraft:set_count"
+                    }
+                  ],
+                  "name": "twilightforest:fallen_leaves"
+                },
+                {
+                  "type": "minecraft:item",
+                  "condition": {
+                    "type": "minecraft:match_block",
+                    "blocks": "twilightforest:fallen_leaves",
+                    "state": {
+                      "layers": "6"
+                    }
+                  },
+                  "modifier": [
+                    {
+                      "add": false,
+                      "count": 6.0,
+                      "type": "minecraft:set_count"
+                    }
+                  ],
+                  "name": "twilightforest:fallen_leaves"
+                },
+                {
+                  "type": "minecraft:item",
+                  "condition": {
+                    "type": "minecraft:match_block",
+                    "blocks": "twilightforest:fallen_leaves",
+                    "state": {
+                      "layers": "7"
+                    }
+                  },
+                  "modifier": [
+                    {
+                      "add": false,
+                      "count": 7.0,
+                      "type": "minecraft:set_count"
+                    }
+                  ],
+                  "name": "twilightforest:fallen_leaves"
+                },
+                {
+                  "type": "minecraft:item",
+                  "condition": {
+                    "type": "minecraft:match_block",
+                    "blocks": "twilightforest:fallen_leaves",
+                    "state": {
+                      "layers": "8"
+                    }
+                  },
+                  "modifier": [
+                    {
+                      "add": false,
+                      "count": 8.0,
+                      "type": "minecraft:set_count"
+                    }
+                  ],
+                  "name": "twilightforest:fallen_leaves"
+                }
+              ],
+              "condition": {
+                "type": "minecraft:match_tool",
+                "predicate": {
+                  "items": "minecraft:shears"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "rolls": 1.0
+    }
+  ]
+}
