@@ -118,7 +118,7 @@ public class ReactorDebrisBlockEntity extends BlockEntity {
 		this.minPos = (Vector3f) input.read("pos", ExtraCodecs.VECTOR3F).orElse(new Vector3f());
 		this.maxPos = input.read("sizes", ExtraCodecs.VECTOR3F).map(size -> ((Vector3f) size).add(this.minPos)).orElse(new Vector3f(1));
 
-		this.shape = Shapes.box(this.minPos.x(), this.minPos.y(), this.minPos.z(), this.maxPos.x(), this.maxPos.y(), this.maxPos.z());
+			this.shape = Shapes.box(this.minPos.x(), this.minPos.y(), this.minPos.z(), this.maxPos.x(), this.maxPos.y(), this.maxPos.z());
 		this.rerolls = input.getBooleanOr("rerolls", false);
 		this.willDisappear = input.getBooleanOr("will_disappear", true);
 		this.timeAlive = input.getByteOr("time_alive", (byte) 0);
@@ -135,7 +135,7 @@ public class ReactorDebrisBlockEntity extends BlockEntity {
 		textures.putString("north", this.textures[4].toString());
 		textures.putString("south", this.textures[5].toString());
 		output.store("pos", ExtraCodecs.VECTOR3F, this.minPos);
-		output.store("sizes", ExtraCodecs.VECTOR3F, this.maxPos.sub(this.minPos));
+		output.store("sizes", ExtraCodecs.VECTOR3F, this.maxPos.sub(this.minPos, new Vector3f()));
 		output.putBoolean("rerolls", this.rerolls);
 		output.putBoolean("will_disappear", this.willDisappear);
 		output.putByte("time_alive", this.timeAlive);
