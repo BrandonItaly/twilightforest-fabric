@@ -22,7 +22,6 @@ public abstract class HydraPart extends TFPart<Hydra> {
 	private static final EntityDataAccessor<Boolean> DATA_SIZEACTIVE = SynchedEntityData.defineId(HydraPart.class, EntityDataSerializers.BOOLEAN);
 
 	boolean markedDead;
-	private EntityDimensions cacheSize;
 
 	@SuppressWarnings("this-escape")
 	public HydraPart(Hydra parent, float width, float height) {
@@ -40,7 +39,7 @@ public abstract class HydraPart extends TFPart<Hydra> {
 	public void onSyncedDataUpdated(EntityDataAccessor<?> accessor) {
 		super.onSyncedDataUpdated(accessor);
 		if (accessor == DATA_SIZEACTIVE) {
-			this.setSize(this.getDimensions(Pose.STANDING));
+			this.refreshDimensions();
 			//reset death markers so things render again
 			if (this.isActive()) {
 				this.markedDead = false;
@@ -57,9 +56,8 @@ public abstract class HydraPart extends TFPart<Hydra> {
 	}
 
 	@Override
-	protected void setSize(EntityDimensions size) {
-		super.setSize(size);
-		this.cacheSize = size;
+	public EntityDimensions getDimensions(Pose pose) {
+		return this.isActive() ? super.getDimensions(pose) : EntityDimensions.scalable(0, 0);
 	}
 
 	@Override
@@ -135,12 +133,10 @@ public abstract class HydraPart extends TFPart<Hydra> {
 	}
 
 	public void activate() {
-		this.dimensions = this.cacheSize;
 		this.getEntityData().set(DATA_SIZEACTIVE, true);
 	}
 
 	public void deactivate() {
-		this.dimensions = EntityDimensions.scalable(0, 0);
 		this.getEntityData().set(DATA_SIZEACTIVE, false);
 	}
 }

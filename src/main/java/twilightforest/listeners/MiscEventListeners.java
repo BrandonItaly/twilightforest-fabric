@@ -4,6 +4,7 @@ import carminite.events.api.PlayerEvents;
 import carminite.events.neoforge.PlayerEvent;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
+import net.fabricmc.fabric.api.networking.v1.EntityTrackingEvents;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.loader.api.FabricLoader;
@@ -40,11 +41,13 @@ import twilightforest.init.TFEntities;
 import twilightforest.init.TFItems;
 import twilightforest.network.CreateMovingCicadaSoundPacket;
 import twilightforest.util.ArmorUtil;
+import twilightforest.util.multiparts.MultipartEntityUtil;
 
 public final class MiscEventListeners {
 	private static final ArmorUtil armorUtil = ArmorUtil.INSTANCE;
 
 	public static void init() {
+		EntityTrackingEvents.START_TRACKING.register(MultipartEntityUtil.INSTANCE::sendInitialMultipartEntityData);
 		ServerEntityEvents.ENTITY_LOAD.register((entity, _) -> MiscEventListeners.addPrey(entity));
 		ServerEntityEvents.EQUIPMENT_CHANGE.register((livingEntity, equipmentSlot, _, currentStack) -> MiscEventListeners.updateCicadaSoundsOnHead(livingEntity, equipmentSlot, currentStack));
 		UseBlockCallback.EVENT.register(MiscEventListeners::addTomesToLecterns);

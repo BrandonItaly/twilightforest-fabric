@@ -12,10 +12,20 @@ public class MultipartEntityUtil {
 
 	public Entity sendDirtyMultipartEntityData(Entity entity) {
 		if (entity instanceof IMultiPartEntity multiPartEntity && multiPartEntity.isMultipartEntity()) {
-			for (ServerPlayer player : PlayerLookup.tracking(entity)) {
-				ServerPlayNetworking.send(player, new UpdateTFMultipartPacket(entity));
+			var players = PlayerLookup.tracking(entity);
+			if (!players.isEmpty()) {
+				var packet = new UpdateTFMultipartPacket(entity);
+				for (ServerPlayer player : players) {
+					ServerPlayNetworking.send(player, packet);
+				}
 			}
 		}
 		return entity;
+	}
+
+	public void sendInitialMultipartEntityData(Entity entity, ServerPlayer player) {
+		if (entity instanceof IMultiPartEntity multiPartEntity && multiPartEntity.isMultipartEntity()) {
+			ServerPlayNetworking.send(player, new UpdateTFMultipartPacket(entity, true));
+		}
 	}
 }

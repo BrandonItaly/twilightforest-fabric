@@ -26,12 +26,16 @@ public record UpdateTFMultipartPacket(int entityId, @Nullable Entity entity, @Nu
 	}
 
 	public UpdateTFMultipartPacket(Entity entity) {
-		this(-1, entity, collectPartData(entity));
+		this(entity, false);
 	}
 
-	private static Map<Integer, PartDataHolder> collectPartData(Entity entity) {
+	public UpdateTFMultipartPacket(Entity entity, boolean initial) {
+		this(-1, entity, collectPartData(entity, initial));
+	}
+
+	private static Map<Integer, PartDataHolder> collectPartData(Entity entity, boolean initial) {
 		Map<Integer, PartDataHolder> data = new HashMap<>();
-		TFPart.forEachPart(entity, (part, index) -> data.put(index, part.writeData()));
+		TFPart.forEachPart(entity, (part, index) -> data.put(index, part.writeData(initial)));
 		return data;
 	}
 

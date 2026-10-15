@@ -121,6 +121,10 @@ public abstract class TFPart<T extends Entity> extends PartEntity<T> {
 	}
 
 	public UpdateTFMultipartPacket.PartDataHolder writeData() {
+		return this.writeData(false);
+	}
+
+	public UpdateTFMultipartPacket.PartDataHolder writeData(boolean initial) {
 		return new UpdateTFMultipartPacket.PartDataHolder(
 			this.getX(),
 			this.getY(),
@@ -130,7 +134,7 @@ public abstract class TFPart<T extends Entity> extends PartEntity<T> {
 			this.dimensions.width(),
 			this.dimensions.height(),
 			this.dimensions.fixed(),
-			getEntityData().packDirty());
+			initial ? getEntityData().getNonDefaultValues() : getEntityData().packDirty());
 
 	}
 
