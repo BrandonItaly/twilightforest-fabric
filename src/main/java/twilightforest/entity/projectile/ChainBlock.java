@@ -160,7 +160,7 @@ public class ChainBlock extends ThrowableProjectile {
 			BlockState state = level.getBlockState(pos);
 			if (!state.isAir()) {
 				boolean restrictedPlaceMode = this.getOwner() instanceof ServerPlayer player && player.gameMode.getGameModeForPlayer().isBlockPlacingRestricted();
-				if (!canBreakBlockAt(level, pos, state, this.stack, restrictedPlaceMode) || this.getAttached(TFDataAttachments.SMASH_BLOCKS).getBlocksSmashed() >= 12) {
+				if (!canBreakBlockAt(level, pos, state, this.stack, restrictedPlaceMode) || this.getAttachedOrCreate(TFDataAttachments.SMASH_BLOCKS).getBlocksSmashed() >= 12) {
 					this.bounce(result.getDirection());
 				}
 
