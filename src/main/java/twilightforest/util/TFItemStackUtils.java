@@ -12,6 +12,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Inventory;
@@ -29,7 +30,6 @@ import twilightforest.init.TFDataComponents;
 
 import org.jspecify.annotations.Nullable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -68,10 +68,9 @@ public class TFItemStackUtils {
 
 	public static NonNullList<ItemStack> sortArmorForCasket(Player player) {
 		NonNullList<ItemStack> armor = NonNullList.create();
-		for (int i = Inventory.INVENTORY_SIZE; i < Inventory.SLOT_BODY_ARMOR; i++) {
-			armor.add(player.getInventory().getItem(i));
+		for (EquipmentSlot slot : List.of(EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET)) {
+			armor.add(player.getItemBySlot(slot));
 		}
-		Collections.reverse(armor);
 		return armor;
 	}
 
