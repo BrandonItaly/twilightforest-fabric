@@ -8,7 +8,6 @@
     "ItemContainerContentsAccessor",
     "LivingEntityGetDeathSoundAccessor",
     "ServerPlayerGameModeMixin",
-    "coremod.BlockTransformersMixin",
     "coremod.ChunkGeneratorMixin",
     "coremod.EntityMixin",
     "coremod.LeashFenceKnotEntityMixin",
