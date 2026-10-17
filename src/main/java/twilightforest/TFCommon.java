@@ -80,6 +80,7 @@ import twilightforest.network.*;
 import twilightforest.tags.TFItemTags;
 import twilightforest.util.HolidayEvent;
 import twilightforest.util.Restriction;
+import twilightforest.util.TFRemapper;
 import twilightforest.util.woods.WoodPalette;
 import twilightforest.world.components.biomesources.TFBiomeProvider;
 import twilightforest.world.components.layer.BiomeDensitySource;
@@ -142,6 +143,8 @@ public final class TFCommon implements ModInitializer {
 		ChunkBlanketProcessors.init();
 		TFStructurePlacementTypes.init();
 		TemplateMarkerHandlers.init();
+
+		TFRemapper.addRegistryAliases();
 
 		setupCommonEvents();
 
