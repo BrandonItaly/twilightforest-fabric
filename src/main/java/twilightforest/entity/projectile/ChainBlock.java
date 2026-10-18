@@ -265,7 +265,7 @@ public class ChainBlock extends ThrowableProjectile {
 					// despawn if close enough
 					if (distToPlayer < 2F) {
 						if (this.stack != null && this.getOwner() instanceof LivingEntity living && living.getAttachedOrCreate(TFDataAttachments.SMASH_BLOCKS).getBlocksSmashed() > 0) {
-							this.stack.hurtAndBreak(Math.min(living.getAttached(TFDataAttachments.SMASH_BLOCKS).getBlocksSmashed(), 3), living, this.getHand());
+							this.stack.hurtAndBreak(Math.min(living.getAttachedOrCreate(TFDataAttachments.SMASH_BLOCKS).getBlocksSmashed(), 3), living, this.getHand());
 						}
 						this.discard();
 					}

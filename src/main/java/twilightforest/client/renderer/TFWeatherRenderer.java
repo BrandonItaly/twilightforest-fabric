@@ -39,7 +39,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 import twilightforest.TFCommon;
-import twilightforest.init.TFDimension;
+import twilightforest.tags.TFDimensionTypeTags;
 import twilightforest.init.custom.Enforcements;
 import twilightforest.util.IntervalUtils;
 import twilightforest.util.RenderTypeUtil;
@@ -93,7 +93,7 @@ public class TFWeatherRenderer {
 
 	public static void init() {
 		LevelRenderEvents.COLLECT_SUBMITS.register(context -> {
-			if (context.levelState().cameraRenderState != null && Minecraft.getInstance().level != null && Minecraft.getInstance().level.dimension().equals(TFDimension.DIMENSION_KEY))
+			if (context.levelState().cameraRenderState != null && Minecraft.getInstance().level != null && Minecraft.getInstance().level.dimensionTypeRegistration().is(TFDimensionTypeTags.TF_WEATHER_RENDERER))
 				renderSnowAndRain(Minecraft.getInstance().level, (int) context.levelState().gameTime, Minecraft.getInstance().getDeltaTracker().getGameTimeDeltaPartialTick(false), context.levelState().cameraRenderState.pos, context.submitNodeCollector());
 		});
 		LevelRenderEvents.END_EXTRACTION.register(TFWeatherRenderer::extractUrGhastRain);
@@ -466,7 +466,7 @@ public class TFWeatherRenderer {
 	// Magic numbers taken from WeatherEffectRenderer#extractRenderState
 	public static void extractUrGhastRain(LevelExtractionContext context) {
 		ClientLevel level = context.level();
-		if (!(level.dimension().equals(TFDimension.DIMENSION_KEY)))
+		if (!(level.dimensionTypeRegistration().is(TFDimensionTypeTags.TF_WEATHER_RENDERER)))
 			return;
 
 		WeatherRenderState renderState = context.levelState().weatherRenderState;

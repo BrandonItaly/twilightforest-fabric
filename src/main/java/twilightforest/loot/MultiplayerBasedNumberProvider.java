@@ -33,7 +33,7 @@ public record MultiplayerBasedNumberProvider(ContextFloatProvider rollsPerPlayer
 	public float getFloatUnsafe(LootContext context) {
 		if (TFConfig.multiplayerFightAdjuster.adjustsLootRolls()) {
 			if (context.hasParameter(LootContextParams.THIS_ENTITY) && context.getOptional(LootContextParams.THIS_ENTITY).hasAttached(TFDataAttachments.MULTIPLAYER_FIGHT)) {
-				int qualifiedPlayers = context.getOptional(LootContextParams.THIS_ENTITY).getAttached(TFDataAttachments.MULTIPLAYER_FIGHT).getQualifiedPlayers().size();
+				int qualifiedPlayers = context.getOptional(LootContextParams.THIS_ENTITY).getAttachedOrCreate(TFDataAttachments.MULTIPLAYER_FIGHT).getQualifiedPlayers().size();
 				float total = this.defaultRolls.getFloat(context);
 				for (int i = 0; i < qualifiedPlayers - 1; i++) {
 					total += Math.max(0, this.rollsPerPlayer.getFloat(context));

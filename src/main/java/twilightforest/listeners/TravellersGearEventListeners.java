@@ -69,7 +69,6 @@ public final class TravellersGearEventListeners {
 		LivingEvents.ARMOR_HURT.register(TravellersGearEventListeners::stopDamagingTravellersGear);
 		LivingEvents.ARMOR_HURT.register(TravellersGearEventListeners::setLastDamageArmorTime);
 		WorkstationEvents.ANVIL_UPDATE.register(TravellersGearEventListeners::cancelCombiningTravellersGear);
-		PlayerEvents.SPAWN_PHANTOMS.register(TravellersGearEventListeners::cancelPhantomSpawns);
 		WorkstationEvents.GRINDSTONE_PLACE.register(TravellersGearEventListeners::removeModifiersFromTravellersGear);
 		WorkstationEvents.GRINDSTONE_TAKE.register(TravellersGearEventListeners::extractItemsFromSwapHotbarModifier);
 		PlayerEvents.ITEM_CRAFTED.register(TravellersGearEventListeners::fireCraftingModifierTrigger);
@@ -180,7 +179,7 @@ public final class TravellersGearEventListeners {
 		else if (player.onGround() || player.isInLiquid() || player.onClimbable())
 			hasDoubleJump = true;
 
-		if (hasDoubleJump != null && hasDoubleJump != player.getAttached(TFDataAttachments.HAS_DOUBLE_JUMP)) {
+		if (hasDoubleJump != null && hasDoubleJump != player.getAttachedOrCreate(TFDataAttachments.HAS_DOUBLE_JUMP)) {
 			player.setAttached(TFDataAttachments.HAS_DOUBLE_JUMP, hasDoubleJump);
 			player.setAttached(TFDataAttachments.DOUBLE_JUMP_VALIDATOR, 0);
 			AttributeInstance instance = player.getAttribute(Attributes.SAFE_FALL_DISTANCE);
@@ -205,7 +204,7 @@ public final class TravellersGearEventListeners {
 		//reset double jump wing anim if on the ground
 		if (event.getEntity().level().isClientSide()) {
 			if (player.getAttachedOrCreate(TFDataAttachments.TRAVELLERS_WINGS_ANIM).doubleJump && player.onGround()) {
-				player.getAttached(TFDataAttachments.TRAVELLERS_WINGS_ANIM).doubleJump = false;
+				player.getAttachedOrCreate(TFDataAttachments.TRAVELLERS_WINGS_ANIM).doubleJump = false;
 			}
 		}
 
@@ -371,12 +370,6 @@ public final class TravellersGearEventListeners {
 		return travellersItemStacks.size() == 1 ? Optional.of(travellersItemStacks.getFirst()) : Optional.empty();
 	}
 
-	public static void cancelPhantomSpawns(PlayerSpawnPhantomsEvent event) {
-		if (TravellersModifiersManager.isModifierActive(event.getEntity(), TravellersModifiersManager.ALL_NIGHT_GOGGLES_MODIFIER)) {
-			event.setResult(PlayerSpawnPhantomsEvent.Result.DENY);
-		}
-	}
-
 	public static void fireCraftingModifierTrigger(PlayerEvent.ItemCraftedEvent event) {
 		if (event.getEntity() instanceof ServerPlayer player && event.getCrafting().has(TFDataComponents.IS_TRAVELLERS_GEAR)) {
 			ItemStack compareStack = ItemStack.EMPTY;
@@ -403,7 +396,7 @@ public final class TravellersGearEventListeners {
 
 	private static <T> void copyAttachmentData(Player source, Player target, AttachmentType<T> type) {
 		if (source.hasAttached(type)) {
-			target.setAttached(type, source.getAttached(type));
+			target.setAttached(type, source.getAttachedOrCreate(type));
 		}
 	}
 }
