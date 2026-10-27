@@ -116,6 +116,7 @@ public class JarBlock extends BaseEntityBlock implements SimpleWaterloggedBlock 
 					serverLevel.playSound(null, pos, TFSounds.JAR_LID_SWAP.value(), SoundSource.BLOCKS, 1.0F, 1.0F);
 					jarBlockEntity.wobble(DecoratedPotBlockEntity.WobbleStyle.POSITIVE);
 					jarBlockEntity.setChanged();
+					serverLevel.sendBlockUpdated(pos, state, state, Block.UPDATE_CLIENTS);
 				}
 				return InteractionResult.SUCCESS;
 			}

@@ -1,6 +1,6 @@
 package twilightforest.util.multiparts;
 
-import carminite.multipart.IMultiPartEntity;
+import carminite.entity.IMultiPartEntity;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.server.level.ServerPlayer;
@@ -23,9 +23,4 @@ public class MultipartEntityUtil {
 		return entity;
 	}
 
-	public void sendInitialMultipartEntityData(Entity entity, ServerPlayer player) {
-		if (entity instanceof IMultiPartEntity multiPartEntity && multiPartEntity.isMultipartEntity()) {
-			ServerPlayNetworking.send(player, new UpdateTFMultipartPacket(entity, true));
-		}
-	}
 }

@@ -16,6 +16,7 @@
       },
       "modifier": "overlay"
     },
+    "minecraft:visual/cloud_color": "#00000000",
     "minecraft:visual/fog_color": "#493000",
     "minecraft:visual/sky_color": "#000000",
     "minecraft:visual/sky_light_factor": 0.24

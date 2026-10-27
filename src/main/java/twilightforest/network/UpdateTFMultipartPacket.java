@@ -10,6 +10,7 @@ import twilightforest.TFCommon;
 import twilightforest.entity.TFPart;
 
 import java.util.*;
+import java.util.function.Function;
 
 public record UpdateTFMultipartPacket(int entityId, @Nullable Entity entity, @Nullable Map<Integer, PartDataHolder> data) implements CustomPacketPayload {
 
@@ -25,16 +26,16 @@ public record UpdateTFMultipartPacket(int entityId, @Nullable Entity entity, @Nu
 	}
 
 	public UpdateTFMultipartPacket(Entity entity) {
-		this(entity, false);
+		this(entity, TFPart::writeData);
 	}
 
-	public UpdateTFMultipartPacket(Entity entity, boolean initial) {
-		this(-1, entity, collectPartData(entity, initial));
+	public UpdateTFMultipartPacket(Entity entity, Function<TFPart<?>, PartDataHolder> writer) {
+		this(-1, entity, collectPartData(entity, writer));
 	}
 
-	private static Map<Integer, PartDataHolder> collectPartData(Entity entity, boolean initial) {
+	private static Map<Integer, PartDataHolder> collectPartData(Entity entity, Function<TFPart<?>, PartDataHolder> writer) {
 		Map<Integer, PartDataHolder> data = new HashMap<>();
-		TFPart.forEachPart(entity, (part, index) -> data.put(index, part.writeData(initial)));
+		TFPart.forEachPart(entity, (part, index) -> data.put(index, writer.apply(part)));
 		return data;
 	}
 

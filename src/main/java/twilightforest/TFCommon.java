@@ -60,6 +60,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import twilightforest.block.BanisterBlock;
 import twilightforest.block.ChiseledCanopyShelfBlock;
+import twilightforest.block.OminousCandleBlock;
 import twilightforest.block.entity.JarBlockEntity;
 import twilightforest.command.TFCommand;
 import twilightforest.config.ConfigSetup;
@@ -153,6 +154,7 @@ public final class TFCommon implements ModInitializer {
 		registerBiomeSource();
 		registerConfig();
 		registerGiantToolDropConversions();
+		registerOminousCandleConversions();
 		registerJarLids();
 		registerStrippableBlocks();
 		registerFlammableBlocks();
@@ -257,6 +259,26 @@ public final class TFCommon implements ModInitializer {
 		LootEventListeners.GIANT_BLOCK_CONVERSIONS.put(Blocks.OAK_LOG, TFBlocks.GIANT_LOG.asItem());
 		LootEventListeners.GIANT_BLOCK_CONVERSIONS.put(Blocks.OAK_LEAVES, TFBlocks.GIANT_LEAVES.asItem());
 		LootEventListeners.GIANT_BLOCK_CONVERSIONS.put(Blocks.OBSIDIAN, TFBlocks.GIANT_OBSIDIAN.asItem());
+	}
+
+	private static void registerOminousCandleConversions() {
+		OminousCandleBlock.CANDLE_MAP.put(Blocks.CANDLE, TFBlocks.OMINOUS_CANDLE);
+		OminousCandleBlock.CANDLE_MAP.put(Blocks.DYED_CANDLE.pick(DyeColor.WHITE), TFBlocks.OMINOUS_WHITE_CANDLE);
+		OminousCandleBlock.CANDLE_MAP.put(Blocks.DYED_CANDLE.pick(DyeColor.ORANGE), TFBlocks.OMINOUS_ORANGE_CANDLE);
+		OminousCandleBlock.CANDLE_MAP.put(Blocks.DYED_CANDLE.pick(DyeColor.MAGENTA), TFBlocks.OMINOUS_MAGENTA_CANDLE);
+		OminousCandleBlock.CANDLE_MAP.put(Blocks.DYED_CANDLE.pick(DyeColor.LIGHT_BLUE), TFBlocks.OMINOUS_LIGHT_BLUE_CANDLE);
+		OminousCandleBlock.CANDLE_MAP.put(Blocks.DYED_CANDLE.pick(DyeColor.YELLOW), TFBlocks.OMINOUS_YELLOW_CANDLE);
+		OminousCandleBlock.CANDLE_MAP.put(Blocks.DYED_CANDLE.pick(DyeColor.LIME), TFBlocks.OMINOUS_LIME_CANDLE);
+		OminousCandleBlock.CANDLE_MAP.put(Blocks.DYED_CANDLE.pick(DyeColor.PINK), TFBlocks.OMINOUS_PINK_CANDLE);
+		OminousCandleBlock.CANDLE_MAP.put(Blocks.DYED_CANDLE.pick(DyeColor.GRAY), TFBlocks.OMINOUS_GRAY_CANDLE);
+		OminousCandleBlock.CANDLE_MAP.put(Blocks.DYED_CANDLE.pick(DyeColor.LIGHT_GRAY), TFBlocks.OMINOUS_LIGHT_GRAY_CANDLE);
+		OminousCandleBlock.CANDLE_MAP.put(Blocks.DYED_CANDLE.pick(DyeColor.CYAN), TFBlocks.OMINOUS_CYAN_CANDLE);
+		OminousCandleBlock.CANDLE_MAP.put(Blocks.DYED_CANDLE.pick(DyeColor.PURPLE), TFBlocks.OMINOUS_PURPLE_CANDLE);
+		OminousCandleBlock.CANDLE_MAP.put(Blocks.DYED_CANDLE.pick(DyeColor.BLUE), TFBlocks.OMINOUS_BLUE_CANDLE);
+		OminousCandleBlock.CANDLE_MAP.put(Blocks.DYED_CANDLE.pick(DyeColor.BROWN), TFBlocks.OMINOUS_BROWN_CANDLE);
+		OminousCandleBlock.CANDLE_MAP.put(Blocks.DYED_CANDLE.pick(DyeColor.GREEN), TFBlocks.OMINOUS_GREEN_CANDLE);
+		OminousCandleBlock.CANDLE_MAP.put(Blocks.DYED_CANDLE.pick(DyeColor.RED), TFBlocks.OMINOUS_RED_CANDLE);
+		OminousCandleBlock.CANDLE_MAP.put(Blocks.DYED_CANDLE.pick(DyeColor.BLACK), TFBlocks.OMINOUS_BLACK_CANDLE);
 	}
 
 	private static void registerJarLids() {

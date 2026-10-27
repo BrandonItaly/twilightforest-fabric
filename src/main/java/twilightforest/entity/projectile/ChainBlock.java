@@ -1,6 +1,6 @@
 package twilightforest.entity.projectile;
 
-import carminite.multipart.PartEntity;
+import carminite.entity.PartEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
@@ -235,7 +235,15 @@ public class ChainBlock extends ThrowableProjectile {
 
 	@Override
 	public void tick() {
+		Vec3 previousPosition = position();
+		boolean wasReturning = isReturning(); // #isReturning result can change after the super invocation
+
 		super.tick();
+
+		// Restore full movement truncated by super.tick() on impact.
+		if (wasReturning && isAlive()) {
+			setPos(previousPosition.add(getDeltaMovement()));
+		}
 
 		if (!this.level().isClientSide()) {
 			if (this.getOwner() == null) {
